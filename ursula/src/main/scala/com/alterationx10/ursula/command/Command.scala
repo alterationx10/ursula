@@ -25,13 +25,13 @@ trait Command[A] {
       Console.printLine(s"Arguments:") *>
         ZIO.foreach(arguments)(_.describeZIO)
     }
-    _ <- Console.printLine(s"Usage: $usage")
+    _ <- Console.printLine(s"Usage:\n\t$usage")
     _ <- Console.printLine("Examples:")
-    _ <- ZIO.foreach(examples)(e => Console.printLine(e))
+    _ <- ZIO.foreach(examples)(e => Console.printLine(s"\t$e"))
   } yield ()
 
   final def processedAction(args: Chunk[String]): Task[Unit] = if (
-    args.contains("--help") || args.contains("-h")
+    args.contains(Flags.helpFlag._sk) || args.contains(Flags.helpFlag._lk)
   ) {
     printHelp
   } else action(args).unit
