@@ -1,9 +1,7 @@
 package com.alterationx10.example.commands
 
+import com.alterationx10.ursula.args.{ArgParsers, Argument, Flag}
 import com.alterationx10.ursula.command.Command
-import com.alterationx10.ursula.args.ArgParsers
-import com.alterationx10.ursula.args.Flag
-import com.alterationx10.ursula.args.Argument
 import zio._
 
 final case class Echo() extends Command[String] with ArgParsers {
