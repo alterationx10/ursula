@@ -22,12 +22,15 @@ case class Flag(
   final val _sk: String = s"-$shortKey"
   final val _lk: String = s"--$longKey"
 
-  val conflictsWith: String =
+  val conflictsWith: String                   =
     s"\t^-- conflicts with:\n${conflicts.map(f => s"\t\t${f._sk}, ${f._lk}").mkString("\n")}"
-  val conflictsWithZIO: IO[IOException, Unit] = Console.printLine(conflictsWith)
+  val conflictsWithZIO: IO[IOException, Unit] =
+    Console.printLine(conflictsWith)
 
-  private val argHolder: String = if (isArgument) " [arg]" else ""
-  val describe: String = s"\t${_sk}, ${_lk}$argHolder\t$description$reqHolder"
+  private val argHolder: String          =
+    if (isArgument) " [arg]" else ""
+  val describe: String                   =
+    s"\t${_sk}, ${_lk}$argHolder\t$description$reqHolder"
   val describeZIO: IO[IOException, Unit] =
     Console.printLine(describe) *> ZIO
       .when(conflicts.nonEmpty)(conflictsWithZIO)
@@ -41,11 +44,14 @@ case class Argument(
     isRequired: Boolean = false,
     conflicts: Seq[Argument] = Seq.empty
 ) extends Arg {
-  val describe: String = s"\t$key [arg]\t$description$reqHolder"
-  val describeZIO: IO[IOException, Unit] = Console.printLine(describe)
+  
+  val describe: String                   =
+    s"\t$key [arg]\t$description$reqHolder"
+  val describeZIO: IO[IOException, Unit] =
+    Console.printLine(describe)
 
-  val conflictsWith: String =
+  val conflictsWith: String                   =
     s"\t^-- conflicts with:\n${conflicts.map(a => s"\t\t$a").mkString("\n")}"
-
-  val conflictsWithZIO: IO[IOException, Unit] = Console.printLine(conflictsWith)
+  val conflictsWithZIO: IO[IOException, Unit] =
+    Console.printLine(conflictsWith)
 }

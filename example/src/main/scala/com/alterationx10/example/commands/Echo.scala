@@ -6,7 +6,8 @@ import zio._
 
 final case class Echo() extends Command[String] with ArgParsers {
 
-  val loudFlag: Flag = Flag("l", "loud", "returns ALL CAPS", isArgument = true)
+  val loudFlag: Flag      =
+    Flag("l", "loud", "returns ALL CAPS", isArgument = true)
   val sarcasticFlag: Flag =
     Flag("s", "sarcastic", "returns SaRcAsM", isArgument = true)
 
@@ -33,7 +34,7 @@ final case class Echo() extends Command[String] with ArgParsers {
     str =>
       str.zipWithIndex.map {
         case odd if odd._2 % 2 == 0 => odd._1.toString().toUpperCase()
-        case even                   => even._1.toString().toLowerCase()
+        case even => even._1.toString().toLowerCase()
       }.mkString
 
   val loudly: String => String =
@@ -41,17 +42,17 @@ final case class Echo() extends Command[String] with ArgParsers {
 
   override def action(args: Chunk[String]): Task[String] = for {
     lArg <- ZIO.attempt(
-      getFlagArgument[String](args)(loudFlag)(loudly)
-    )
+              getFlagArgument[String](args)(loudFlag)(loudly)
+            )
     sArg <- ZIO.attempt(
-      getFlagArgument[String](args)(sarcasticFlag)(sarcastically)
-    )
-    str <- ZIO
-      .fromOption(lArg)
-      .catchAll(_ => ZIO.fromOption(sArg))
-      .catchAll(_ => ZIO.fromOption(args.drop(1).headOption))
-      .catchAll(_ => ZIO.succeed(""))
-    _ <- Console.printLine(str)
+              getFlagArgument[String](args)(sarcasticFlag)(sarcastically)
+            )
+    str  <- ZIO
+              .fromOption(lArg)
+              .catchAll(_ => ZIO.fromOption(sArg))
+              .catchAll(_ => ZIO.fromOption(args.drop(1).headOption))
+              .catchAll(_ => ZIO.succeed(""))
+    _    <- Console.printLine(str)
   } yield str
 
 }

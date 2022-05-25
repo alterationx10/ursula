@@ -39,13 +39,13 @@ trait UrsulaApp extends ZIOAppDefault {
   private val commandMap: RIO[CommandList, Map[String, Command[_]]] =
     for {
       map <- ZIO.serviceWith[CommandList](_.groupBy(_.trigger))
-      _ <- ZIO.foreach(map.filter(_._2.size > 1).toList) { kv =>
-        ZIO.logWarning(s"""
-                Multiple commands injected with the same trigger - using first found: 
+      _   <- ZIO.foreach(map.filter(_._2.size > 1).toList) { kv =>
+               ZIO.logWarning(s"""
+                Multiple commands injected with the same trigger - using first found:
                   ${kv._1} =>
-                    ${kv._2.map(_.getClass().getSimpleName()).mkString(", ")}
+                    ${kv._2.map(_.getClass.getSimpleName).mkString(", ")}
                 """)
-      }
+             }
     } yield map.map { case (a, b) => (a, b.head) }
 
   /** Given the injected Seq[Command[_]], parse out the trigger key-words
@@ -59,12 +59,12 @@ trait UrsulaApp extends ZIOAppDefault {
   private val findDefaultCommand: RIO[CommandList, Option[Command[_]]] =
     for {
       default <- ZIO.serviceWith[CommandList](_.filter(_.isDefaultCommand))
-      _ <- ZIO.when(default.size > 1) {
-        ZIO.logWarning(s"""
+      _       <- ZIO.when(default.size > 1) {
+                   ZIO.logWarning(s"""
           Multiple commands injected with isDefaultCommand=true - using the first:
-            ${default.map(_.getClass().getSimpleName()).mkString(", ")}
+            ${default.map(_.getClass.getSimpleName).mkString(", ")}
           """)
-      }
+                 }
     } yield default.headOption
 
   /** The "main program" of Ursula, which wires everything together, and runs
@@ -73,22 +73,23 @@ trait UrsulaApp extends ZIOAppDefault {
   private final val program
       : ZIO[CommandList with ZIOAppArgs, Throwable, ExitCode] =
     for {
-      args <- ZIOAppArgs.getArgs
-      trigger = args.headOption
-      cmpMap <- commandMap
-      drop1Ref <- Ref.make[Boolean](true)
-      cmd <- ZIO
-        .fromOption(trigger.flatMap(t => cmpMap.get(t)))
-        .catchAll(_ =>
-          drop1Ref.set(false) *>
-            findDefaultCommand.someOrFail(
-              new Exception(
-                "Could not find command from argument, and no default command provided"
+      args       <- ZIOAppArgs.getArgs
+      trigger     = args.headOption
+      cmpMap     <- commandMap
+      drop1Ref   <- Ref.make[Boolean](true)
+      cmd        <-
+        ZIO
+          .fromOption(trigger.flatMap(t => cmpMap.get(t)))
+          .catchAll(_ =>
+            drop1Ref.set(false) *>
+              findDefaultCommand.someOrFail(
+                new Exception(
+                  "Could not find command from argument, and no default command provided"
+                )
               )
-            )
-        )
+          )
       shouldDrop <- drop1Ref.get
-      _ <- cmd.processedAction(if (shouldDrop) args.tail else args)
+      _          <- cmd.processedAction(if (shouldDrop) args.tail else args)
     } yield ExitCode.success
 
   /** The entry point to the CLI, which takes [[program]], and provides

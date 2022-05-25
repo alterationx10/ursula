@@ -1,5 +1,5 @@
 ThisBuild / organization := "com.alterationx10"
-ThisBuild / version := "0.0.1-SNAPSHOT"
+ThisBuild / version      := "0.0.1-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.8"
 
 lazy val ursula = project
@@ -16,6 +16,6 @@ lazy val example = project
   .in(file("example"))
   .settings(
     publishArtifact := false,
-    fork := true
+    fork            := true
   )
   .dependsOn(ursula)
