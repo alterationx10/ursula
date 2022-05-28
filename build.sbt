@@ -43,13 +43,18 @@ ThisBuild / credentials += Credentials(
   sys.env.getOrElse("GITHUB_TOKEN", "abc123") // password
 )
 
+val zioVersion: String = "2.0.0-RC6"
+
 lazy val ursula = project
   .in(file("ursula"))
   .settings(
     name           := "ursula",
     libraryDependencies ++= Seq(
-      "dev.zio" %% "zio" % "2.0.0-RC6"
+      "dev.zio" %% "zio"          % zioVersion,
+      "dev.zio" %% "zio-test"     % zioVersion % "test",
+      "dev.zio" %% "zio-test-sbt" % zioVersion % "test"
     ),
+    testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
     fork           := true,
     publish / skip := false
   )
