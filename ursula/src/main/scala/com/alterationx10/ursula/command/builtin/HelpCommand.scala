@@ -1,15 +1,12 @@
 package com.alterationx10.ursula.command.builtin
 
+import com.alterationx10.ursula.args.{Flag, Argument}
 import com.alterationx10.ursula.command.Command
-import zio._
-import com.alterationx10.ursula.args.ArgParsers
-import com.alterationx10.ursula.args.Flag
 import com.alterationx10.ursula.args.builtin.Flags
-import com.alterationx10.ursula.args.Argument
+import zio._
 
 case class HelpCommand(commands: Seq[Command[_]], isDefault: Boolean)
-    extends Command[Unit]
-    with ArgParsers {
+    extends Command[Unit] {
 
   override val isDefaultCommand: Boolean = isDefault
 
@@ -26,7 +23,7 @@ case class HelpCommand(commands: Seq[Command[_]], isDefault: Boolean)
 
   override val trigger: String = "help"
 
-  override val flags: Seq[Flag] = Seq(
+  override val flags: Seq[Flag[_]] = Seq(
     Flags.helpFlag
   )
 
