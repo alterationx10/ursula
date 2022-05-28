@@ -4,7 +4,7 @@ import com.alterationx10.ursula.args.{BooleanFlag, Flag}
 
 object Flags {
 
-  val helpFlag: Flag[Boolean] = new BooleanFlag {
+  val helpFlag: Flag[Unit] = new BooleanFlag {
     override val name: String = "help"
     override val shortKey: String = "h"
     override val description: String = "Prints help"

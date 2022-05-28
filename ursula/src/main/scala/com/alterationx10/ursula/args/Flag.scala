@@ -190,11 +190,15 @@ trait Flag[R] {
     ZIO.when(!hidden)(printDocumentation).unit
 }
 
-trait BooleanFlag extends Flag[Boolean] {
-  override def parse: PartialFunction[String, Boolean] = _ => false
-  override val expectsArgument: Boolean                = false
+trait BooleanFlag extends Flag[Unit] {
+  override def parse: PartialFunction[String, Unit] = _ => ()
+  override val expectsArgument: Boolean             = false
 }
 
 trait StringFlag extends Flag[String] {
   override def parse: PartialFunction[String, String] = identity[String](_)
+}
+
+trait IntFlag extends Flag[Int] {
+  override def parse: PartialFunction[String, Int] = str => str.toInt
 }
