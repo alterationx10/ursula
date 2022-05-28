@@ -22,20 +22,21 @@ trait Flag[R] {
     */
   val shortKey: String
 
-  /** A description of the purpose of this flag, used when printing help.
+  /** A description of the purpose of this flag, used in [[describeZIO]].
     */
   val description: String
 
-  /** A flag to set whether this Flag should be printed in help.
+  /** Sets whether this Flag should be printed in help.
     */
   val hidden: Boolean = false
 
-  /** A flag to indicate if this Flag can be used multiple times in one Command
+  /** Sets if this Flag can be used multiple times in one Command
     */
   val multiple: Boolean = false
 
-  /** An optional environment variable used to set the value of the this Flag.
-    * Arguments passed in take precedence over environment settings.
+  /** An optional environment variable used to set the value of the this Flag
+    * when [[expectsArgument]] is true. The precedence is [arg] > [[env]] >
+    * [[default]]
     */
   val env: Option[String] = Option.empty
 
@@ -79,7 +80,7 @@ trait Flag[R] {
     */
   val default: Option[R] = Option.empty
 
-  /** A flag to indicate if this Flag is required or not.
+  /** Indicates if this Flag is required or not.
     */
   val required: Boolean = false
 
@@ -185,7 +186,7 @@ trait Flag[R] {
 
   /** A ZIO that prints documentation to the console
     */
-  final def describeZIO: Task[Unit]                =
+  final def describeZIO: Task[Unit] =
     ZIO.when(!hidden)(printDocumentation).unit
 }
 
