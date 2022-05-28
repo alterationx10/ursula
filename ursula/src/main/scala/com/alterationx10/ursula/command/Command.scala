@@ -31,7 +31,7 @@ trait Command[A] {
   } yield ()
 
   final def processedAction(args: Chunk[String]): Task[Unit] = if (
-    args.contains(Flags.helpFlag._sk) || args.contains(Flags.helpFlag._lk)
+    Flags.helpFlag.isPresent(args)
   ) {
     printHelp
   } else action(args).unit
