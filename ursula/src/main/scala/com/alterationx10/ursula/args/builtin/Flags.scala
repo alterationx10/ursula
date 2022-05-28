@@ -1,9 +1,13 @@
 package com.alterationx10.ursula.args.builtin
 
-import com.alterationx10.ursula.args.Flag
+import com.alterationx10.ursula.args.{BooleanFlag, Flag}
 
 object Flags {
 
-  val helpFlag: Flag = Flag("h", "help", "Prints the help for a command")
+  val helpFlag: Flag[Unit] = new BooleanFlag {
+    override val name: String = "help"
+    override val shortKey: String = "h"
+    override val description: String = "Prints help"
+  }
 
 }
