@@ -48,7 +48,7 @@ final case class Echo() extends Command[String] {
     sarcasticFlag
   )
 
-  override val arguments: Seq[Argument] = Seq.empty
+  override val arguments: Seq[Argument[_]] = Seq.empty
 
   val sarcastically: String => String =
     str =>

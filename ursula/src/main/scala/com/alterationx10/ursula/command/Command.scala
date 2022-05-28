@@ -10,7 +10,7 @@ trait Command[A] {
   val examples: Seq[String]
   val trigger: String
   val flags: Seq[Flag[_]]
-  val arguments: Seq[Argument]
+  val arguments: Seq[Argument[_]]
   val hidden: Boolean           = false
   val isDefaultCommand: Boolean = false
   def action(args: Chunk[String]): Task[A]

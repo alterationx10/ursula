@@ -27,7 +27,7 @@ case class HelpCommand(commands: Seq[Command[_]], isDefault: Boolean)
     Flags.helpFlag
   )
 
-  override val arguments: Seq[Argument] = Seq.empty
+  override val arguments: Seq[Argument[_]] = Seq.empty
 
   override def action(args: Chunk[String]): Task[Unit] = for {
     _ <- Console.printLine("The CLI supports the following commands:")
