@@ -39,7 +39,7 @@ trait Command[A] {
         case Some(h) => {
           if (hasBooleanFlag(h)) {
             loop(a.drop(1), r)
-          } else if (hasArgumentFlag(a)) {
+          } else if (hasArgumentFlag(h)) {
             // TODO what if this has a default value?
             loop(a.drop(2), r)
           } else {
