@@ -6,8 +6,30 @@ import zio._
 
 final case class Echo() extends Command[String] {
 
-  val loudFlag: Flag[String]      = ???
-  val sarcasticFlag: Flag[String] = ???
+  val loudFlag: Flag[String] = new Flag[String] {
+
+    override val name: String = "loud"
+
+    override val shortKey: String = "l"
+
+    override val description: String = "converts to argument to uppercase"
+
+    override def parse: PartialFunction[String, String] =
+      str => loudly(str)
+
+  }
+
+  val sarcasticFlag: Flag[String] = new Flag[String] {
+
+    override val name: String = "sarcastic"
+
+    override val shortKey: String = "s"
+
+    override val description: String = "prints the argument in alternating case"
+
+    override def parse: PartialFunction[String, String] =
+      str => sarcastically(str)
+  }
 
   override val description: String = "Echoes back the provided argument"
 

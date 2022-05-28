@@ -71,6 +71,10 @@ trait Flag[R] {
   def parseZIO: PartialFunction[String, Task[R]] =
     str => ZIO.attempt(parse(str))
 
+  /** Indicates this Flag expects an argument
+    */
+  val expectsArgument: Boolean = true
+
   /** An optional default value to provide
     */
   val default: Option[R] = Option.empty
@@ -102,10 +106,6 @@ trait Flag[R] {
     args.find(a => a == _sk || a == _lk).isDefined
 
   /** Wraps [[isPresent]] in a ZIO.attempt
-    * @param args
-    *   The arguments passed to the command
-    * @return
-    *   ZIO.attempt(isPresent(args))
     * @see
     *   [[isPresent]]
     */
@@ -138,23 +138,60 @@ trait Flag[R] {
     * @see
     *   [[multiple]]
     */
-  def parseFirstArg(args: Chunk[String]): Option[R] =
+  final def parseFirstArg(args: Chunk[String]): Option[R] =
     args.dropUntil(a => a == _sk || a == _lk).headOption.map(parse)
 
-  def parseFirstArgZIO(args: Chunk[String]): Task[Option[R]] =
+  /** Wraps [[parseFirstArg]] in ZIO.attempt
+    * @see
+    *   [[parseFirstArg]]
+    */
+  final def parseFirstArgZIO(args: Chunk[String]): Task[Option[R]] =
     ZIO.attempt(parseFirstArg(args))
 
+  /** Finds instances of arguments that trigger this Flag, and presses them
+    * through [[parse]]
+    * @param args
+    *   The arguments passed to the command
+    */
   def parseArgs(args: Chunk[String]): Chunk[R] = recursiveParse(parse)(args)
 
+  /** Wraps [[parseArgs]] in ZIO.attempt
+    */
   def parseArgsZIO(args: Chunk[String]): Chunk[Task[R]] =
     recursiveParse(parseZIO)(args)
 
-  def describe: String          = ???
-  def describeZIO: Task[String] = ???
+  private final def printWhenDefined(
+      header: String
+  )(flags: Option[Seq[Flag[_]]]): Task[Unit] =
+    for {
+      _ <- ZIO.when(flags.exists(_.nonEmpty))(Console.printLine(header))
+      _ <- ZIO
+             .fromOption(flags)
+             .flatMap { s =>
+               ZIO.foreach(s)(f => Console.printLine(s"\t${f._sk}, ${f._lk}"))
+             }
+             .ignore
+    } yield ()
+
+  private final val printDocumentation: Task[Unit] = {
+    val argReq = if (expectsArgument) "[arg]" else ""
+    val req    = if (required) " [required]" else ""
+    for {
+      _ <- Console.printLine(s"\t${_sk}, ${_lk} $argReq \t$description$req")
+      _ <- printWhenDefined("Requires:")(dependsOn)
+      _ <- printWhenDefined("Conflicts with:")(exclusive)
+    } yield ()
+  }
+
+  /** A ZIO that prints documentation to the console
+    */
+  final def describeZIO: Task[Unit]                =
+    ZIO.when(!hidden)(printDocumentation).unit
 }
 
 trait BooleanFlag extends Flag[Boolean] {
   override def parse: PartialFunction[String, Boolean] = _ => false
+  override val expectsArgument: Boolean                = false
 }
 
 trait StringFlag extends Flag[String] {
