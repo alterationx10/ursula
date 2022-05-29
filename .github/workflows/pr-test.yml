@@ -2,6 +2,8 @@ name: Run tests on PR
 on:
   pull_request:
     types: [ opened, reopened, synchronize ]
+    branches:
+      - main
 jobs:
   test:
     runs-on: ubuntu-latest
