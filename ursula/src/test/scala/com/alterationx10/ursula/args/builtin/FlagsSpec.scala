@@ -11,12 +11,17 @@ object FlagsSpec extends ZIOSpecDefault {
   def toChunk(str: String): Chunk[String] =
     Chunk.fromArray(str.split(" "))
 
-  val commandArgs: Seq[Chunk[String]] = Seq(
+  val presentArgs: Seq[Chunk[String]] = Seq(
     "-h",
     "--help",
     "command -h",
     "command --help",
-    "command h help arg1 arg2"
+    "command arg1 arg2 --help",
+  ).map(toChunk)
+
+  val missingArgs : Seq[Chunk[String]] = Seq(
+    "command h help arg1 arg2",
+    "arg1 arg2"
   ).map(toChunk)
 
   override def spec: Spec[TestEnvironment with Scope, Any] =
@@ -39,10 +44,11 @@ object FlagsSpec extends ZIOSpecDefault {
         ),
         test("isPresent")(
           for {
-            r <- ZIO.foreach(commandArgs)(helpFlag.isPresentZIO)
+            p <- ZIO.foreach(presentArgs)(helpFlag.isPresentZIO)
+            m <- ZIO.foreach(missingArgs)(helpFlag.isPresentZIO)
           } yield assertTrue(
-            r.count(_ == true) == 4,
-            r.count(_ == false) == 1
+            p.forall(_ == true),
+            m.forall(_ == false)
           )
         )
       )
