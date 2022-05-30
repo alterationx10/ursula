@@ -1,14 +1,15 @@
 package com.alterationx10.ursula
 
-import zio._
 import com.alterationx10.ursula.command.Command
 import com.alterationx10.ursula.command.builtin.HelpCommand
+
+import zio.*
 
 trait UrsulaApp extends ZIOAppDefault {
 
   /** A convenience alias for private methods
     */
-  type CommandList = Seq[Command[_]]
+  type CommandList = Seq[Command[?]]
 
   /** This setting determines whether the built in HelpCommand is the default
     * command. Defaults true, override to false if you want to use a different
@@ -19,7 +20,7 @@ trait UrsulaApp extends ZIOAppDefault {
   /** This layer should provide a Seq of your Command[_] implementations that
     * you want your CLI to have access to.
     */
-  val commandLayer: ZLayer[Any, Nothing, Seq[Command[_]]]
+  val commandLayer: ZLayer[Any, Nothing, Seq[Command[?]]]
 
   /** In internal layer that injects some built in Commands on top of the
     * [[commandLayer]]
@@ -36,7 +37,7 @@ trait UrsulaApp extends ZIOAppDefault {
   /** Given the injected Seq[Command[_]], parse out a Map keyed by the Command
     * trigger. Warns if multiple commands use the same trigger.
     */
-  private val commandMap: RIO[CommandList, Map[String, Command[_]]] =
+  private val commandMap: RIO[CommandList, Map[String, Command[?]]] =
     for {
       map <- ZIO.serviceWith[CommandList](_.groupBy(_.trigger))
       _   <- ZIO.foreach(map.filter(_._2.size > 1).toList) { kv =>
@@ -56,7 +57,7 @@ trait UrsulaApp extends ZIOAppDefault {
   /** Given the injected Seq[Command[_]], find the one flagged as default (if
     * present). Warns if multiple Commands have been set as default.
     */
-  private val findDefaultCommand: RIO[CommandList, Option[Command[_]]] =
+  private val findDefaultCommand: RIO[CommandList, Option[Command[?]]] =
     for {
       default <- ZIO.serviceWith[CommandList](_.filter(_.isDefaultCommand))
       _       <- ZIO.when(default.size > 1) {
@@ -89,7 +90,7 @@ trait UrsulaApp extends ZIOAppDefault {
               )
           )
       shouldDrop <- drop1Ref.get
-      _          <- cmd.processedAction(if (shouldDrop) args.tail else args)
+      _          <- cmd.processedAction(if shouldDrop then args.tail else args)
     } yield ExitCode.success
 
   /** The entry point to the CLI, which takes [[program]], and provides
