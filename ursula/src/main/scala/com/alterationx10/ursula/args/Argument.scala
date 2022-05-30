@@ -57,7 +57,7 @@ trait Argument[R] {
     */
   def describeZIO: Task[Unit] = for {
     _ <- Console.printLine(
-           s"\t$name\t$description${if required then " [required" else ""}"
+           s"\t$name\t$description${if required then " [required]" else ""}"
          )
   } yield ()
 }
