@@ -3,7 +3,7 @@
 
 val tagWithQualifier: String => String => String =
   qualifier =>
-    tagVersion => s"%s.%s.%s-${qualifier}%s".format(tagVersion.split("\\."): _*)
+    tagVersion => s"%s.%s.%s-${qualifier}%s".format(tagVersion.split("\\.")*)
 
 val tagAlpha: String => String     = tagWithQualifier("a")
 val tagBeta: String => String      = tagWithQualifier("b")
@@ -29,7 +29,7 @@ val versionFromTag: String = sys.env
 
 ThisBuild / organization := "com.alterationx10"
 ThisBuild / version           := versionFromTag
-ThisBuild / scalaVersion      := "2.13.8"
+ThisBuild / scalaVersion      := "3.1.2"
 ThisBuild / publish / skip    := true
 ThisBuild / publishMavenStyle := true
 ThisBuild / versionScheme     := Some("early-semver")
@@ -42,6 +42,17 @@ ThisBuild / credentials += Credentials(
   "alterationx10",                            // user
   sys.env.getOrElse("GITHUB_TOKEN", "abc123") // password
 )
+ThisBuild / scalacOptions ++= {
+  Seq(
+    "-encoding",
+    "UTF-8",
+    "-feature",
+    "-language:implicitConversions",
+    "-unchecked",
+    "-noindent",
+    "-new-syntax"
+  )
+}
 
 val zioVersion: String = "2.0.0-RC6"
 

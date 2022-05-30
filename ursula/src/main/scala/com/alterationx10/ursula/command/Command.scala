@@ -2,17 +2,17 @@ package com.alterationx10.ursula.command
 
 import com.alterationx10.ursula.args.{Argument, Flag}
 import com.alterationx10.ursula.args.builtin.Flags
-import zio._
 
 import scala.annotation.tailrec
+import zio.*
 
 trait Command[A] {
   val description: String
   val usage: String
   val examples: Seq[String]
   val trigger: String
-  val flags: Seq[Flag[_]]
-  val arguments: Seq[Argument[_]]
+  val flags: Seq[Flag[?]]
+  val arguments: Seq[Argument[?]]
   val hidden: Boolean           = false
   val isDefaultCommand: Boolean = false
   def action(args: Chunk[String]): Task[A]
@@ -37,9 +37,9 @@ trait Command[A] {
     def loop(a: Chunk[String], r: Chunk[String]): Chunk[String] = {
       a.headOption match {
         case Some(h) => {
-          if (hasBooleanFlag(h)) {
+          if hasBooleanFlag(h) then {
             loop(a.drop(1), r)
-          } else if (hasArgumentFlag(h)) {
+          } else if hasArgumentFlag(h) then {
             // TODO what if this has a default value?
             loop(a.drop(2), r)
           } else {
@@ -52,8 +52,7 @@ trait Command[A] {
     loop(args, Chunk.empty)
   }
 
-  /**
-    * Prints documentation
+  /** Prints documentation
     * @return
     */
   final def printHelp: Task[Unit] = for {
@@ -71,11 +70,11 @@ trait Command[A] {
     _ <- ZIO.foreach(examples)(e => Console.printLine(s"\t$e"))
   } yield ()
 
-  final def processedAction(args: Chunk[String]): Task[Unit] = if (
-    Flags.helpFlag.isPresent(args)
-  ) {
-    printHelp
-  } else action(args).unit
+  final def processedAction(args: Chunk[String]): Task[Unit] =
+    if Flags.helpFlag.isPresent(args)
+    then {
+      printHelp
+    } else action(args).unit
 
 }
 

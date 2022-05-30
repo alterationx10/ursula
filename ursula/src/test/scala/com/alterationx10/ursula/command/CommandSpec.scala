@@ -1,7 +1,7 @@
 package com.alterationx10.ursula.command
 
-import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertCompletes}
-import zio.{Scope, ZIO}
+import zio.*
+import zio.test.*
 
 object CommandSpec extends ZIOSpecDefault {
 

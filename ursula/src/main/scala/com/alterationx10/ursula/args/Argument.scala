@@ -1,6 +1,6 @@
 package com.alterationx10.ursula.args
 
-import zio._
+import zio.*
 
 /** Arguments are positional arguments passed to the command, and can be parsed
   * to type R
@@ -47,7 +47,7 @@ trait Argument[R] {
     * example, if you wanted to restrict to only "dev", or "test", supply them
     * here.
     */
-  val options: Option[Set[Argument[_]]] = Option.empty
+  val options: Option[Set[Argument[?]]] = Option.empty
 
   /** An optional default value to apply
     */
@@ -57,7 +57,7 @@ trait Argument[R] {
     */
   def describeZIO: Task[Unit] = for {
     _ <- Console.printLine(
-           s"\t$name\t$description${if (required) " [required" else ""}"
+           s"\t$name\t$description${if required then " [required]" else ""}"
          )
   } yield ()
 }

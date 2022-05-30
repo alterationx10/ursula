@@ -1,7 +1,7 @@
 package com.alterationx10.ursula.args
 
-import zio._
-import zio.test._
+import zio.*
+import zio.test.*
 
 object FlagSpec extends ZIOSpecDefault {
 

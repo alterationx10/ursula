@@ -1,8 +1,7 @@
 package com.alterationx10.ursula.args
 
-import zio._
-
 import scala.annotation.tailrec
+import zio.*
 
 /** Flags are non-positional arguments passed to the command. Flags can be
   * generally used as either an argument flag, which expects an argument parsed
@@ -87,11 +86,11 @@ trait Flag[R] {
   /** An optional set of Flags that need to also be present for this Flag to
     * function
     */
-  val dependsOn: Option[Seq[Flag[_]]] = Option.empty
+  val dependsOn: Option[Seq[Flag[?]]] = Option.empty
 
   /** An optional set of Flags that conflict with usage of this Flag
     */
-  val exclusive: Option[Seq[Flag[_]]] = Option.empty
+  val exclusive: Option[Seq[Flag[?]]] = Option.empty
 
   final lazy val _sk: String = s"-$shortKey"
   final lazy val _lk: String = s"--$name"
@@ -163,7 +162,7 @@ trait Flag[R] {
 
   private final def printWhenDefined(
       header: String
-  )(flags: Option[Seq[Flag[_]]]): Task[Unit] =
+  )(flags: Option[Seq[Flag[?]]]): Task[Unit] =
     for {
       _ <- ZIO.when(flags.exists(_.nonEmpty))(Console.printLine(header))
       _ <- ZIO
@@ -175,8 +174,8 @@ trait Flag[R] {
     } yield ()
 
   private final val printDocumentation: Task[Unit] = {
-    val argReq = if (expectsArgument) "[arg]" else ""
-    val req    = if (required) " [required]" else ""
+    val argReq = if expectsArgument then "[arg]" else ""
+    val req    = if required then " [required]" else ""
     for {
       _ <- Console.printLine(s"\t${_sk}, ${_lk} $argReq \t$description$req")
       _ <- printWhenDefined("Requires:")(dependsOn)

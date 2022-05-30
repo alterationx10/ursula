@@ -1,12 +1,12 @@
 package com.alterationx10.ursula.args.builtin
 
-import zio.test._
-import zio.test.Assertion._
-import zio._
+import zio.*
+import zio.test.*
+import zio.test.Assertion.*
 
 object FlagsSpec extends ZIOSpecDefault {
 
-  import Flags._
+  import Flags.*
 
   def toChunk(str: String): Chunk[String] =
     Chunk.fromArray(str.split(" "))
@@ -16,10 +16,10 @@ object FlagsSpec extends ZIOSpecDefault {
     "--help",
     "command -h",
     "command --help",
-    "command arg1 arg2 --help",
+    "command arg1 arg2 --help"
   ).map(toChunk)
 
-  val missingArgs : Seq[Chunk[String]] = Seq(
+  val missingArgs: Seq[Chunk[String]] = Seq(
     "command h help arg1 arg2",
     "arg1 arg2"
   ).map(toChunk)

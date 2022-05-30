@@ -2,7 +2,8 @@ package com.alterationx10.example.commands
 
 import com.alterationx10.ursula.args.{Argument, Flag}
 import com.alterationx10.ursula.command.Command
-import zio._
+
+import zio.*
 
 final case class Echo() extends Command[String] {
 
@@ -43,12 +44,12 @@ final case class Echo() extends Command[String] {
 
   override val trigger: String = "echo"
 
-  override val flags: Seq[Flag[_]] = Seq(
+  override val flags: Seq[Flag[?]] = Seq(
     loudFlag,
     sarcasticFlag
   )
 
-  override val arguments: Seq[Argument[_]] = Seq.empty
+  override val arguments: Seq[Argument[?]] = Seq.empty
 
   val sarcastically: String => String =
     str =>
