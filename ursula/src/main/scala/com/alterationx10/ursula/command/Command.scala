@@ -70,11 +70,52 @@ trait Command[A] {
     _ <- ZIO.foreach(examples)(e => Console.printLine(s"\t$e"))
   } yield ()
 
-  final def processedAction(args: Chunk[String]): Task[Unit] =
-    if Flags.helpFlag.isPresent(args)
-    then {
-      printHelp
-    } else action(args).unit
+  private final def unrecognizedFlags(args: Chunk[String]): Boolean = {
+    val flagTriggers: Seq[String] =
+      flags.flatMap(f => Seq(f._sk, f._lk)).distinct
+    args.filter(_.startsWith("-")).exists(a => !flagTriggers.contains(a))
+  }
+
+  private final def conflictingFlags(presentFlags: Seq[Flag[?]]): Boolean = {
+    presentFlags
+      .map { f =>
+        presentFlags.flatMap(_.exclusive).flatten.contains(f)
+      }
+      .fold(false)(_ || _)
+  }
+
+  private final def missingRequiredFlags(
+      presentFlags: Seq[Flag[?]]
+  ): Boolean = {
+    flags.filterNot(presentFlags.toSet).exists(_.required)
+  }
+
+  final def processedAction(args: Chunk[String]): Task[Unit] = {
+    for {
+      _            <- ZIO.cond(!Flags.helpFlag.isPresent(args), (), new Exception())
+      _            <- ZIO
+                        .cond(!unrecognizedFlags(args), (), new Exception())
+                        .tapError(_ =>
+                          Console.printLine("You have given an unrecognized flag.") *>
+                            Console.printLine(s"> ${args.mkString(" ")}")
+                        )
+      presentFlags <- ZIO.filter(flags)(_.isPresentZIO(args))
+      _            <- ZIO
+                        .cond(!conflictingFlags(presentFlags), (), new Exception())
+                        .tapError(_ =>
+                          Console.printLine("You have used two conflicting flags.") *>
+                            Console.printLine(s"> ${args.mkString(" ")}")
+                        )
+      _            <- ZIO
+                        .cond(!missingRequiredFlags(presentFlags), (), new Exception())
+                        .tapError(_ =>
+                          Console.printLine("Missing a required flag.") *>
+                            Console.printLine(s"> ${args.mkString(" ")}")
+                        )
+
+      _ <- action(args).unit
+    } yield ()
+  }.catchAll(_ => printHelp)
 
 }
 
