@@ -2,6 +2,7 @@ package com.alterationx10.ursula.command
 
 import com.alterationx10.ursula.args.{Argument, Flag}
 import com.alterationx10.ursula.args.builtin.Flags
+import com.alterationx10.ursula.errors.*
 
 import scala.annotation.tailrec
 import zio.*
@@ -70,11 +71,64 @@ trait Command[A] {
     _ <- ZIO.foreach(examples)(e => Console.printLine(s"\t$e"))
   } yield ()
 
-  final def processedAction(args: Chunk[String]): Task[Unit] =
-    if Flags.helpFlag.isPresent(args)
-    then {
+  private final def unrecognizedFlags(args: Chunk[String]): Boolean = {
+    val flagTriggers: Seq[String] =
+      flags.flatMap(f => Seq(f._sk, f._lk)).distinct
+    args.filter(_.startsWith("-")).exists(a => !flagTriggers.contains(a))
+  }
+
+  private final def conflictingFlags(presentFlags: Seq[Flag[?]]): Boolean = {
+    presentFlags
+      .map { f =>
+        presentFlags.flatMap(_.exclusive).flatten.contains(f)
+      }
+      .fold(false)(_ || _)
+  }
+
+  private final def missingRequiredFlags(
+      presentFlags: Seq[Flag[?]]
+  ): Boolean = {
+    flags.filterNot(presentFlags.toSet).exists(_.required)
+  }
+
+  private final def failWhen[E](
+      predicate: => Boolean,
+      error: E
+  ): ZIO[Any, E, Unit] =
+    ZIO.cond(!predicate, (), error)
+
+  private final def printArgs(args: Chunk[String]): Task[Unit] =
+    Console.printLine(s"> ${args.mkString(" ")}")
+
+  private final def printReason(msg: String): Task[Unit] =
+    Console.printLine(msg)
+
+  private final val printHelpfulError
+      : Chunk[String] => CommandException => Task[Unit] =
+    args =>
+      error =>
+        error.printMessageZIO *>
+          printArgs(args) *>
+          printHelp
+
+  final def processedAction(args: Chunk[String]): Task[Unit] = {
+    for {
+      _            <- failWhen(Flags.helpFlag.isPresent(args), HelpFlagException)
+      _            <- failWhen(unrecognizedFlags(args), UnrecognizedFlagException)
+                        .tapError { printHelpfulError(args) }
+      presentFlags <- ZIO.filter(flags)(_.isPresentZIO(args))
+      _            <- failWhen(conflictingFlags(presentFlags), ConflictingFlagsException)
+                        .tapError { printHelpfulError(args) }
+      _            <- failWhen(missingRequiredFlags(presentFlags), MissingFlagsException)
+                        .tapError { printHelpfulError(args) }
+
+      _ <- action(args).unit
+    } yield ()
+  }.catchSome {
+    //
+    case HelpFlagException =>
       printHelp
-    } else action(args).unit
+  }
 
 }
 
