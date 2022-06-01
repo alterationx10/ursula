@@ -90,7 +90,7 @@ trait UrsulaApp extends ZIOAppDefault {
               )
           )
       shouldDrop <- drop1Ref.get
-      _          <- cmd.processedAction(if shouldDrop then args.tail else args)
+      _          <- cmd.processedAction(if shouldDrop then args.tail else args).ignore
     } yield ExitCode.success
 
   /** The entry point to the CLI, which takes [[program]], and provides

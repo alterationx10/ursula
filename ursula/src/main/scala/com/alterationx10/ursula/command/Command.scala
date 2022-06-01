@@ -2,13 +2,10 @@ package com.alterationx10.ursula.command
 
 import com.alterationx10.ursula.args.{Argument, Flag}
 import com.alterationx10.ursula.args.builtin.Flags
+import com.alterationx10.ursula.errors.*
 
 import scala.annotation.tailrec
 import zio.*
-import com.alterationx10.ursula.errors.HelpFlagException
-import com.alterationx10.ursula.errors.UnrecognizedFlagException
-import com.alterationx10.ursula.errors.ConflictingFlagsException
-import com.alterationx10.ursula.errors.MissingFlagsException
 
 trait Command[A] {
   val description: String
@@ -100,39 +97,37 @@ trait Command[A] {
   ): ZIO[Any, E, Unit] =
     ZIO.cond(!predicate, (), error)
 
+  private final def printArgs(args: Chunk[String]): Task[Unit] =
+    Console.printLine(s"> ${args.mkString(" ")}")
+
+  private final def printReason(msg: String): Task[Unit] =
+    Console.printLine(msg)
+
+  private final val printHelpfulError
+      : Chunk[String] => CommandException => Task[Unit] =
+    args =>
+      error =>
+        error.printMessageZIO *>
+          printArgs(args) *>
+          printHelp
+
   final def processedAction(args: Chunk[String]): Task[Unit] = {
     for {
       _            <- failWhen(Flags.helpFlag.isPresent(args), HelpFlagException)
       _            <- failWhen(unrecognizedFlags(args), UnrecognizedFlagException)
-      // _            <- ZIO
-      //                   .cond(!unrecognizedFlags(args), (), new Exception())
-      //                   .tapError(_ =>
-      //                     Console.printLine("You have given an unrecognized flag.") *>
-      //                       Console.printLine(s"> ${args.mkString(" ")}")
-      //                   )
+                        .tapError { printHelpfulError(args) }
       presentFlags <- ZIO.filter(flags)(_.isPresentZIO(args))
       _            <- failWhen(conflictingFlags(presentFlags), ConflictingFlagsException)
-      // _            <- ZIO
-      //                   .cond(!conflictingFlags(presentFlags), (), new Exception())
-      //                   .tapError(_ =>
-      //                     Console.printLine("You have used two conflicting flags.") *>
-      //                       Console.printLine(s"> ${args.mkString(" ")}")
-      //                   )
+                        .tapError { printHelpfulError(args) }
       _            <- failWhen(missingRequiredFlags(presentFlags), MissingFlagsException)
-      // _            <- ZIO
-      //                   .cond(!missingRequiredFlags(presentFlags), (), new Exception())
-      //                   .tapError(_ =>
-      //                     Console.printLine("Missing a required flag.") *>
-      //                       Console.printLine(s"> ${args.mkString(" ")}")
-      //                   )
+                        .tapError { printHelpfulError(args) }
 
-      // _ <- action(args).unit
+      _ <- action(args).unit
     } yield ()
   }.catchSome {
-    case HelpFlagException         => printHelp
-    case UnrecognizedFlagException => printHelp
-    case ConflictingFlagsException => printHelp
-    case MissingFlagsException     => printHelp
+    //
+    case HelpFlagException =>
+      printHelp
   }
 
 }
