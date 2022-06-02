@@ -1,7 +1,7 @@
 package com.alterationx10.ursula.command.builtin
 
 import com.alterationx10.ursula.args.{Argument, Flag}
-import com.alterationx10.ursula.args.builtin.Flags
+import com.alterationx10.ursula.args.builtin.HelpFlag
 import com.alterationx10.ursula.command.Command
 
 import zio.*
@@ -25,7 +25,7 @@ case class HelpCommand(commands: Seq[Command[?]], isDefault: Boolean)
   override val trigger: String = "help"
 
   override val flags: Seq[Flag[?]] = Seq(
-    Flags.helpFlag
+    HelpFlag
   )
 
   override val arguments: Seq[Argument[?]] = Seq.empty
@@ -40,7 +40,7 @@ case class HelpCommand(commands: Seq[Command[?]], isDefault: Boolean)
          )
     _ <-
       Console.printLine(
-        s"use [cmd] ${Flags.helpFlag._sk}, ${Flags.helpFlag._lk} for cmd-specific help"
+        s"use [cmd] ${HelpFlag._sk}, ${HelpFlag._lk} for cmd-specific help"
       )
   } yield ()
 

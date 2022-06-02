@@ -3,10 +3,10 @@ package com.alterationx10.ursula.args.builtin
 import zio.*
 import zio.test.*
 import zio.test.Assertion.*
+import com.alterationx10.ursula.args.builtin.HelpFlag
 
 object FlagsSpec extends ZIOSpecDefault {
 
-  import Flags.*
 
   def toChunk(str: String): Chunk[String] =
     Chunk.fromArray(str.split(" "))
@@ -26,26 +26,26 @@ object FlagsSpec extends ZIOSpecDefault {
 
   override def spec: Spec[TestEnvironment with Scope, Any] =
     suite("FlagsSpec")(
-      suite("helpFlag")(
+      suite("HelpFlag")(
         test("name")(
-          assert(helpFlag.name)(equalTo("help"))
+          assert(HelpFlag.name)(equalTo("help"))
         ),
         test("shortKey")(
-          assert(helpFlag.shortKey)(equalTo("h"))
+          assert(HelpFlag.shortKey)(equalTo("h"))
         ),
         test("isBoolean")(
-          assert(helpFlag.expectsArgument)(isFalse)
+          assert(HelpFlag.expectsArgument)(isFalse)
         ),
         test("no conflicts")(
-          assert(helpFlag.exclusive)(isNone)
+          assert(HelpFlag.exclusive)(isNone)
         ),
         test("no dependencies")(
-          assert(helpFlag.dependsOn)(isNone)
+          assert(HelpFlag.dependsOn)(isNone)
         ),
         test("isPresent")(
           for {
-            p <- ZIO.foreach(presentArgs)(helpFlag.isPresentZIO)
-            m <- ZIO.foreach(missingArgs)(helpFlag.isPresentZIO)
+            p <- ZIO.foreach(presentArgs)(HelpFlag.isPresentZIO)
+            m <- ZIO.foreach(missingArgs)(HelpFlag.isPresentZIO)
           } yield assertTrue(
             p.forall(_ == true),
             m.forall(_ == false)
