@@ -5,32 +5,46 @@ import com.alterationx10.ursula.command.Command
 
 import zio.*
 
+case object SarcasticFlag extends Flag[String] {
+
+  val sarcastically: String => String =
+    str =>
+      str.zipWithIndex.map {
+        case odd if odd._2 % 2 == 0 => odd._1.toString.toUpperCase()
+        case even => even._1.toString.toLowerCase()
+      }.mkString
+
+  override val name: String = "sarcastic"
+
+  override val shortKey: String = "s"
+
+  override val description: String = "prints the argument in alternating case"
+
+  override def parse: PartialFunction[String, String] =
+    str => sarcastically(str)
+
+  override val exclusive: Option[Seq[Flag[?]]] = Some(Seq(LoudFlag))
+
+}
+
+case object LoudFlag extends Flag[String] {
+  val loudly: String => String =
+    str => str.toUpperCase()
+
+  override val name: String = "loud"
+
+  override val shortKey: String = "l"
+
+  override val description: String = "converts to argument to uppercase"
+
+  override def parse: PartialFunction[String, String] =
+    str => loudly(str)
+
+  override val exclusive: Option[Seq[Flag[?]]] = Some(Seq(SarcasticFlag))
+
+}
+
 final case class Echo() extends Command[String] {
-
-  val loudFlag: Flag[String] = new Flag[String] {
-
-    override val name: String = "loud"
-
-    override val shortKey: String = "l"
-
-    override val description: String = "converts to argument to uppercase"
-
-    override def parse: PartialFunction[String, String] =
-      str => loudly(str)
-
-  }
-
-  val sarcasticFlag: Flag[String] = new Flag[String] {
-
-    override val name: String = "sarcastic"
-
-    override val shortKey: String = "s"
-
-    override val description: String = "prints the argument in alternating case"
-
-    override def parse: PartialFunction[String, String] =
-      str => sarcastically(str)
-  }
 
   override val description: String = "Echoes back the provided argument"
 
@@ -45,25 +59,15 @@ final case class Echo() extends Command[String] {
   override val trigger: String = "echo"
 
   override val flags: Seq[Flag[?]] = Seq(
-    loudFlag,
-    sarcasticFlag
+    LoudFlag,
+    SarcasticFlag
   )
 
   override val arguments: Seq[Argument[?]] = Seq.empty
 
-  val sarcastically: String => String =
-    str =>
-      str.zipWithIndex.map {
-        case odd if odd._2 % 2 == 0 => odd._1.toString.toUpperCase()
-        case even => even._1.toString.toLowerCase()
-      }.mkString
-
-  val loudly: String => String =
-    str => str.toUpperCase()
-
   override def action(args: Chunk[String]): Task[String] = for {
-    lArg <- loudFlag.parseFirstArgZIO(args)
-    sArg <- sarcasticFlag.parseFirstArgZIO(args)
+    lArg <- LoudFlag.parseFirstArgZIO(args)
+    sArg <- SarcasticFlag.parseFirstArgZIO(args)
     str  <- ZIO
               .fromOption(lArg)
               .catchAll(_ => ZIO.fromOption(sArg))

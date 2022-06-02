@@ -1,7 +1,7 @@
 package com.alterationx10.ursula.command
 
 import com.alterationx10.ursula.args.{Argument, Flag}
-import com.alterationx10.ursula.args.builtin.Flags
+import com.alterationx10.ursula.args.builtin.HelpFlag
 import com.alterationx10.ursula.errors.*
 
 import scala.annotation.tailrec
@@ -113,7 +113,7 @@ trait Command[A] {
 
   final def processedAction(args: Chunk[String]): Task[Unit] = {
     for {
-      _            <- failWhen(Flags.helpFlag.isPresent(args), HelpFlagException)
+      _            <- failWhen(HelpFlag.isPresent(args), HelpFlagException)
       _            <- failWhen(unrecognizedFlags(args), UnrecognizedFlagException)
                         .tapError { printHelpfulError(args) }
       presentFlags <- ZIO.filter(flags)(_.isPresentZIO(args))
