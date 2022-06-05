@@ -6,6 +6,9 @@ import zio.test.*
 
 object FlagSpec extends ZIOSpecDefault {
 
+  // NOTE: sbt provides TEST_FLAG in the env. Test run without sbt, i.e.
+  // in VSCode will fail, without additional set up.
+
   trait TestFlag extends StringFlag {
     override val description: String = "A flag for testing"
     override val name: String        = "override"
