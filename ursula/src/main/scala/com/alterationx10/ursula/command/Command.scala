@@ -41,7 +41,6 @@ trait Command[A] {
           if hasBooleanFlag(h) then {
             loop(a.drop(1), r)
           } else if hasArgumentFlag(h) then {
-            // TODO what if this has a default value?
             loop(a.drop(2), r)
           } else {
             loop(a.drop(1), r.appended(h))
