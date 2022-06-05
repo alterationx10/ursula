@@ -40,7 +40,7 @@ trait Flag[R] {
     */
   val env: Option[String] = Option.empty
 
-  private final lazy val envArg: Option[R] =
+  private final def envArg: Option[R] =
     env.flatMap(e => sys.env.get(e)).map(parse)
 
   /** An optional set of possible values to restrict the argument to. For

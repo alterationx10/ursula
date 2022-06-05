@@ -54,6 +54,9 @@ ThisBuild / scalacOptions ++= {
   )
 }
 
+ThisBuild / Test / fork                   := true
+ThisBuild / Test / envVars += "TEST_FLAG" -> "abc"
+
 val zioVersion: String = "2.0.0-RC6"
 
 lazy val ursula = project
