@@ -1,5 +1,6 @@
 package com.alterationx10.ursula.args
 
+import com.alterationx10.ursula.extensions.*
 import scala.annotation.tailrec
 import zio.*
 
@@ -38,6 +39,9 @@ trait Flag[R] {
     * [[default]]
     */
   val env: Option[String] = Option.empty
+
+  private final lazy val envArg: Option[R] =
+    env.flatMap(e => sys.env.get(e)).map(parse)
 
   /** An optional set of possible values to restrict the argument to. For
     * example, if you wanted to restrict an --env [arg] flag to only "dev", or
@@ -139,7 +143,10 @@ trait Flag[R] {
     *   [[multiple]]
     */
   final def parseFirstArg(args: Chunk[String]): Option[R] =
-    args.dropUntil(a => a == _sk || a == _lk).headOption.map(parse)
+    args
+      .dropUntil(a => a == _sk || a == _lk)
+      .headOption
+      .map(parse) :~ envArg :~ default
 
   /** Wraps [[parseFirstArg]] in ZIO.attempt
     * @see
@@ -153,12 +160,16 @@ trait Flag[R] {
     * @param args
     *   The arguments passed to the command
     */
-  def parseArgs(args: Chunk[String]): Chunk[R] = recursiveParse(parse)(args)
+  def parseArgs(args: Chunk[String]): Chunk[R] =
+    recursiveParse(parse)(args) :~ envArg :~ default
 
   /** Wraps [[parseArgs]] in ZIO.attempt
     */
-  def parseArgsZIO(args: Chunk[String]): Chunk[Task[R]] =
-    recursiveParse(parseZIO)(args)
+  def parseArgsZIO(args: Chunk[String]): Task[Chunk[R]] = ZIO.foreach {
+    recursiveParse(parseZIO)(args) :~
+      envArg.map(ZIO.succeed) :~
+      default.map(ZIO.succeed)
+  } { identity }
 
   private final def printWhenDefined(
       header: String

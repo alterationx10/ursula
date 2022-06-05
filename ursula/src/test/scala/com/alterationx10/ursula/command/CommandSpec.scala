@@ -8,6 +8,7 @@ import com.alterationx10.ursula.args.StringFlag
 import com.alterationx10.ursula.errors.MissingFlagsException
 import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
+import com.alterationx10.ursula.extensions.*
 
 // A <-> B Conflict
 // C requires an argument
@@ -56,10 +57,6 @@ object CommandSpec extends ZIOSpecDefault {
       Seq(AFlag, BFlag, CFlag, DFlag)
     val trigger: String                                           = "test"
     val usage: String                                             = "Used in a test"
-  }
-
-  extension (s: String) {
-    def chunked: Chunk[String] = Chunk.fromArray(s.split(" "))
   }
 
   val goodCommand: Chunk[String] = "-a -d -c 123".chunked
