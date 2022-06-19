@@ -1,6 +1,7 @@
 package com.alterationx10.ursula.args
 
 import com.alterationx10.ursula.extensions.*
+import com.alterationx10.ursula.doc.FlagDoc
 import scala.annotation.tailrec
 import zio.*
 
@@ -171,6 +172,8 @@ trait Flag[R] {
       default.map(ZIO.succeed)
   } { identity }
 
+  private lazy val docGenerator: FlagDoc = FlagDoc(this)
+
   private final def printWhenDefined(
       header: String
   )(flags: Option[Seq[Flag[?]]]): Task[Unit] =
@@ -197,7 +200,7 @@ trait Flag[R] {
   /** A ZIO that prints documentation to the console
     */
   final def describeZIO: Task[Unit] =
-    ZIO.when(!hidden)(printDocumentation).unit
+    ZIO.when(!hidden)(Console.printLine(docGenerator.txt.indented)).unit
 }
 
 trait BooleanFlag extends Flag[Unit] {
