@@ -8,11 +8,6 @@ import zio.ZLayer
 
 object Example extends UrsulaApp {
 
-  override val commandLayer: ZLayer[Any, Nothing, Seq[Command[?]]] =
-    ZLayer.succeed(
-      Seq(
-        Echo()
-      )
-    )
+  override val commands: Seq[Command[?]] = Seq(Echo())
 
 }

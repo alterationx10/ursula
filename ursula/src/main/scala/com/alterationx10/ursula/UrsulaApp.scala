@@ -17,22 +17,17 @@ trait UrsulaApp extends ZIOAppDefault {
     */
   val defaultHelp: Boolean = true
 
-  /** This layer should provide a Seq of your Command[_] implementations that
-    * you want your CLI to have access to.
+  /** This is a Seq of your Command[_] implementations that you want your CLI to
+    * have access to.
     */
-  val commandLayer: ZLayer[Any, Nothing, Seq[Command[?]]]
+  val commands: Seq[Command[?]]
 
-  /** In internal layer that injects some built in Commands on top of the
-    * [[commandLayer]]
-    */
-  private lazy val withBuiltIns: ZLayer[Any, Nothing, CommandList] =
-    commandLayer >>> ZLayer.fromZIO {
-      for {
-        commands <- ZIO.service[CommandList]
-      } yield Seq(
-        HelpCommand(commands, defaultHelp)
-      ) ++ commands
-    }
+  private lazy val builtInCommands: Seq[Command[?]] = Seq(
+    HelpCommand(commands = commands, isDefault = defaultHelp)
+  )
+
+  private lazy val commandLayer: ZLayer[Any, Nothing, Seq[Command[?]]] =
+    ZLayer.succeed(builtInCommands ++ commands)
 
   /** Given the injected Seq[Command[_]], parse out a Map keyed by the Command
     * trigger. Warns if multiple commands use the same trigger.
@@ -97,6 +92,6 @@ trait UrsulaApp extends ZIOAppDefault {
     * [[withBuiltIns]]
     */
   override final def run: ZIO[Any with ZIOAppArgs with Scope, Any, Any] =
-    program.provideSome[ZIOAppArgs](withBuiltIns)
+    program.provideSome[ZIOAppArgs](commandLayer)
 
 }
