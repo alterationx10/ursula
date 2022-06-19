@@ -4,6 +4,10 @@ import zio.Chunk
 
 extension (s: String) {
   def chunked: Chunk[String] = Chunk.fromArray(s.split(" "))
+  def indented: String       =
+    s.split(System.lineSeparator())
+      .map(s => "\t" + s)
+      .mkString(System.lineSeparator())
 }
 
 extension [A](c: Chunk[A]) {
@@ -15,4 +19,12 @@ extension [A](c: Chunk[A]) {
 extension [A](o: Option[A]) {
   def :~(a: A): Option[A]         = o.orElse(Option(a))
   def :~(a: Option[A]): Option[A] = o.orElse(a)
+}
+
+extension (sb: StringBuilder) {
+  def newLine: StringBuilder =
+    sb.append(System.lineSeparator())
+
+  def appendLine(str: String): StringBuilder =
+    sb.append(str + System.lineSeparator())
 }
