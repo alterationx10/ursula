@@ -3,6 +3,7 @@ package com.alterationx10.ursula.command
 import com.alterationx10.ursula.args.{Argument, Flag}
 import com.alterationx10.ursula.args.builtin.HelpFlag
 import com.alterationx10.ursula.errors.*
+import com.alterationx10.ursula.doc.*
 
 import scala.annotation.tailrec
 import zio.*
@@ -52,23 +53,13 @@ trait Command[A] {
     loop(args, Chunk.empty)
   }
 
+  lazy val documentation: Documentation = CommandDoc(this)
+
   /** Prints documentation
     * @return
     */
-  final def printHelp: Task[Unit] = for {
-    _ <- Console.printLine(s"$trigger:\t$description")
-    _ <- ZIO.when(flags.nonEmpty) {
-           Console.printLine(s"Flags:") *>
-             ZIO.foreach(flags)(_.describeZIO)
-         }
-    _ <- ZIO.when(arguments.nonEmpty) {
-           Console.printLine(s"Arguments:") *>
-             ZIO.foreach(arguments)(_.describeZIO)
-         }
-    _ <- Console.printLine(s"Usage:\n\t$usage")
-    _ <- Console.printLine("Examples:")
-    _ <- ZIO.foreach(examples)(e => Console.printLine(s"\t$e"))
-  } yield ()
+  final def printHelp: Task[Unit] =
+    Console.printLine(documentation.txt)
 
   private final def unrecognizedFlags(args: Chunk[String]): Boolean = {
     val flagTriggers: Seq[String] =

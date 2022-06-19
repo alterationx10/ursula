@@ -1,7 +1,7 @@
 package com.alterationx10.ursula.args
 
 import com.alterationx10.ursula.extensions.*
-import com.alterationx10.ursula.doc.FlagDoc
+import com.alterationx10.ursula.doc.*
 import scala.annotation.tailrec
 import zio.*
 
@@ -172,35 +172,8 @@ trait Flag[R] {
       default.map(ZIO.succeed)
   } { identity }
 
-  private lazy val docGenerator: FlagDoc = FlagDoc(this)
+  lazy val documentation: Documentation = FlagDoc(this)
 
-  private final def printWhenDefined(
-      header: String
-  )(flags: Option[Seq[Flag[?]]]): Task[Unit] =
-    for {
-      _ <- ZIO.when(flags.exists(_.nonEmpty))(Console.printLine(header))
-      _ <- ZIO
-             .fromOption(flags)
-             .flatMap { s =>
-               ZIO.foreach(s)(f => Console.printLine(s"\t${f._sk}, ${f._lk}"))
-             }
-             .ignore
-    } yield ()
-
-  private final val printDocumentation: Task[Unit] = {
-    val argReq = if expectsArgument then "[arg]" else ""
-    val req    = if required then " [required]" else ""
-    for {
-      _ <- Console.printLine(s"\t${_sk}, ${_lk} $argReq \t$description$req")
-      _ <- printWhenDefined("Requires:")(dependsOn)
-      _ <- printWhenDefined("Conflicts with:")(exclusive)
-    } yield ()
-  }
-
-  /** A ZIO that prints documentation to the console
-    */
-  final def describeZIO: Task[Unit] =
-    ZIO.when(!hidden)(Console.printLine(docGenerator.txt.indented)).unit
 }
 
 trait BooleanFlag extends Flag[Unit] {

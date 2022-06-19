@@ -1,5 +1,6 @@
 package com.alterationx10.ursula.args
 
+import com.alterationx10.ursula.doc._
 import zio.*
 
 /** Arguments are positional arguments passed to the command, and can be parsed
@@ -53,11 +54,6 @@ trait Argument[R] {
     */
   val default: Option[R] = Option.empty
 
-  /** Print documentation to the console.
-    */
-  def describeZIO: Task[Unit] = for {
-    _ <- Console.printLine(
-           s"\t$name\t$description${if required then " [required]" else ""}"
-         )
-  } yield ()
+  lazy val documentation: Documentation = ArgumentDoc(this)
+
 }

@@ -4,9 +4,9 @@ import com.alterationx10.ursula.args.Flag
 import com.alterationx10.ursula.extensions.*
 import scala.collection.mutable.StringBuilder.apply
 
-final case class FlagDoc(flag: Flag[?]) {
+final case class FlagDoc(flag: Flag[?]) extends Documentation {
 
-  lazy val txt: String = {
+  override lazy val txt: String = {
     val sb: StringBuilder = new StringBuilder()
     sb.append(s"${flag._sk}, ${flag._lk}")
     if (flag.expectsArgument) then sb.append(" [arg]")
