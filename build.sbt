@@ -28,12 +28,12 @@ val versionFromTag: String = sys.env
   .getOrElse(defaultVersion)
 
 ThisBuild / organization := "com.alterationx10"
-ThisBuild / version           := versionFromTag
-ThisBuild / scalaVersion      := "3.1.2"
-ThisBuild / publish / skip    := true
-ThisBuild / publishMavenStyle := true
-ThisBuild / versionScheme     := Some("early-semver")
-ThisBuild / publishTo         := Some(
+ThisBuild / version                       := versionFromTag
+ThisBuild / scalaVersion                  := "3.1.2"
+ThisBuild / publish / skip                := true
+ThisBuild / publishMavenStyle             := true
+ThisBuild / versionScheme                 := Some("early-semver")
+ThisBuild / publishTo                     := Some(
   "GitHub Package Registry " at "https://maven.pkg.github.com/alterationx10/ursula"
 )
 ThisBuild / credentials += Credentials(
@@ -57,7 +57,8 @@ ThisBuild / scalacOptions ++= {
 ThisBuild / Test / fork                   := true
 ThisBuild / Test / envVars += "TEST_FLAG" -> "abc"
 
-val zioVersion: String = "2.0.0-RC6"
+val zioVersion: String     = "2.0.0-RC6"
+val zioJsonVersion: String = "0.3.0-RC8"
 
 lazy val ursula = project
   .in(file("ursula"))
@@ -66,7 +67,9 @@ lazy val ursula = project
     libraryDependencies ++= Seq(
       "dev.zio" %% "zio"          % zioVersion,
       "dev.zio" %% "zio-test"     % zioVersion % "test",
-      "dev.zio" %% "zio-test-sbt" % zioVersion % "test"
+      "dev.zio" %% "zio-test-sbt" % zioVersion % "test",
+      "dev.zio" %% "zio-streams"  % zioVersion,
+      "dev.zio" %% "zio-json"     % zioJsonVersion
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
     fork           := true,

@@ -9,6 +9,8 @@ import com.alterationx10.ursula.errors.MissingFlagsException
 import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
 import com.alterationx10.ursula.extensions.*
+import com.alterationx10.ursula.services.config.UrsulaConfig
+import com.alterationx10.ursula.services.config.UrsulaConfigLive
 
 // A <-> B Conflict
 // C requires an argument
@@ -92,6 +94,6 @@ object CommandSpec extends ZIOSpecDefault {
           err <- TestCommand.processedAction(conflicting).flip
         } yield assertTrue(err == ConflictingFlagsException)
       )
-    )
+    ).provideCustomLayer(UrsulaConfigLive.empty)
 
 }
