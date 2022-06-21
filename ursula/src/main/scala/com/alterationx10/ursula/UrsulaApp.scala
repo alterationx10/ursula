@@ -9,6 +9,7 @@ import com.alterationx10.ursula.services.config.UrsulaConfig
 import zio.stream.*
 import zio.json.*
 import com.alterationx10.ursula.services.config.UrsulaConfigLive
+import com.alterationx10.ursula.command.builtin.ConfigCommand
 
 trait UrsulaApp extends ZIOAppDefault {
 
@@ -32,7 +33,8 @@ trait UrsulaApp extends ZIOAppDefault {
   val commands: Seq[Command[?]]
 
   private lazy val builtInCommands: Seq[Command[?]] = Seq(
-    HelpCommand(commands = commands, isDefault = defaultHelp)
+    HelpCommand(commands = commands, isDefault = defaultHelp),
+    ConfigCommand
   )
 
   private lazy val commandLayer: ZLayer[Any, Nothing, Seq[Command[?]]] =

@@ -38,7 +38,10 @@ case class UrsulaConfigLive(
       namespace => if (namespace == "") then key else s"${namespace}.${key}"
 
   def delete(key: String)(using namespace: String): Task[Unit] =
-    configMap.getAndUpdate(_.removed(buildKey(key)(namespace))).unit
+    for {
+      _ <- configMap.getAndUpdate(_.removed(buildKey(key)(namespace)))
+      _ <- dirty.set(true)
+    } yield ()
 
   def get(key: String)(using namespace: String): Task[Option[String]] =
     configMap.get.map(_.get(key))
