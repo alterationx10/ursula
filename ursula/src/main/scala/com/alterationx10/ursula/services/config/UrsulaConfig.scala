@@ -46,17 +46,18 @@ case class UrsulaConfigLive(
   def set(key: String, value: String)(using namespace: String): Task[Unit] =
     for {
       _ <- configMap.getAndUpdate(_ + (buildKey(key)(namespace) -> value))
-      _ <- dirty.set(true).debug("dirty")
+      _ <- dirty.set(true)
     } yield ()
 
 }
 
 object UrsulaConfigLive {
 
-  val empty: ZLayer[Any, Nothing, UrsulaConfig] = ZLayer.fromZIO {
+  val live: ZLayer[Any, Nothing, UrsulaConfig] = ZLayer.fromZIO {
     for {
       map  <- Ref.make(Map.empty[String, String])
       bool <- Ref.make(false)
     } yield UrsulaConfigLive(map, bool)
   }
+
 }

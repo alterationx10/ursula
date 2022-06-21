@@ -51,7 +51,8 @@ object CommandSpec extends ZIOSpecDefault {
   }
 
   case object TestCommand extends UnitCommand {
-    def action(args: zio.Chunk[String]): zio.Task[Unit]           = ZIO.unit
+    override def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, Unit] = ZIO.unit
+
     val arguments: Seq[com.alterationx10.ursula.args.Argument[?]] = Seq.empty
     val description: String                                       = ""
     val examples: Seq[String]                                     = Seq.empty
@@ -94,6 +95,6 @@ object CommandSpec extends ZIOSpecDefault {
           err <- TestCommand.processedAction(conflicting).flip
         } yield assertTrue(err == ConflictingFlagsException)
       )
-    ).provideCustomLayer(UrsulaConfigLive.empty)
+    ).provideCustomLayer(UrsulaConfigLive.live)
 
 }

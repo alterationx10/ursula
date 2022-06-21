@@ -11,7 +11,7 @@ import com.alterationx10.ursula.services.config.UrsulaConfig
 
 trait Command[A] {
 
-  type BuiltInServices = UrsulaConfig
+  type UrsulaServices = UrsulaConfig
 
   val description: String
   val usage: String
@@ -21,7 +21,7 @@ trait Command[A] {
   val arguments: Seq[Argument[?]]
   val hidden: Boolean           = false
   val isDefaultCommand: Boolean = false
-  def action(args: Chunk[String]): ZIO[Any with BuiltInServices, Throwable, A]
+  def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, A]
 
   private def hasBooleanFlag(a: String) =
     flags
@@ -107,7 +107,7 @@ trait Command[A] {
 
   final def processedAction(
       args: Chunk[String]
-  ): ZIO[Any with BuiltInServices, Throwable, Unit] = {
+  ): ZIO[UrsulaServices, Throwable, Unit] = {
     for {
       _            <- failWhen(HelpFlag.isPresent(args), HelpFlagException)
       _            <- failWhen(unrecognizedFlags(args), UnrecognizedFlagException)

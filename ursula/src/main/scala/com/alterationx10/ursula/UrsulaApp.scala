@@ -92,19 +92,20 @@ trait UrsulaApp extends ZIOAppDefault {
     * Commands based on the arguments passed in
     */
   private final val program: ZIO[
-    CommandList with ZIOAppArgs,
+    CommandList with UrsulaConfig with ZIOAppArgs,
     Throwable,
     ExitCode
   ] =
     for {
-      configData     <- readConfig
-      configMapRef   <- Ref.make(configData)
-      configDirtyRef <- Ref.make(false)
-      args           <- ZIOAppArgs.getArgs
-      trigger         = args.headOption
-      cmpMap         <- commandMap
-      drop1Ref       <- Ref.make[Boolean](true)
-      cmd            <-
+      configData <- readConfig
+      _          <- ZIO.serviceWithZIO[UrsulaConfig](
+                      _.asInstanceOf[UrsulaConfigLive].configMap.set(configData)
+                    )
+      args       <- ZIOAppArgs.getArgs
+      trigger     = args.headOption
+      cmpMap     <- commandMap
+      drop1Ref   <- Ref.make[Boolean](true)
+      cmd        <-
         ZIO
           .fromOption(trigger.flatMap(t => cmpMap.get(t)))
           .catchAll(_ =>
@@ -115,20 +116,19 @@ trait UrsulaApp extends ZIOAppDefault {
                 )
               )
           )
-      shouldDrop     <- drop1Ref.get
-      _              <- cmd
-                          .processedAction(if shouldDrop then args.tail else args)
-                          .provideSome(
-                            ZLayer.succeed[UrsulaConfig](
-                              UrsulaConfigLive(
-                                configMapRef,
-                                configDirtyRef
-                              )
-                            )
-                          )
-      _              <- configMapRef.get
-                          .flatMap(d => writeConfig(d))
-                          .whenZIO(configDirtyRef.get)
+      shouldDrop <- drop1Ref.get
+      _          <- cmd
+                      .processedAction(if shouldDrop then args.tail else args)
+      _          <- ZIO
+                      .serviceWithZIO[UrsulaConfig](
+                        _.asInstanceOf[UrsulaConfigLive].configMap.get
+                      )
+                      .flatMap(d => writeConfig(d))
+                      .whenZIO(
+                        ZIO.serviceWithZIO[UrsulaConfig](
+                          _.asInstanceOf[UrsulaConfigLive].dirty.get
+                        )
+                      )
     } yield ExitCode.success
 
   /** The entry point to the CLI, which takes [[program]], and provides
@@ -136,7 +136,7 @@ trait UrsulaApp extends ZIOAppDefault {
     */
   override final def run: ZIO[Any with ZIOAppArgs with Scope, Any, Any] =
     program.provideSome[ZIOAppArgs with Scope](
-      commandLayer
+      commandLayer ++ UrsulaConfigLive.live
     )
 
 }
