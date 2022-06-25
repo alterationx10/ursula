@@ -3,7 +3,8 @@ on:
   release:
     types: [ created ]
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CLOUDSMITH_USER: ${{ secrets.CLOUDSMITH_USER }}
+  CLOUDSMITH_TOKEN: ${{ secrets.CLOUDSMITH_TOKEN }}
 jobs:
   publish:
     runs-on: ubuntu-latest

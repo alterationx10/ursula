@@ -28,19 +28,20 @@ val versionFromTag: String = sys.env
   .getOrElse(defaultVersion)
 
 ThisBuild / organization := "com.alterationx10"
-ThisBuild / version           := versionFromTag
-ThisBuild / scalaVersion      := "3.1.2"
-ThisBuild / publish / skip    := true
-ThisBuild / publishMavenStyle := true
-ThisBuild / versionScheme     := Some("early-semver")
-ThisBuild / publishTo         := Some(
-  "GitHub Package Registry " at "https://maven.pkg.github.com/alterationx10/ursula"
+ThisBuild / version                       := versionFromTag
+ThisBuild / scalaVersion                  := "3.1.2"
+ThisBuild / publish / skip                := true
+ThisBuild / publishMavenStyle             := true
+ThisBuild / versionScheme                 := Some("early-semver")
+ThisBuild / publishTo                     := Some(
+  "Cloudsmith API" at "https://maven.cloudsmith.io/alterationx10/ursula/"
 )
+ThisBuild / pomIncludeRepository          := { x => false }
 ThisBuild / credentials += Credentials(
-  "GitHub Package Registry",                  // realm
-  "maven.pkg.github.com",                     // host
-  "alterationx10",                            // user
-  sys.env.getOrElse("GITHUB_TOKEN", "abc123") // password
+  "Cloudsmith API",                                      // realm
+  "maven.cloudsmith.io",                                 // host
+  sys.env.getOrElse("CLOUDSMITH_USER", "alterationx10"), // user
+  sys.env.getOrElse("CLOUDSMITH_TOKEN", "abc123")        // password
 )
 ThisBuild / scalacOptions ++= {
   Seq(
