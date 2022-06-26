@@ -100,7 +100,11 @@ object ConfigCommand extends Command[Unit] {
       UrsulaConfig.delete(_args.head).when(DeleteFlag.isPresent(args))
   } yield ()
 
-  override val examples: Seq[String] = Seq.empty
+  override val examples: Seq[String] = Seq(
+    "config --set key value",
+    "config --get key",
+    "config --delete key"
+  )
 
   override val flags: Seq[Flag[?]] = Seq(GetFlag, SetFlag, DeleteFlag)
 

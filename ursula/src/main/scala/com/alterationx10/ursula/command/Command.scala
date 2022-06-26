@@ -8,10 +8,11 @@ import com.alterationx10.ursula.doc.*
 import scala.annotation.tailrec
 import zio.*
 import com.alterationx10.ursula.services.config.UrsulaConfig
+import com.alterationx10.ursula.services.UrsulaServices
 
 trait Command[A] {
 
-  type UrsulaServices = UrsulaConfig
+  type UrsulaServices = UrsulaServices.UrsulaServices
 
   val description: String
   val usage: String

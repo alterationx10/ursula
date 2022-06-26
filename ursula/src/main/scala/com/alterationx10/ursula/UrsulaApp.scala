@@ -9,6 +9,7 @@ import com.alterationx10.ursula.services.config.UrsulaConfig
 import zio.stream.*
 import zio.json.*
 import com.alterationx10.ursula.services.config.UrsulaConfigLive
+import com.alterationx10.ursula.services.UrsulaServices
 import com.alterationx10.ursula.command.builtin.ConfigCommand
 
 trait UrsulaApp extends ZIOAppDefault {
@@ -138,7 +139,7 @@ trait UrsulaApp extends ZIOAppDefault {
     */
   override final def run: ZIO[Any with ZIOAppArgs with Scope, Any, Any] =
     program.provideSome[ZIOAppArgs with Scope](
-      commandLayer ++ UrsulaConfigLive.live
+      commandLayer ++ UrsulaServices.live
     )
 
 }
