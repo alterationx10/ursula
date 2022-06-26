@@ -7,8 +7,13 @@ import com.alterationx10.ursula.doc.*
 
 import scala.annotation.tailrec
 import zio.*
+import com.alterationx10.ursula.services.config.UrsulaConfig
+import com.alterationx10.ursula.services.UrsulaServices
 
 trait Command[A] {
+
+  type UrsulaServices = UrsulaServices.UrsulaServices
+
   val description: String
   val usage: String
   val examples: Seq[String]
@@ -17,7 +22,7 @@ trait Command[A] {
   val arguments: Seq[Argument[?]]
   val hidden: Boolean           = false
   val isDefaultCommand: Boolean = false
-  def action(args: Chunk[String]): Task[A]
+  def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, A]
 
   private def hasBooleanFlag(a: String) =
     flags
@@ -101,7 +106,9 @@ trait Command[A] {
           printArgs(args) *>
           printHelp
 
-  final def processedAction(args: Chunk[String]): Task[Unit] = {
+  final def processedAction(
+      args: Chunk[String]
+  ): ZIO[UrsulaServices, Throwable, Unit] = {
     for {
       _            <- failWhen(HelpFlag.isPresent(args), HelpFlagException)
       _            <- failWhen(unrecognizedFlags(args), UnrecognizedFlagException)

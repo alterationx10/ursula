@@ -9,6 +9,8 @@ import com.alterationx10.ursula.errors.MissingFlagsException
 import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
 import com.alterationx10.ursula.extensions.*
+import com.alterationx10.ursula.services.config.UrsulaConfig
+import com.alterationx10.ursula.services.config.UrsulaConfigLive
 
 // A <-> B Conflict
 // C requires an argument
@@ -49,7 +51,8 @@ object CommandSpec extends ZIOSpecDefault {
   }
 
   case object TestCommand extends UnitCommand {
-    def action(args: zio.Chunk[String]): zio.Task[Unit]           = ZIO.unit
+    override def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, Unit] = ZIO.unit
+
     val arguments: Seq[com.alterationx10.ursula.args.Argument[?]] = Seq.empty
     val description: String                                       = ""
     val examples: Seq[String]                                     = Seq.empty
@@ -92,6 +95,6 @@ object CommandSpec extends ZIOSpecDefault {
           err <- TestCommand.processedAction(conflicting).flip
         } yield assertTrue(err == ConflictingFlagsException)
       )
-    )
+    ).provideCustomLayer(UrsulaConfigLive.live)
 
 }
