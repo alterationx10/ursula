@@ -6,26 +6,20 @@ import zio.stream.*
 import java.util.UUID
 
 trait UrsulaConfig {
-  def get(key: String)(using namespace: String = ""): Task[Option[String]]
-  def set(key: String, value: String)(using namespace: String = ""): Task[Unit]
-  def delete(key: String)(using namespace: String = ""): Task[Unit]
+  def get(key: String): Task[Option[String]]
+  def set(key: String, value: String): Task[Unit]
+  def delete(key: String): Task[Unit]
 }
 
 object UrsulaConfig {
-  def get(key: String)(using
-      namespace: String = ""
-  ): ZIO[UrsulaConfig, Throwable, Option[String]] =
-    ZIO.serviceWithZIO[UrsulaConfig](_.get(key)(using namespace))
+  def get(key: String): ZIO[UrsulaConfig, Throwable, Option[String]] =
+    ZIO.serviceWithZIO[UrsulaConfig](_.get(key))
 
-  def set(key: String, value: String)(using
-      namespace: String = ""
-  ): ZIO[UrsulaConfig, Throwable, Unit] =
-    ZIO.serviceWithZIO[UrsulaConfig](_.set(key, value)(using namespace))
+  def set(key: String, value: String): ZIO[UrsulaConfig, Throwable, Unit] =
+    ZIO.serviceWithZIO[UrsulaConfig](_.set(key, value))
 
-  def delete(key: String)(using
-      namespace: String = ""
-  ): ZIO[UrsulaConfig, Throwable, Unit] =
-    ZIO.serviceWithZIO[UrsulaConfig](_.delete(key)(using namespace))
+  def delete(key: String): ZIO[UrsulaConfig, Throwable, Unit] =
+    ZIO.serviceWithZIO[UrsulaConfig](_.delete(key))
 }
 
 case class UrsulaConfigLive(
@@ -33,22 +27,18 @@ case class UrsulaConfigLive(
     dirty: Ref[Boolean]
 ) extends UrsulaConfig {
 
-  private final val buildKey: String => String => String =
-    key =>
-      namespace => if (namespace == "") then key else s"${namespace}.${key}"
-
-  def delete(key: String)(using namespace: String): Task[Unit] =
+  def delete(key: String): Task[Unit] =
     for {
-      _ <- configMap.getAndUpdate(_.removed(buildKey(key)(namespace)))
+      _ <- configMap.getAndUpdate(_.removed(key))
       _ <- dirty.set(true)
     } yield ()
 
-  def get(key: String)(using namespace: String): Task[Option[String]] =
+  def get(key: String): Task[Option[String]] =
     configMap.get.map(_.get(key))
 
-  def set(key: String, value: String)(using namespace: String): Task[Unit] =
+  def set(key: String, value: String): Task[Unit] =
     for {
-      _ <- configMap.getAndUpdate(_ + (buildKey(key)(namespace) -> value))
+      _ <- configMap.getAndUpdate(_ + (key -> value))
       _ <- dirty.set(true)
     } yield ()
 
