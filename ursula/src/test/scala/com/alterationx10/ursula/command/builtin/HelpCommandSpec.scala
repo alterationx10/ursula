@@ -5,7 +5,7 @@ import zio.test.*
 
 object HelpCommandSpec extends ZIOSpecDefault {
 
-  override def spec: Spec[TestEnvironment with Scope, Any] =
+  override def spec: Spec[TestEnvironment & Scope, Any] =
     suite("HelpCommandSpec")(
       test("")(
         for {

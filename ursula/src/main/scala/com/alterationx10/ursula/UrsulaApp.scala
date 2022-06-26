@@ -108,7 +108,7 @@ trait UrsulaApp extends ZIOAppDefault {
     * Commands based on the arguments passed in
     */
   private final val program: ZIO[
-    CommandList with UrsulaConfig with ZIOAppArgs,
+    CommandList & UrsulaConfig & ZIOAppArgs,
     Throwable,
     ExitCode
   ] =
@@ -150,8 +150,8 @@ trait UrsulaApp extends ZIOAppDefault {
   /** The entry point to the CLI, which takes [[program]], and provides
     * [[withBuiltIns]]
     */
-  override final def run: ZIO[Any with ZIOAppArgs with Scope, Any, Any] =
-    program.provideSome[ZIOAppArgs with Scope](
+  override final def run: ZIO[Any & ZIOAppArgs & Scope, Any, Any] =
+    program.provideSome[ZIOAppArgs & Scope](
       commandLayer ++ UrsulaServices.live
     )
 

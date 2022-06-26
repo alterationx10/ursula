@@ -5,7 +5,7 @@ import zio.test.*
 
 object UrsulaAppSpec extends ZIOSpecDefault {
 
-  override def spec: Spec[TestEnvironment with Scope, Any] =
+  override def spec: Spec[TestEnvironment & Scope, Any] =
     suite("UrsulaAppSpec")(
       test("")(
         for {
