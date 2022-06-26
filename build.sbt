@@ -9,6 +9,8 @@ val tagAlpha: String => String     = tagWithQualifier("a")
 val tagBeta: String => String      = tagWithQualifier("b")
 val tagMilestone: String => String = tagWithQualifier("m")
 val tagRC: String => String        = tagWithQualifier("rc")
+val tagSnapshot: String => String  = tagVersion =>
+  s"%s.%s.%s-SNAPSHOT".format(tagVersion.split("\\.")*)
 
 val defaultVersion: String = "0.0.0-a0"
 val versionFromTag: String = sys.env
@@ -21,6 +23,7 @@ val versionFromTag: String = sys.env
       case 'b' => tagBeta(t.tail)      // Beta build, b1.2.3.4
       case 'm' => tagMilestone(t.tail) // Milestone build, m1.2.3.4
       case 'r' => tagRC(t.tail)        // RC build, r1.2.3.4
+      case 's' => tagSnapshot(t.tail)  // SNAPSHOT build, s1.2.3
       case 'v' => t.tail               // Production build, should be v1.2.3
       case _   => defaultVersion
     }
@@ -58,7 +61,7 @@ ThisBuild / scalacOptions ++= {
 ThisBuild / Test / fork                   := true
 ThisBuild / Test / envVars += "TEST_FLAG" -> "abc"
 
-val zioVersion: String     = "2.0.0-RC6"
+val zioVersion: String     = "2.0.0"
 val zioJsonVersion: String = "0.3.0-RC8"
 
 lazy val ursula = project

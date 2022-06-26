@@ -68,7 +68,7 @@ object CommandSpec extends ZIOSpecDefault {
   val conflicting: Chunk[String] = "-a -b -d".chunked
   val help: Chunk[String]        = "-a -b -d -f -h".chunked
 
-  override def spec: Spec[TestEnvironment with Scope, Any] =
+  override def spec: Spec[TestEnvironment & Scope, Any] =
     suite("CommandSpec")(
       test("should succeed when flags are given correctly")(
         for {

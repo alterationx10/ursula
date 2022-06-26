@@ -50,7 +50,7 @@ object FlagSpec extends ZIOSpecDefault {
   val argsWithFlag: Chunk[String] = "-l this -l that -t xyz".chunked
   val argsNoFlag: Chunk[String]   = "-l this -l that".chunked
 
-  override def spec: Spec[TestEnvironment with Scope, Any] =
+  override def spec: Spec[TestEnvironment & Scope, Any] =
     suite("FlagSpec")(
       suite("parseFirstArg")(
         test("provided from CLI")(

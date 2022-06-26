@@ -24,7 +24,7 @@ object FlagsSpec extends ZIOSpecDefault {
     "arg1 arg2"
   ).map(toChunk)
 
-  override def spec: Spec[TestEnvironment with Scope, Any] =
+  override def spec: Spec[TestEnvironment & Scope, Any] =
     suite("FlagsSpec")(
       suite("HelpFlag")(
         test("name")(
