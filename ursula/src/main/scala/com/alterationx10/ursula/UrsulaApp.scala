@@ -11,6 +11,8 @@ import zio.json.*
 import com.alterationx10.ursula.services.config.UrsulaConfigLive
 import com.alterationx10.ursula.services.UrsulaServices
 import com.alterationx10.ursula.command.builtin.ConfigCommand
+import java.nio.file.NoSuchFileException
+import java.io.File
 
 trait UrsulaApp extends ZIOAppDefault {
 
@@ -85,10 +87,21 @@ trait UrsulaApp extends ZIOAppDefault {
       .map(_.fromJson[Map[String, String]].toOption)
       .someOrElse(Map.empty[String, String])
 
-  private final def writeConfig(data: Map[String, String]) = for {
+  private final def writeConfigRecovery: ZIO[Any, Throwable, Unit] = for {
+    file <- ZIO.succeed(new File(s"$configDirectory/$configFile"))
+    _    <- ZIO.attempt(file.getParentFile().mkdirs())
+    _    <- ZIO.attempt(file.createNewFile())
+  } yield ()
+
+  private final def writeConfig(
+      data: Map[String, String]
+  ): ZIO[Any, Throwable, Unit] = for {
     _ <- ZStream(data.toJsonPretty)
            .via(ZPipeline.utf8Encode)
            .run(ZSink.fromFileName(s"$configDirectory/$configFile"))
+           .catchSome { case _: NoSuchFileException =>
+             writeConfigRecovery *> writeConfig(data)
+           }
   } yield ()
 
   /** The "main program" of Ursula, which wires everything together, and runs
