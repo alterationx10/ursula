@@ -12,6 +12,37 @@ I'm currently publishing `0.0.0-a# ` builds, any they might (i.e. most likely
 will) break a bit on updates, but using the current latest will give you a feel
 for how it's used, and where the project is moving towards.
 
+## Scala 2 Compatibility
+
+I wanted to drop this hear early on for now for anyone that might be testing
+this out. This library is written in Scala 3, and I _aim_ to make it compatible
+for Scala 2.13, however there is currently an issue 😬. Scala 3 only, until I
+work that out!
+
+**But**, if I had got it right already, you could use Ursula via something like
+one of those sbt examples:
+
+```scala
+ThisBuild / version := "0.1.0-SNAPSHOT"
+
+ThisBuild / resolvers += "alterationx10-ursula" at "https://dl.cloudsmith.io/public/alterationx10/ursula/maven/"
+
+lazy val scala3Project = (project in file("proj-scala3"))
+  .settings(
+    name := "urusla-app_2",
+    scalaVersion := "3.1.2",
+    libraryDependencies += "com.alterationx10" %% "ursula" % "0.0.0-a5"
+  )
+
+lazy val scala2Project = (project in file("proj-scala2"))
+  .settings(
+    name := "urusla-app_3",
+    scalaVersion := "2.13.8",
+    scalacOptions += "-Ytasty-reader",
+    libraryDependencies += ("com.alterationx10" %% "ursula" % "0.0.0-a5").cross(CrossVersion.for2_13Use3)
+  )
+```
+
 ## About
 
 One of my personal motivations for this library, is that I want to take useful
@@ -163,3 +194,13 @@ This repo contains a very simple
 [example program](./example/src/main/scala/com/alterationx10/example/), which
 contains an `echo` command and a couple simple flags. Drop into an sbt repl, and
 run `example/run` to give it a try!
+
+## Other Projects
+
+It's always good to have options 😉.
+
+There is an official [zio-cli](https://github.com/zio/zio-cli) project out
+there, and I encourage you to check that out too! I feel maybe one large
+difference is just how apps are structured/built, driven mostly by my
+motivations outlined [above](#about). A lot of my inspiration for this project
+comes from [oclif: Node.JS Open CLI Framework ](https://github.com/oclif/oclif).
