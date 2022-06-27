@@ -4,13 +4,13 @@ A slim framework to make CLI apps in ZIO.
 
 ## Project Status
 
-This project is still in early development, but feel free to give it a try - I'd
-love to hear any feedback you have. To add resolvers for the published jars,
-check the [Using in your project](#using-in-your-project) section.
+This project is still in (very) early development, but feel free to give it a
+try - I'd love to hear any feedback you have. To add resolvers for the published
+jars, check the [Using in your project](#using-in-your-project) section.
 
-I'm currently publishing `0.0.0-a# ` builds, any they might break, but using the
-current latest will give you a feel for how it's used, and where the project is
-moving towards.
+I'm currently publishing `0.0.0-a# ` builds, any they might (i.e. most likely
+will) break a bit on updates, but using the current latest will give you a feel
+for how it's used, and where the project is moving towards.
 
 ## About
 
@@ -19,7 +19,7 @@ code I already have, and make a CLI out of it. Often times I have a collection
 of scripts/scratch projects that could easily be parameterized, and be shared
 with my _non-Scala_ friends.
 
-A lot of this framework tried to bootstrap that idea - how can we turn this type
+A lot of this framework tries to bootstrap that idea - how can we turn this type
 of code into helpful, shareable apps that take care of the boiler plate of
 bootstrapping, and provide documentation needed to let others know how to run
 it.
