@@ -36,7 +36,7 @@ trait UrsulaApp extends ZIOAppDefault {
   val commands: Seq[Command[?]]
 
   private lazy val builtInCommands: Seq[Command[?]] = Seq(
-    HelpCommand(commands = commands, isDefault = defaultHelp),
+    HelpCommand(commands = commands :+ ConfigCommand, isDefault = defaultHelp),
     ConfigCommand
   )
 
