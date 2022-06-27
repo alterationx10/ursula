@@ -6,14 +6,7 @@ import com.alterationx10.ursula.command.Command
 import zio.*
 import com.alterationx10.ursula.services.config.UrsulaConfig
 
-case object SarcasticFlag extends Flag[String] {
-
-  val sarcastically: String => String =
-    str =>
-      str.zipWithIndex.map {
-        case odd if odd._2 % 2 == 0 => odd._1.toString.toUpperCase()
-        case even => even._1.toString.toLowerCase()
-      }.mkString
+case object SarcasticFlag extends Flag[Unit] {
 
   override val name: String = "sarcastic"
 
@@ -21,40 +14,40 @@ case object SarcasticFlag extends Flag[String] {
 
   override val description: String = "prints the argument in alternating case"
 
-  override def parse: PartialFunction[String, String] =
-    str => sarcastically(str)
+  override val expectsArgument: Boolean = false
+
+  override def parse: PartialFunction[String, Unit] = _ => ()
 
   override val exclusive: Option[Seq[Flag[?]]] = Some(Seq(LoudFlag))
 
 }
 
-case object LoudFlag extends Flag[String] {
-  val loudly: String => String =
-    str => str.toUpperCase()
+case object LoudFlag extends Flag[Unit] {
 
   override val name: String = "loud"
 
   override val shortKey: String = "l"
 
-  override val description: String = "converts to argument to uppercase"
+  override val description: String = "converts to uppercase"
 
-  override def parse: PartialFunction[String, String] =
-    str => loudly(str)
+  override val expectsArgument: Boolean = false
+
+  override def parse: PartialFunction[String, Unit] = _ => ()
 
   override val exclusive: Option[Seq[Flag[?]]] = Some(Seq(SarcasticFlag))
 
 }
 
-final case class Echo() extends Command[String] {
+final case class Echo() extends Command[Unit] {
 
   override val description: String = "Echoes back the provided argument"
 
-  override val usage: String = """echo "some stuff""""
+  override val usage: String = "echo [?flag] some stuff to print back"
 
   override val examples: Seq[String] = Seq(
     "echo hello",
-    "echo -s hello",
-    """echo -l "good day""""
+    "echo -s sarcasm is hard to convey on the internet",
+    "echo -l I said good day"
   )
 
   override val trigger: String = "echo"
@@ -66,17 +59,31 @@ final case class Echo() extends Command[String] {
 
   override val arguments: Seq[Argument[?]] = Seq.empty
 
+  // LOUDLY
+  val loudly: String => String =
+    str => str.toUpperCase()
+
+  // SaRcAsM
+  val sarcastically: String => String =
+    str =>
+      str.zipWithIndex.map {
+        case odd if odd._2 % 2 == 0 => odd._1.toString.toUpperCase()
+        case even => even._1.toString.toLowerCase()
+      }.mkString
+
   override def action(
       args: Chunk[String]
-  ): ZIO[UrsulaServices, Throwable, String] = for {
-    lArg <- LoudFlag.parseFirstArgZIO(args)
-    sArg <- SarcasticFlag.parseFirstArgZIO(args)
-    str  <- ZIO
-              .fromOption(lArg)
-              .catchAll(_ => ZIO.fromOption(sArg))
-              .catchAll(_ => ZIO.fromOption(args.drop(1).headOption))
-              .catchAll(_ => ZIO.succeed(""))
-    _    <- Console.printLine(str)
-  } yield str
+  ): ZIO[UrsulaServices, Throwable, Unit] = for {
+    argString <- ZIO.attempt(stripFlags(args).mkString(" "))
+    _         <- Console
+                   .printLine(loudly(argString))
+                   .when(LoudFlag.isPresent(args))
+    _         <- Console
+                   .printLine(sarcastically(argString))
+                   .when(SarcasticFlag.isPresent(args))
+    _         <- Console
+                   .printLine(argString)
+                   .when(!LoudFlag.isPresent(args) && !SarcasticFlag.isPresent(args))
+  } yield ()
 
 }
