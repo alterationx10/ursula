@@ -17,4 +17,4 @@ jobs:
           java-version: '17'
           cache: 'sbt'
       - name: Test
-        run: sbt test
+        run: sbt +test

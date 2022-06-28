@@ -7,7 +7,6 @@ import com.alterationx10.ursula.doc.*
 
 import scala.annotation.tailrec
 import zio.*
-import com.alterationx10.ursula.services.config.UrsulaConfig
 import com.alterationx10.ursula.services.UrsulaServices
 
 trait Command[A] {
@@ -44,9 +43,9 @@ trait Command[A] {
     def loop(a: Chunk[String], r: Chunk[String]): Chunk[String] = {
       a.headOption match {
         case Some(h) => {
-          if hasBooleanFlag(h) then {
+          if (hasBooleanFlag(h) ) {
             loop(a.drop(1), r)
-          } else if hasArgumentFlag(h) then {
+          } else if (hasArgumentFlag(h))  {
             loop(a.drop(2), r)
           } else {
             loop(a.drop(1), r.appended(h))

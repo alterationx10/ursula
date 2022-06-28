@@ -13,17 +13,17 @@ import zio.*
   */
 trait Flag[R] {
 
-  /** The name of the flag, e.g. "help". This will be parsed as s"--$name", e.g.
+  /** The name of the flag, e.g. "help". This will be parsed as s"--\\$name", e.g.
     * "--help"
     */
   val name: String
 
   /** A short-key version of name, e.g. "h". This will be parsed as
-    * s"-$shortKey", e.g. "-h"
+    * s"-\\$shortKey", e.g. "-h"
     */
   val shortKey: String
 
-  /** A description of the purpose of this flag, used in [[describeZIO]].
+  /** A description of the purpose of this flag, used in [[documentation]].
     */
   val description: String
 
@@ -168,8 +168,8 @@ trait Flag[R] {
     */
   def parseArgsZIO(args: Chunk[String]): Task[Chunk[R]] = ZIO.foreach {
     recursiveParse(parseZIO)(args) :~
-      envArg.map(ZIO.succeed) :~
-      default.map(ZIO.succeed)
+      envArg.map(e => ZIO.succeed(e)) :~
+      default.map(d => ZIO.succeed(d))
   } { identity }
 
   lazy val documentation: Documentation = FlagDoc(this)

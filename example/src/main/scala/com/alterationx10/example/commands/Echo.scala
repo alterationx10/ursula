@@ -4,7 +4,6 @@ import com.alterationx10.ursula.args.{Argument, Flag}
 import com.alterationx10.ursula.command.Command
 
 import zio.*
-import com.alterationx10.ursula.services.config.UrsulaConfig
 
 case object SarcasticFlag extends Flag[Unit] {
 

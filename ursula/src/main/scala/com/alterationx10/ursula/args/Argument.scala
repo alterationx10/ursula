@@ -1,6 +1,6 @@
 package com.alterationx10.ursula.args
 
-import com.alterationx10.ursula.doc._
+import com.alterationx10.ursula.doc.*
 import zio.*
 
 /** Arguments are positional arguments passed to the command, and can be parsed
