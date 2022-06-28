@@ -4,7 +4,6 @@ import com.alterationx10.ursula.command.Command
 import com.alterationx10.ursula.command.builtin.HelpCommand
 
 import zio.*
-import java.util.UUID
 import com.alterationx10.ursula.services.config.UrsulaConfig
 import zio.stream.*
 import zio.json.*
@@ -134,7 +133,7 @@ trait UrsulaApp extends ZIOAppDefault {
           )
       shouldDrop <- drop1Ref.get
       _          <- cmd
-                      .processedAction(if shouldDrop then args.tail else args)
+                      .processedAction(if (shouldDrop) args.tail else args)
       _          <- ZIO
                       .serviceWithZIO[UrsulaConfig](
                         _.asInstanceOf[UrsulaConfigLive].configMap.get
@@ -147,11 +146,10 @@ trait UrsulaApp extends ZIOAppDefault {
                       )
     } yield ExitCode.success
 
-  /** The entry point to the CLI, which takes [[program]], and provides
-    * [[withBuiltIns]]
+  /** The entry point to the CLI, pre-wired
     */
-  override final def run: ZIO[Any & ZIOAppArgs & Scope, Any, Any] =
-    program.provideSome[ZIOAppArgs & Scope](
+  override final def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
+    program.provideSome[ZIOAppArgs](
       commandLayer ++ UrsulaServices.live
     )
 

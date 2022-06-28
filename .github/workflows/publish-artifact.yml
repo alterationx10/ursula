@@ -18,4 +18,4 @@ jobs:
           java-version: '17'
           cache: 'sbt'
       - name: Publish
-        run: sbt publish
+        run: sbt +publish

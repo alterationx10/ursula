@@ -14,13 +14,12 @@ for how it's used, and where the project is moving towards.
 
 ## Scala 2 Compatibility
 
-I wanted to drop this hear early on for now for anyone that might be testing
-this out. This library is written in Scala 3, and I _aim_ to make it compatible
-for Scala 2.13, however there is currently an issue 😬. Scala 3 only, until I
-work that out!
+This project is written in Scala 3, but without too many fancy new features. I
+am trying to support cross-compile and publish for Scala 2.13 as well (starting
+at 0.0.0-a6).
 
-**But**, if I had got it right already, you could use Ursula via something like
-one of those sbt examples:
+This means it should be straightforward to use in either case, without needing
+the `-Ytasty-reader` compiler flag or `CrossVersion` updates on the dependency:
 
 ```scala
 ThisBuild / version := "0.1.0-SNAPSHOT"
@@ -31,15 +30,15 @@ lazy val scala3Project = (project in file("proj-scala3"))
   .settings(
     name := "urusla-app_2",
     scalaVersion := "3.1.2",
-    libraryDependencies += "com.alterationx10" %% "ursula" % "0.0.0-a5"
+    libraryDependencies += "com.alterationx10" %% "ursula" % "0.0.0-a6"
   )
 
 lazy val scala2Project = (project in file("proj-scala2"))
   .settings(
     name := "urusla-app_3",
     scalaVersion := "2.13.8",
-    scalacOptions += "-Ytasty-reader",
-    libraryDependencies += ("com.alterationx10" %% "ursula" % "0.0.0-a5").cross(CrossVersion.for2_13Use3)
+    // scalacOptions += "-Ytasty-reader", <- not needed
+    libraryDependencies += ("com.alterationx10" %% "ursula" % "0.0.0-a5")//.cross(CrossVersion.for2_13Use3) <- not needed
   )
 ```
 

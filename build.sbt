@@ -32,7 +32,8 @@ val versionFromTag: String = sys.env
 
 ThisBuild / organization := "com.alterationx10"
 ThisBuild / version                       := versionFromTag
-ThisBuild / scalaVersion                  := "3.1.2"
+ThisBuild / scalaVersion                  := "3.1.3"
+ThisBuild / crossScalaVersions ++= Seq("2.13.8", "3.1.3")
 ThisBuild / publish / skip                := true
 ThisBuild / publishMavenStyle             := true
 ThisBuild / versionScheme                 := Some("early-semver")
@@ -51,11 +52,21 @@ ThisBuild / scalacOptions ++= {
     "-encoding",
     "UTF-8",
     "-feature",
-    "-language:implicitConversions",
-    "-unchecked",
-    "-noindent",
-    "-new-syntax"
-  )
+    "-language:implicitConversions"
+  ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((3, _)) =>
+      Seq(
+        "-unchecked"
+      )
+    case _            =>
+      Seq(
+        "-deprecation",
+        "-Xfatal-warnings",
+        "-Wunused:imports",
+        "-Wvalue-discard",
+        "-Xsource:3"
+      )
+  })
 }
 
 ThisBuild / Test / fork                   := true

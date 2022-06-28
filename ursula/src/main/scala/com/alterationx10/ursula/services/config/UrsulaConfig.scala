@@ -1,9 +1,6 @@
 package com.alterationx10.ursula.services.config
 
 import zio.*
-import zio.json.*
-import zio.stream.*
-import java.util.UUID
 
 trait UrsulaConfig {
   def get(key: String): Task[Option[String]]
