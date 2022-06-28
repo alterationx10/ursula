@@ -38,7 +38,7 @@ lazy val scala2Project = (project in file("proj-scala2"))
     name := "urusla-app_3",
     scalaVersion := "2.13.8",
     // scalacOptions += "-Ytasty-reader", <- not needed
-    libraryDependencies += ("com.alterationx10" %% "ursula" % "0.0.0-a5")//.cross(CrossVersion.for2_13Use3) <- not needed
+    libraryDependencies += ("com.alterationx10" %% "ursula" % "0.0.0-a6")//.cross(CrossVersion.for2_13Use3) <- not needed
   )
 ```
 
