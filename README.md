@@ -180,28 +180,45 @@ if the state becomes dirty (i.e. a `set` or `delete` is used), then after your
 
 ## Using in your project
 
-### Resolvers
-
 [![Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith&style=flat-square)](https://cloudsmith.com)
 
-Add this resolver to your build.sbt file:
-
-resolvers += "alterationx10-ursula" at
-"https://dl.cloudsmith.io/public/alterationx10/ursula/maven/"
-
-### Version
+Latest version:
 
 [![Latest version of 'ursula_3' @ Cloudsmith](https://api-prd.cloudsmith.io/v1/badges/version/alterationx10/ursula/maven/ursula_3/latest/a=noarch;xg=com.alterationx10/?render=true&show_latest=true)](https://cloudsmith.io/~alterationx10/repos/ursula/packages/detail/maven/ursula_3/latest/a=noarch;xg=com.alterationx10/)
 
-Add this dependency to your project:
+Note: If the badge doesn't show above, you can check the
+[cloudsmith page](https://cloudsmith.io/~alterationx10/repos/ursula/packages/)
+directly.
+
+### sbt
+
+If you're using [sbt](https://www.scala-sbt.org/), add this resolver to your
+build.sbt file:
+
+```scala
+ThisBuild / resolvers += "alterationx10-ursula" at "https://dl.cloudsmith.io/public/alterationx10/ursula/maven/"
+```
+
+and add this dependency to your project:
 
 ```scala
 libraryDependencies += "com.alterationx10" %% "ursula" % "LATEST_VERSION"
 ```
 
-Note: If the badge doesn't show above, you can check the
-[cloudsmith page](https://cloudsmith.io/~alterationx10/repos/ursula/packages/)
-directly.
+### 🤘 scala-cli
+
+If you're using [scala-cli](https://scala-cli.virtuslab.org/), you rock!
+
+```scala
+//> using repository "https://dl.cloudsmith.io/public/alterationx10/ursula/maven/"
+//> using lib "com.alterationx10::ursula:LATEST_VERSION"
+```
+
+and when you're ready to share, you can use _something like_
+
+```shell
+scala-cli package . -o app --assembly
+```
 
 ## Example
 
