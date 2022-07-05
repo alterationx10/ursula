@@ -99,9 +99,6 @@ trait Command[A] {
   private final def printArgs(args: Chunk[String]): Task[Unit] =
     Console.printLine(s"> ${args.mkString(" ")}")
 
-  private final def printReason(msg: String): Task[Unit] =
-    Console.printLine(msg)
-
   private final val printHelpfulError
       : Chunk[String] => CommandException => Task[Unit] =
     args =>
