@@ -23,6 +23,11 @@ trait Command[A] {
   val isDefaultCommand: Boolean = false
   def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, A]
 
+  /** Indicates if the program should stop on unrecognized, missing, and/or
+    * conflicting flags.
+    */
+  val strict: Boolean = true
+
   private def hasBooleanFlag(a: String) =
     flags
       .filter(!_.expectsArgument)
@@ -43,9 +48,9 @@ trait Command[A] {
     def loop(a: Chunk[String], r: Chunk[String]): Chunk[String] = {
       a.headOption match {
         case Some(h) => {
-          if (hasBooleanFlag(h) ) {
+          if (hasBooleanFlag(h)) {
             loop(a.drop(1), r)
-          } else if (hasArgumentFlag(h))  {
+          } else if (hasArgumentFlag(h)) {
             loop(a.drop(2), r)
           } else {
             loop(a.drop(1), r.appended(h))
@@ -89,7 +94,7 @@ trait Command[A] {
       predicate: => Boolean,
       error: E
   ): ZIO[Any, E, Unit] =
-    ZIO.cond(!predicate, (), error)
+    ZIO.cond(!predicate, (), error).when(strict).unit
 
   private final def printArgs(args: Chunk[String]): Task[Unit] =
     Console.printLine(s"> ${args.mkString(" ")}")
