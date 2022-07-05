@@ -11,16 +11,48 @@ import com.alterationx10.ursula.services.UrsulaServices
 
 trait Command[A] {
 
+  // This type is re-declared to save an import
   type UrsulaServices = UrsulaServices.UrsulaServices
 
+  /** A brief description of what this command does.
+    */
   val description: String
+
+  /** A one-line generic example of how to use this command
+    */
   val usage: String
+
+  /** Some specific examples of how to use this command
+    */
   val examples: Seq[String]
+
+  /** The argument to trigger this command.
+    */
   val trigger: String
+
+  /** A collection fo [[Flag]] that this command supports.
+    */
   val flags: Seq[Flag[?]]
+
+  /** A collection of arguments this command expects.
+    */
   val arguments: Seq[Argument[?]]
-  val hidden: Boolean           = false
+
+  /** Hides this command from the help
+    */
+  val hidden: Boolean = false
+
+  /** Indicates if this command should be the default run, when no other
+    * matching trigger is found. There can only be one per CLI.
+    */
   val isDefaultCommand: Boolean = false
+
+  /** The central logic to implement for this Command
+    * @param args
+    *   The cli arguments passed in, with any trigger command already stripped
+    *   out.
+    * @return
+    */
   def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, A]
 
   /** Indicates if the program should stop on unrecognized, missing, and/or
@@ -62,6 +94,16 @@ trait Command[A] {
     loop(args, Chunk.empty)
   }
 
+  /** Strips flags and their arguments from the cli arguments, which can then be
+    * parsed for Arguments. Wraps [[stripFlags()]] in a ZIO.attempt
+    * @param args
+    *   The cli arguments
+    */
+  def stripFlagsZIO(args: Chunk[String]): Task[Chunk[String]] =
+    ZIO.attempt(stripFlags(args))
+
+  /** An object that has formatted help for this command.
+    */
   lazy val documentation: Documentation = CommandDoc(this)
 
   /** Prints documentation
