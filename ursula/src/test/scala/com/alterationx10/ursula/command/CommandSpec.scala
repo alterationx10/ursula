@@ -49,8 +49,10 @@ object CommandSpec extends ZIOSpecDefault {
 
   }
 
-  case object TestCommand extends UnitCommand {
-    override def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, Unit] = ZIO.unit
+  trait TestCommand extends UnitCommand {
+    override def action(
+        args: Chunk[String]
+    ): ZIO[UrsulaServices, Throwable, Unit] = ZIO.unit
 
     val arguments: Seq[com.alterationx10.ursula.args.Argument[?]] = Seq.empty
     val description: String                                       = ""
@@ -59,6 +61,12 @@ object CommandSpec extends ZIOSpecDefault {
       Seq(AFlag, BFlag, CFlag, DFlag)
     val trigger: String                                           = "test"
     val usage: String                                             = "Used in a test"
+  }
+
+  case object TestCommand extends TestCommand
+
+  case object NonStrictTestCommand extends TestCommand {
+    override val strict: Boolean = false
   }
 
   val goodCommand: Chunk[String] = "-a -d -c 123".chunked
@@ -93,6 +101,15 @@ object CommandSpec extends ZIOSpecDefault {
         for {
           err <- TestCommand.processedAction(conflicting).flip
         } yield assertTrue(err == ConflictingFlagsException)
+      ),
+      test(
+        "should not fail on unknown/conflicting/missing flags if non-strict"
+      )(
+        for {
+          _ <- NonStrictTestCommand.processedAction(unknownArg)
+          _ <- NonStrictTestCommand.processedAction(conflicting)
+          _ <- NonStrictTestCommand.processedAction(missingFlag)
+        } yield assertCompletes
       )
     ).provideCustomLayer(UrsulaConfigLive.live)
 
