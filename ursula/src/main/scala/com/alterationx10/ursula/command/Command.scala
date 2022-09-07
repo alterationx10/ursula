@@ -30,7 +30,8 @@ trait Command[A] {
     */
   val trigger: String
 
-  /** A collection fo [[Flag]] that this command supports.
+  /** A collection fo [[com.alterationx10.ursula.args.Flag]] that this command
+    * supports.
     */
   val flags: Seq[Flag[?]]
 
@@ -95,7 +96,8 @@ trait Command[A] {
   }
 
   /** Strips flags and their arguments from the cli arguments, which can then be
-    * parsed for Arguments. Wraps [[stripFlags()]] in a ZIO.attempt
+    * parsed for Arguments. Wraps
+    * [[com.alterationx10.ursula.command.Command.stripFlags]] in a ZIO.attempt
     * @param args
     *   The cli arguments
     */

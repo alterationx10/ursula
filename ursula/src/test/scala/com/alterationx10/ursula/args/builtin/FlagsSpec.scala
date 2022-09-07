@@ -7,7 +7,6 @@ import com.alterationx10.ursula.args.builtin.HelpFlag
 
 object FlagsSpec extends ZIOSpecDefault {
 
-
   def toChunk(str: String): Chunk[String] =
     Chunk.fromArray(str.split(" "))
 

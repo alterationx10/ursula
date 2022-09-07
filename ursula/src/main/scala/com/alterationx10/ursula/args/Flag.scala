@@ -13,8 +13,8 @@ import zio.*
   */
 trait Flag[R] {
 
-  /** The name of the flag, e.g. "help". This will be parsed as s"--\\$name", e.g.
-    * "--help"
+  /** The name of the flag, e.g. "help". This will be parsed as s"--\\$name",
+    * e.g. "--help"
     */
   val name: String
 
