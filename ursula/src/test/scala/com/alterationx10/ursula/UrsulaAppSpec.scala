@@ -1,17 +1,11 @@
 package com.alterationx10.ursula
 
-import zio.*
-import zio.test.*
+import utest.*
 
-object UrsulaAppSpec extends ZIOSpecDefault {
-
-  override def spec: Spec[TestEnvironment & Scope, Any] =
-    suite("UrsulaAppSpec")(
-      test("")(
-        for {
-          _ <- ZIO.logWarning("TestNotImplemented")
-        } yield assertCompletes
-      )
-    )
-
+object UrsulaAppSpec extends TestSuite {
+  override def tests: Tests = Tests {
+    test("TODO") {
+      "Needs to be implemented"
+    }
+  }
 }

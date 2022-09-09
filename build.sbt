@@ -42,38 +42,32 @@ ThisBuild / Test / envVars += "TEST_FLAG" -> "abc"
 val zioVersion: String     = "2.0.2"
 val zioJsonVersion: String = "0.3.0-RC8"
 
-lazy val ursula = crossProject(JSPlatform, JVMPlatform, NativePlatform)
+lazy val ursula = crossProject(JVMPlatform, NativePlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .in(file("ursula"))
+  .dependsOn(ursulaTest)
   .settings(
-    name           := "ursula",
     libraryDependencies ++= Seq(
-      "dev.zio" %% "zio"          % zioVersion,
-      "dev.zio" %% "zio-test"     % zioVersion % "test",
-      "dev.zio" %% "zio-test-sbt" % zioVersion % "test",
-      "dev.zio" %% "zio-streams"  % zioVersion,
-      "dev.zio" %% "zio-json"     % zioJsonVersion
+      "dev.zio"     %%% "zio"   % zioVersion,
+      "com.lihaoyi" %%% "utest" % "0.8.1" % Test,
+      "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
     ),
-    testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework"),
+    testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false
   )
-  .jvmSettings(
-    fork := true
-  )
-  .jsSettings(
-    fork := false
-  )
-  .nativeSettings(
-    fork := false
-  )
 
-lazy val example = project
-  .in(file("example"))
+lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform, JSPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("ursula-test"))
   .settings(
-    publishArtifact := false,
-    fork            := true
+    libraryDependencies ++= Seq(
+      "dev.zio" %%% "zio" % zioVersion,
+      "com.lihaoyi" %%% "utest" % "0.8.1" % Test,
+      "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
+    ),
+    testFrameworks += new TestFramework("utest.runner.Framework"),
+    publish / skip := false
   )
-  .dependsOn(ursula.jvm)
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")
 addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
