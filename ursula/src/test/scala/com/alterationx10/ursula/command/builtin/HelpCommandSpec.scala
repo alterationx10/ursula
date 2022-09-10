@@ -1,17 +1,13 @@
-//package com.alterationx10.ursula.command.builtin
-//
-//import zio.*
-//import zio.test.*
-//
-//object HelpCommandSpec extends ZIOSpecDefault {
-//
-//  override def spec: Spec[TestEnvironment & Scope, Any] =
-//    suite("HelpCommandSpec")(
-//      test("")(
-//        for {
-//          _ <- ZIO.logWarning("TestNotImplemented")
-//        } yield assertCompletes
-//      )
-//    )
-//
-//}
+package com.alterationx10.ursula.command.builtin
+
+import utest.*
+
+object HelpCommandSpec extends TestSuite {
+
+  override def tests: Tests = Tests {
+    test("TODO") {
+      "Needs to be implemented"
+    }
+  }
+
+}

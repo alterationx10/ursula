@@ -15,7 +15,7 @@ import utest.*
 // C requires an argument
 // D is a required flag
 
-object CommandSpec extends TestSuite with ZIOTestExtensions {
+object CommandSpec extends TestSuite with UrsulaTestExtensions {
 
   case object AFlag extends BooleanFlag {
     override val description: String = "A flag"

@@ -1,14 +1,14 @@
-ThisBuild / organization                  := "com.alterationx10"
-ThisBuild / version                       := Versioning.versionFromTag
-ThisBuild / scalaVersion                  := "3.1.3"
+ThisBuild / organization         := "com.alterationx10"
+ThisBuild / version              := Versioning.versionFromTag
+ThisBuild / scalaVersion         := "3.1.3"
 ThisBuild / crossScalaVersions ++= Seq("2.13.8", "3.1.3")
-ThisBuild / publish / skip                := true
-ThisBuild / publishMavenStyle             := true
-ThisBuild / versionScheme                 := Some("early-semver")
-ThisBuild / publishTo                     := Some(
+ThisBuild / publish / skip       := true
+ThisBuild / publishMavenStyle    := true
+ThisBuild / versionScheme        := Some("early-semver")
+ThisBuild / publishTo            := Some(
   "Cloudsmith API" at "https://maven.cloudsmith.io/alterationx10/ursula/"
 )
-ThisBuild / pomIncludeRepository          := { x => false }
+ThisBuild / pomIncludeRepository := { x => false }
 ThisBuild / credentials += Credentials(
   "Cloudsmith API",                                      // realm
   "maven.cloudsmith.io",                                 // host
@@ -37,10 +37,10 @@ ThisBuild / scalacOptions ++= {
   })
 }
 
-ThisBuild / Test / envVars += "TEST_FLAG" -> "abc"
+ThisBuild / Test / envFileName   := ".env.test"
+ThisBuild / Test / envVars       := (Test / envFromFile).value
 
-val zioVersion: String     = "2.0.2"
-val zioJsonVersion: String = "0.3.0-RC8"
+val zioVersion: String = "2.0.2"
 
 lazy val ursula = crossProject(JVMPlatform, NativePlatform, JSPlatform)
   .crossType(CrossType.Pure)
@@ -48,12 +48,28 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform, JSPlatform)
   .dependsOn(ursulaTest)
   .settings(
     libraryDependencies ++= Seq(
-      "dev.zio"           %%% "zio"             % zioVersion,
-      "com.lihaoyi"       %%% "utest"           % "0.8.1" % Test,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
+      "dev.zio"     %%% "zio"   % zioVersion,
+      "com.lihaoyi" %%% "utest" % "0.8.1" % Test
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false
+  )
+  .jvmSettings(
+    fork := true
+  )
+  .jsSettings(
+    // test env Not loading... need to figure this out. Maybe fixed soon.
+    // https://github.com/scala-js/scala-js/issues/4686
+    libraryDependencies ++= Seq(
+      "io.github.cquiroz" %%% "scala-java-time"      % "2.4.0",
+      "io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.4.0"
+    )
+  )
+  .nativeSettings(
+    libraryDependencies ++= Seq(
+      "io.github.cquiroz" %%% "scala-java-time"      % "2.4.0",
+      "io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.4.0"
+    )
   )
 
 lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform, JSPlatform)
@@ -61,12 +77,23 @@ lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform, JSPlatform)
   .in(file("ursula-test"))
   .settings(
     libraryDependencies ++= Seq(
-      "dev.zio"           %%% "zio"             % zioVersion,
-      "com.lihaoyi"       %%% "utest"           % "0.8.1" % Test,
-      "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
+      "dev.zio"     %%% "zio"   % zioVersion,
+      "com.lihaoyi" %%% "utest" % "0.8.1" % Test
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false
+  )
+  .jsSettings(
+    libraryDependencies ++= Seq(
+      "io.github.cquiroz" %%% "scala-java-time"      % "2.4.0",
+      "io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.4.0"
+    )
+  )
+  .nativeSettings(
+    libraryDependencies ++= Seq(
+      "io.github.cquiroz" %%% "scala-java-time"      % "2.4.0",
+      "io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.4.0"
+    )
   )
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")

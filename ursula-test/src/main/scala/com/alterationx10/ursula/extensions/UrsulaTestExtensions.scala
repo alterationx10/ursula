@@ -2,7 +2,7 @@ package com.alterationx10.ursula.extensions
 
 import zio.*
 
-trait ZIOTestExtensions {
+trait UrsulaTestExtensions {
 
   implicit class ZLayerTestExtension[E, A](layer: ZLayer[Any, E, A]) {
 
@@ -14,7 +14,7 @@ trait ZIOTestExtensions {
 
   }
 
-  implicit class ZIOUTestExtension[R, E, A](zio: ZIO[R, E, A]) {
+  implicit class ZIOTestExtension[R, E, A](zio: ZIO[R, E, A]) {
     def testValue(implicit runtime: Runtime[R]): A = {
       Unsafe.unsafe { implicit unsafe =>
         runtime.unsafe
