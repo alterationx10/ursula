@@ -8,7 +8,7 @@ import com.alterationx10.ursula.errors.MissingFlagsException
 import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
 import com.alterationx10.ursula.extensions.*
-import com.alterationx10.ursula.services.config.{UrsulaConfig, UrsulaConfigLive}
+import com.alterationx10.ursula.services.{Config, ConfigLive}
 import utest.*
 
 // A <-> B Conflict
@@ -75,7 +75,8 @@ object CommandSpec extends TestSuite with ZIOTestExtensions {
   val conflicting: Chunk[String] = "-a -b -d".chunked
   val help: Chunk[String]        = "-a -b -d -f -h".chunked
 
-  implicit val rt: Runtime.Scoped[UrsulaConfig] = UrsulaConfigLive.live.testRuntime
+  implicit val rt: Runtime.Scoped[Config] =
+    ConfigLive.live.testRuntime
 
   override def tests: Tests = Tests {
 

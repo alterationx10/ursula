@@ -48,8 +48,8 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform, JSPlatform)
   .dependsOn(ursulaTest)
   .settings(
     libraryDependencies ++= Seq(
-      "dev.zio"     %%% "zio"   % zioVersion,
-      "com.lihaoyi" %%% "utest" % "0.8.1" % Test,
+      "dev.zio"           %%% "zio"             % zioVersion,
+      "com.lihaoyi"       %%% "utest"           % "0.8.1" % Test,
       "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
@@ -61,8 +61,8 @@ lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform, JSPlatform)
   .in(file("ursula-test"))
   .settings(
     libraryDependencies ++= Seq(
-      "dev.zio" %%% "zio" % zioVersion,
-      "com.lihaoyi" %%% "utest" % "0.8.1" % Test,
+      "dev.zio"           %%% "zio"             % zioVersion,
+      "com.lihaoyi"       %%% "utest"           % "0.8.1" % Test,
       "io.github.cquiroz" %%% "scala-java-time" % "2.4.0"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),

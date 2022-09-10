@@ -4,11 +4,8 @@ import com.alterationx10.ursula.command.Command
 import com.alterationx10.ursula.command.builtin.HelpCommand
 
 import zio.*
-import com.alterationx10.ursula.services.config.UrsulaConfig
-import com.alterationx10.ursula.services.config.UrsulaConfigLive
-import com.alterationx10.ursula.services.UrsulaServices
+import com.alterationx10.ursula.services.{Config, ConfigLive, UrsulaServices}
 import com.alterationx10.ursula.command.builtin.ConfigCommand
-
 
 trait UrsulaApp extends ZIOAppDefault {
 
@@ -104,14 +101,14 @@ trait UrsulaApp extends ZIOAppDefault {
     * Commands based on the arguments passed in
     */
   private final val program: ZIO[
-    CommandList & UrsulaConfig & ZIOAppArgs,
+    CommandList & Config & ZIOAppArgs,
     Throwable,
     ExitCode
   ] =
     for {
-      configData <- ZIO.succeed(Map.empty[String, String]) //readConfig
-      _          <- ZIO.serviceWithZIO[UrsulaConfig](
-                      _.asInstanceOf[UrsulaConfigLive].configMap.set(configData)
+      configData <- ZIO.succeed(Map.empty[String, String]) // readConfig
+      _          <- ZIO.serviceWithZIO[Config](
+                      _.asInstanceOf[ConfigLive].configMap.set(configData)
                     )
       args       <- ZIOAppArgs.getArgs
       trigger     = args.headOption
@@ -132,13 +129,13 @@ trait UrsulaApp extends ZIOAppDefault {
       _          <- cmd
                       .processedAction(if (shouldDrop) args.tail else args)
       _          <- ZIO
-                      .serviceWithZIO[UrsulaConfig](
-                        _.asInstanceOf[UrsulaConfigLive].configMap.get
+                      .serviceWithZIO[Config](
+                        _.asInstanceOf[ConfigLive].configMap.get
                       )
 //                      .flatMap(d => writeConfig(d))
                       .whenZIO(
-                        ZIO.serviceWithZIO[UrsulaConfig](
-                          _.asInstanceOf[UrsulaConfigLive].dirty.get
+                        ZIO.serviceWithZIO[Config](
+                          _.asInstanceOf[ConfigLive].dirty.get
                         )
                       )
     } yield ExitCode.success

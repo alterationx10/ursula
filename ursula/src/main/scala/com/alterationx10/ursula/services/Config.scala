@@ -1,28 +1,28 @@
-package com.alterationx10.ursula.services.config
+package com.alterationx10.ursula.services
 
 import zio.*
 
-trait UrsulaConfig {
+trait Config {
   def get(key: String): Task[Option[String]]
   def set(key: String, value: String): Task[Unit]
   def delete(key: String): Task[Unit]
 }
 
-object UrsulaConfig {
-  def get(key: String): ZIO[UrsulaConfig, Throwable, Option[String]] =
-    ZIO.serviceWithZIO[UrsulaConfig](_.get(key))
+object Config {
+  def get(key: String): ZIO[Config, Throwable, Option[String]] =
+    ZIO.serviceWithZIO[Config](_.get(key))
 
-  def set(key: String, value: String): ZIO[UrsulaConfig, Throwable, Unit] =
-    ZIO.serviceWithZIO[UrsulaConfig](_.set(key, value))
+  def set(key: String, value: String): ZIO[Config, Throwable, Unit] =
+    ZIO.serviceWithZIO[Config](_.set(key, value))
 
-  def delete(key: String): ZIO[UrsulaConfig, Throwable, Unit] =
-    ZIO.serviceWithZIO[UrsulaConfig](_.delete(key))
+  def delete(key: String): ZIO[Config, Throwable, Unit] =
+    ZIO.serviceWithZIO[Config](_.delete(key))
 }
 
-case class UrsulaConfigLive(
+case class ConfigLive(
     configMap: Ref[Map[String, String]],
     dirty: Ref[Boolean]
-) extends UrsulaConfig {
+) extends Config {
 
   def delete(key: String): Task[Unit] =
     for {
@@ -41,13 +41,13 @@ case class UrsulaConfigLive(
 
 }
 
-object UrsulaConfigLive {
+object ConfigLive {
 
-  val live: ZLayer[Any, Nothing, UrsulaConfig] = ZLayer.fromZIO {
+  val live: ZLayer[Any, Nothing, Config] = ZLayer.fromZIO {
     for {
       map  <- Ref.make(Map.empty[String, String])
       bool <- Ref.make(false)
-    } yield UrsulaConfigLive(map, bool)
+    } yield ConfigLive(map, bool)
   }
 
 }

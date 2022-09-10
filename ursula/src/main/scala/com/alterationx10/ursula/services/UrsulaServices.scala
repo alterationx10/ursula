@@ -1,15 +1,13 @@
 package com.alterationx10.ursula.services
 
 import zio.*
-import com.alterationx10.ursula.services.config.UrsulaConfig
-import com.alterationx10.ursula.services.config.UrsulaConfigLive
 
 object UrsulaServices {
 
-  type UrsulaServices = UrsulaConfig
+  type UrsulaServices = Config
 
-  val live: ZLayer[Any, Throwable, UrsulaServices] = ZLayer.make[UrsulaConfig](
-    UrsulaConfigLive.live
+  val live: ZLayer[Any, Throwable, UrsulaServices] = ZLayer.make[Config](
+    ConfigLive.live
   )
 
 }

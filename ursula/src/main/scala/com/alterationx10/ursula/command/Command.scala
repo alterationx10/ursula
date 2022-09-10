@@ -7,7 +7,7 @@ import com.alterationx10.ursula.doc.*
 
 import scala.annotation.tailrec
 import zio.*
-import com.alterationx10.ursula.services.UrsulaServices
+import com.alterationx10.ursula.services.{TTY, UrsulaServices}
 
 trait Command[A] {
 
@@ -112,7 +112,7 @@ trait Command[A] {
     * @return
     */
   final def printHelp: Task[Unit] =
-    Console.printLine(documentation.txt)
+    TTY.printLine(documentation.txt)
 
   private final def unrecognizedFlags(args: Chunk[String]): Boolean = {
     val flagTriggers: Seq[String] =
@@ -141,7 +141,7 @@ trait Command[A] {
     ZIO.cond(!predicate, (), error).when(strict).unit
 
   private final def printArgs(args: Chunk[String]): Task[Unit] =
-    Console.printLine(s"> ${args.mkString(" ")}")
+    TTY.printLine(s"> ${args.mkString(" ")}")
 
   private final val printHelpfulError
       : Chunk[String] => CommandException => Task[Unit] =
