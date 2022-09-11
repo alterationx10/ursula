@@ -1,6 +1,10 @@
 package com.alterationx10.ursula.services
 
+import upickle.default.*
 import zio.*
+
+import java.io.{IOException, PrintWriter}
+import scala.io.{BufferedSource, Source}
 
 trait Config {
   def get(key: String): Task[Option[String]]
@@ -43,11 +47,43 @@ case class ConfigLive(
 
 object ConfigLive {
 
-  val live: ZLayer[Any, Nothing, Config] = ZLayer.fromZIO {
+  private def readConfig(
+      dir: String,
+      file: String
+  ): ZIO[Scope, Throwable, Source] =
+    ZIO.fromAutoCloseable(ZIO.attempt(Source.fromFile(s"$dir/$file")))
+
+  private def parseConfig(source: Source): Task[Map[String, String]] =
+    ZIO.attempt {
+      read[Map[String, String]](source.mkString)
+    }
+
+  private def printWriter(dir: String, file: String) =
+    ZIO.fromAutoCloseable(ZIO.attempt(new PrintWriter(s"$dir/$file")))
+  private def writeConfig(
+      dir: String,
+      file: String,
+      config: ConfigLive
+  ): ZIO[Scope, Nothing, Unit] = {
     for {
-      map  <- Ref.make(Map.empty[String, String])
-      bool <- Ref.make(false)
-    } yield ConfigLive(map, bool)
-  }
+      writer <- printWriter(dir, file)
+      cfg    <- config.configMap.get
+      dirty  <- config.dirty.get
+      _      <- ZIO.attempt(writeTo(cfg, writer)).when(dirty)
+    } yield ()
+  }.orDie
+
+  def live(dir: String, file: String): ZLayer[Scope, Throwable, Config] =
+    ZLayer {
+      (for {
+        cfg    <-
+          readConfig(dir, file).orElse(ZIO.succeed(Source.fromString("{}")))
+        map    <- parseConfig(cfg)
+        mapRef <- Ref.make(map)
+        dRef   <- Ref.make(false)
+      } yield ConfigLive(mapRef, dRef)).withFinalizer { cfg =>
+        writeConfig(dir, file, cfg)
+      }
+    }
 
 }

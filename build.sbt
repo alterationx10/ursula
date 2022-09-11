@@ -48,8 +48,9 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform, JSPlatform)
   .dependsOn(ursulaTest)
   .settings(
     libraryDependencies ++= Seq(
-      "dev.zio"     %%% "zio"   % zioVersion,
-      "com.lihaoyi" %%% "utest" % "0.8.1" % Test
+      "dev.zio"     %%% "zio"     % zioVersion,
+      "com.lihaoyi" %%% "utest"   % "0.8.1" % Test,
+      "com.lihaoyi" %%% "upickle" % "2.0.0"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false

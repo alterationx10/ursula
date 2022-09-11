@@ -4,7 +4,7 @@ import com.alterationx10.ursula.command.Command
 import com.alterationx10.ursula.command.builtin.HelpCommand
 
 import zio.*
-import com.alterationx10.ursula.services.{Config, ConfigLive, UrsulaServices}
+import com.alterationx10.ursula.services.{Config, ConfigLive}
 import com.alterationx10.ursula.command.builtin.ConfigCommand
 
 trait UrsulaApp extends ZIOAppDefault {
@@ -69,33 +69,6 @@ trait UrsulaApp extends ZIOAppDefault {
           """)
                  }
     } yield default.headOption
-//
-//  private final def readConfig: ZIO[Any, Nothing, Map[String, String]] =
-//    ZStream
-//      .fromFileName(s"$configDirectory/$configFile")
-//      .via(ZPipeline.utf8Decode)
-//      .run(ZSink.collectAll)
-//      .map(_.mkString)
-//      .catchAll(_ => ZIO.succeed("{}"))
-//      .map(_.fromJson[Map[String, String]].toOption)
-//      .someOrElse(Map.empty[String, String])
-//
-//  private final def writeConfigRecovery: ZIO[Any, Throwable, Unit] = for {
-//    file <- ZIO.succeed(new File(s"$configDirectory/$configFile"))
-//    _    <- ZIO.attempt(file.getParentFile().mkdirs())
-//    _    <- ZIO.attempt(file.createNewFile())
-//  } yield ()
-//
-//  private final def writeConfig(
-//      data: Map[String, String]
-//  ): ZIO[Any, Throwable, Unit] = for {
-//    _ <- ZStream(data.toJsonPretty)
-//           .via(ZPipeline.utf8Encode)
-//           .run(ZSink.fromFileName(s"$configDirectory/$configFile"))
-//           .catchSome { case _: NoSuchFileException =>
-//             writeConfigRecovery *> writeConfig(data)
-//           }
-//  } yield ()
 
   /** The "main program" of Ursula, which wires everything together, and runs
     * Commands based on the arguments passed in
@@ -106,10 +79,6 @@ trait UrsulaApp extends ZIOAppDefault {
     ExitCode
   ] =
     for {
-      configData <- ZIO.succeed(Map.empty[String, String]) // readConfig
-      _          <- ZIO.serviceWithZIO[Config](
-                      _.asInstanceOf[ConfigLive].configMap.set(configData)
-                    )
       args       <- ZIOAppArgs.getArgs
       trigger     = args.headOption
       cmpMap     <- commandMap
@@ -128,23 +97,13 @@ trait UrsulaApp extends ZIOAppDefault {
       shouldDrop <- drop1Ref.get
       _          <- cmd
                       .processedAction(if (shouldDrop) args.tail else args)
-      _          <- ZIO
-                      .serviceWithZIO[Config](
-                        _.asInstanceOf[ConfigLive].configMap.get
-                      )
-//                      .flatMap(d => writeConfig(d))
-                      .whenZIO(
-                        ZIO.serviceWithZIO[Config](
-                          _.asInstanceOf[ConfigLive].dirty.get
-                        )
-                      )
     } yield ExitCode.success
 
   /** The entry point to the CLI, pre-wired
     */
   override final def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
-    program.provideSome[ZIOAppArgs](
-      commandLayer ++ UrsulaServices.live
+    program.provideSome[ZIOAppArgs & Scope](
+      commandLayer ++ ConfigLive.live(configDirectory, configFile)
     )
 
 }
