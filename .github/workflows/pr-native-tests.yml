@@ -1,4 +1,4 @@
-name: JVM Tests
+name: Native Tests
 on:
   pull_request:
     types: [ opened, reopened, synchronize ]
