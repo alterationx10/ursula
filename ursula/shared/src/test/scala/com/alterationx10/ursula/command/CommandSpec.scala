@@ -49,7 +49,7 @@ object CommandSpec extends TestSuite with UrsulaTestExtensions {
 
   }
 
-  trait TestCommand extends UnitCommand {
+  trait TestCommand extends Command {
     override def action(
         args: Chunk[String]
     ): ZIO[UrsulaServices, Throwable, Unit] = ZIO.unit

@@ -50,7 +50,7 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform)
   .in(file("ursula"))
   .dependsOn(ursulaTest)
   .settings(
-    name := "ursula",
+    name           := "ursula",
     libraryDependencies ++= Seq(
       "dev.zio"     %%% "zio"     % zioVersion,
       "com.lihaoyi" %%% "utest"   % "0.8.1" % Test,
@@ -74,7 +74,7 @@ lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform)
   .crossType(CrossType.Pure)
   .in(file("ursula-test"))
   .settings(
-    name := "ursula-test",
+    name           := "ursula-test",
     libraryDependencies ++= Seq(
       "dev.zio"     %%% "zio"   % zioVersion,
       "com.lihaoyi" %%% "utest" % "0.8.1" % Test

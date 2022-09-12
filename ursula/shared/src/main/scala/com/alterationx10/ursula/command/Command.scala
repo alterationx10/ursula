@@ -9,7 +9,7 @@ import scala.annotation.tailrec
 import zio.*
 import com.alterationx10.ursula.services.{Config, TTY}
 
-trait Command[A] {
+trait Command {
 
   // This type is re-declared to save an import
   type UrsulaServices = Config
@@ -54,7 +54,7 @@ trait Command[A] {
     *   out.
     * @return
     */
-  def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, A]
+  def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, ?]
 
   /** Indicates if the program should stop on unrecognized, missing, and/or
     * conflicting flags.
@@ -173,5 +173,3 @@ trait Command[A] {
   }
 
 }
-
-trait UnitCommand extends Command[Unit]
