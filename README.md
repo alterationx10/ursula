@@ -1,6 +1,6 @@
 # Ursula
 
-A slim framework to make CLI apps in ZIO.
+A slim framework to make CLI apps in ZIO, primarily targeting Scala Native.
 
 ## Project Status
 
@@ -12,47 +12,14 @@ I'm currently publishing `0.0.0-a# ` builds, any they might (i.e. most likely
 will) break a bit on updates, but using the current latest will give you a feel
 for how it's used, and where the project is moving towards.
 
-## Scala 2 Compatibility
+## Cross Compatibility
+
+I've started using `sbt-crossproject` to build both JVM and Native (0.4.x) 
+versions of the library. Going forward, I'm attempting to drive development 
+around "Native first" in terms of design choices.
 
 This project is written in Scala 3, but without too many fancy new features. I
-am trying to support cross-compile and publish for Scala 2.13 as well (starting
-at 0.0.0-a6).
-
-This means it should be straightforward to use in either case, without needing
-the `-Ytasty-reader` compiler flag or `CrossVersion` updates on the dependency:
-
-```scala
-ThisBuild / version := "0.1.0-SNAPSHOT"
-
-ThisBuild / resolvers += "alterationx10-ursula" at "https://dl.cloudsmith.io/public/alterationx10/ursula/maven/"
-
-lazy val scala3Project = (project in file("proj-scala3"))
-  .settings(
-    name := "urusla-app_2",
-    scalaVersion := "3.1.2",
-    libraryDependencies += "com.alterationx10" %% "ursula" % "0.0.0-a6"
-  )
-
-lazy val scala2Project = (project in file("proj-scala2"))
-  .settings(
-    name := "urusla-app_3",
-    scalaVersion := "2.13.8",
-    // scalacOptions += "-Ytasty-reader", <- not needed
-    libraryDependencies += ("com.alterationx10" %% "ursula" % "0.0.0-a6")//.cross(CrossVersion.for2_13Use3) <- not needed
-  )
-```
-
-## About
-
-One of my personal motivations for this library, is that I want to take useful
-code I already have, and make a CLI out of it. Often times I have a collection
-of scripts/scratch projects that could easily be parameterized, and be shared
-with my _non-Scala_ friends.
-
-A lot of this framework tries to bootstrap that idea - how can we turn this type
-of code into helpful, shareable apps that take care of the boiler plate of
-bootstrapping, and provide documentation needed to let others know how to run
-it.
+am trying to support cross-compile and publish for Scala 2.13 as well.
 
 ## Anatomy of the Framework
 
@@ -146,7 +113,7 @@ element in the command arguments to be parsed as type `R`, or boolean flags
 which do not (i.e. present/not present).
 
 The
-[source code](./ursula/src/main/scala/com/alterationx10/ursula/args/Flag.scala)
+[source code](ursula/shared/src/main/scala/com/alterationx10/ursula/args/Flag.scala)
 is fairly well documented at this point. Some general highlights are that it has
 things built in to
 
@@ -161,7 +128,7 @@ Arguments (`trait Argument[R]`) are _positional_ arguments passed to the
 command, and are to be parsed to type `R`
 
 The
-[source code](./ursula/src/main/scala/com/alterationx10/ursula/args/Argument.scala)
+[source code](ursula/shared/src/main/scala/com/alterationx10/ursula/args/Argument.scala)
 is fairly well documented at this point. Some general highlights are that you
 can encode the parsing logic.
 
@@ -170,13 +137,19 @@ can encode the parsing logic.
 `UrsulaServices` is the sum of all services that are automatically provided in
 the `R` channel of your commands `action` zio. See below for more info on each.
 
-#### UrsulaConfig
+#### Config
 
 This service allows you to get/set/delete keys from the apps config file. Behind
 the scenes, the `UrsulaApp` will automatically read the config file at start,
 and load it into an in memory `Map`. This `Map` is what backs this service, and
 if the state becomes dirty (i.e. a `set` or `delete` is used), then after your
 `Command` logic has run, it will persist the `Map` back to disk.
+
+#### TTY
+
+`zio.Console` does a lot `.attemptBlockingIO`, which can make Scala Native 
+unhappy, so `TTY` is simple implementation of the `zio.Console` trait, 
+largely just using `scala.Console.println`, etc...
 
 ## Using in your project
 
@@ -219,13 +192,6 @@ and when you're ready to share, you can use _something like_
 ```shell
 scala-cli package . -o app --assembly
 ```
-
-## Example
-
-This repo contains a very simple
-[example program](./example/src/main/scala/com/alterationx10/example/), which
-contains an `echo` command and a couple simple flags. Drop into an sbt repl, and
-run `example/run` to give it a try!
 
 ## Other Projects
 
