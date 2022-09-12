@@ -1,10 +1,8 @@
 package com.alterationx10.ursula.services
 
-import upickle.default.*
+import os.Path
 import zio.*
-
-import java.io.{IOException, PrintWriter}
-import scala.io.{BufferedSource, Source}
+import upickle.default.*
 
 trait Config {
   def get(key: String): Task[Option[String]]
@@ -47,29 +45,38 @@ case class ConfigLive(
 
 object ConfigLive {
 
+  private def dirToPath(dir: String) =
+    dir.split("/").filterNot(_.isEmpty).foldLeft(os.root)(_ / _)
+
   private def readConfig(
       dir: String,
       file: String
-  ): ZIO[Scope, Throwable, Source] =
-    ZIO.fromAutoCloseable(ZIO.attempt(Source.fromFile(s"$dir/$file")))
+  ): ZIO[Any, Throwable, Map[String, String]] = {
+    val configPath     = dirToPath(dir)
+    val configFilePath = configPath / file
+    for {
+      _    <- ZIO.attempt(os.makeDir.all(configPath)).when(!os.exists(configPath))
+      _    <- ZIO
+                .attempt(os.write.over(configFilePath, "{}"))
+                .when(!os.exists(configFilePath))
+      data <- ZIO.attempt(os.read(configFilePath))
+      cfg  <- ZIO.attempt {
+                read[Map[String, String]](data)
+              }
+    } yield cfg
+  }
 
-  private def parseConfig(source: Source): Task[Map[String, String]] =
-    ZIO.attempt {
-      read[Map[String, String]](source.mkString)
-    }
-
-  private def printWriter(dir: String, file: String) =
-    ZIO.fromAutoCloseable(ZIO.attempt(new PrintWriter(s"$dir/$file")))
   private def writeConfig(
       dir: String,
       file: String,
       config: ConfigLive
   ): ZIO[Scope, Nothing, Unit] = {
+    val configPath     = dirToPath(dir)
+    val configFilePath = configPath / file
     for {
-      writer <- printWriter(dir, file)
-      cfg    <- config.configMap.get
-      dirty  <- config.dirty.get
-      _      <- ZIO.attempt(writeTo(cfg, writer)).when(dirty)
+      cfg   <- config.configMap.get.map(d => writeJs(d).toString())
+      dirty <- config.dirty.get
+      _     <- ZIO.attempt(os.write.over(configFilePath, cfg)).when(dirty)
     } yield ()
   }.orDie
 
@@ -77,13 +84,13 @@ object ConfigLive {
     ZLayer {
       (for {
         cfg    <-
-          readConfig(dir, file).orElse(ZIO.succeed(Source.fromString("{}")))
-        map    <- parseConfig(cfg)
-        mapRef <- Ref.make(map)
+          readConfig(dir, file)
+        mapRef <- Ref.make(cfg)
         dRef   <- Ref.make(false)
-      } yield ConfigLive(mapRef, dRef)).withFinalizer { cfg =>
-        writeConfig(dir, file, cfg)
-      }
+      } yield ConfigLive(mapRef, dRef))
+        .withFinalizer { cfg =>
+          writeConfig(dir, file, cfg)
+        }
     }
 
 }
