@@ -40,9 +40,6 @@ ThisBuild / scalacOptions ++= {
 ThisBuild / semanticdbEnabled    := true
 ThisBuild / semanticdbVersion    := scalafixSemanticdb.revision
 
-ThisBuild / Test / envFileName := ".env.test"
-ThisBuild / Test / envVars     := (Test / envFromFile).value
-
 val zioVersion: String = "2.0.2"
 
 lazy val ursula = crossProject(JVMPlatform, NativePlatform)
