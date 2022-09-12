@@ -60,9 +60,6 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform)
     testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false
   )
-  .jvmSettings(
-    fork := true
-  )
   .nativeSettings(
     libraryDependencies ++= Seq(
       "io.github.cquiroz" %%% "scala-java-time"      % "2.4.0",

@@ -23,7 +23,7 @@ trait UrsulaApp extends ZIOAppDefault {
     */
   val defaultHelp: Boolean = true
 
-  /** This is a Seq of your Command[_] implementations that you want your CLI to
+  /** This is a Seq of your Command implementations that you want your CLI to
     * have access to.
     */
   val commands: Seq[Command]
@@ -36,7 +36,7 @@ trait UrsulaApp extends ZIOAppDefault {
   private lazy val commandLayer: ZLayer[Any, Nothing, Seq[Command]] =
     ZLayer.succeed(builtInCommands ++ commands)
 
-  /** Given the injected Seq[Command[_]], parse out a Map keyed by the Command
+  /** Given the injected Seq[Command], parse out a Map keyed by the Command
     * trigger. Warns if multiple commands use the same trigger.
     */
   private val commandMap: RIO[CommandList, Map[String, Command]] =
@@ -51,12 +51,12 @@ trait UrsulaApp extends ZIOAppDefault {
              }
     } yield map.map { case (a, b) => (a, b.head) }
 
-  /** Given the injected Seq[Command[_]], parse out the trigger key-words
+  /** Given the injected Seq[Command], parse out the trigger key-words
     */
   private val triggerList: RIO[CommandList, Seq[String]] =
     ZIO.serviceWith[CommandList](_.map(_.trigger))
 
-  /** Given the injected Seq[Command[_]], find the one flagged as default (if
+  /** Given the injected Seq[Command], find the one flagged as default (if
     * present). Warns if multiple Commands have been set as default.
     */
   private val findDefaultCommand: RIO[CommandList, Option[Command]] =
