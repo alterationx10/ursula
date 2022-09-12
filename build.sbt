@@ -30,7 +30,7 @@ ThisBuild / scalacOptions ++= {
       Seq(
         "-deprecation",
         "-Xfatal-warnings",
-        "-Wunused:imports",
+//        "-Wunused:imports",
         "-Wvalue-discard",
         "-Xsource:3"
       )
@@ -42,29 +42,22 @@ ThisBuild / Test / envVars       := (Test / envFromFile).value
 
 val zioVersion: String = "2.0.2"
 
-lazy val ursula = crossProject(JVMPlatform, NativePlatform, JSPlatform)
-  .crossType(CrossType.Pure)
+lazy val ursula = crossProject(JVMPlatform, NativePlatform)
+  .crossType(CrossType.Full)
   .in(file("ursula"))
   .dependsOn(ursulaTest)
   .settings(
     libraryDependencies ++= Seq(
       "dev.zio"     %%% "zio"     % zioVersion,
       "com.lihaoyi" %%% "utest"   % "0.8.1" % Test,
-      "com.lihaoyi" %%% "upickle" % "2.0.0"
+      "com.lihaoyi" %%% "upickle" % "2.0.0",
+      "com.lihaoyi" %%% "os-lib"  % "0.8.1"
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false
   )
   .jvmSettings(
     fork := true
-  )
-  .jsSettings(
-    // test env Not loading... need to figure this out. Maybe fixed soon.
-    // https://github.com/scala-js/scala-js/issues/4686
-    libraryDependencies ++= Seq(
-      "io.github.cquiroz" %%% "scala-java-time"      % "2.4.0",
-      "io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.4.0"
-    )
   )
   .nativeSettings(
     libraryDependencies ++= Seq(
@@ -73,7 +66,7 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform, JSPlatform)
     )
   )
 
-lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform, JSPlatform)
+lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform)
   .crossType(CrossType.Pure)
   .in(file("ursula-test"))
   .settings(
@@ -83,12 +76,6 @@ lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform, JSPlatform)
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false
-  )
-  .jsSettings(
-    libraryDependencies ++= Seq(
-      "io.github.cquiroz" %%% "scala-java-time"      % "2.4.0",
-      "io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.4.0"
-    )
   )
   .nativeSettings(
     libraryDependencies ++= Seq(

@@ -146,7 +146,7 @@ element in the command arguments to be parsed as type `R`, or boolean flags
 which do not (i.e. present/not present).
 
 The
-[source code](./ursula/src/main/scala/com/alterationx10/ursula/args/Flag.scala)
+[source code](ursula/shared/src/main/scala/com/alterationx10/ursula/args/Flag.scala)
 is fairly well documented at this point. Some general highlights are that it has
 things built in to
 
@@ -161,7 +161,7 @@ Arguments (`trait Argument[R]`) are _positional_ arguments passed to the
 command, and are to be parsed to type `R`
 
 The
-[source code](./ursula/src/main/scala/com/alterationx10/ursula/args/Argument.scala)
+[source code](ursula/shared/src/main/scala/com/alterationx10/ursula/args/Argument.scala)
 is fairly well documented at this point. Some general highlights are that you
 can encode the parsing logic.
 
