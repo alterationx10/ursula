@@ -3,10 +3,12 @@ package com.alterationx10.ursula.doc
 import com.alterationx10.ursula.extensions.*
 import com.alterationx10.ursula.command.Command
 
-final case class CommandDoc(cmd: Command[?]) extends Documentation {
+import scala.collection.mutable
+
+final case class CommandDoc(cmd: Command) extends Documentation {
 
   override lazy val txt: String = {
-    val sb: StringBuilder = new StringBuilder()
+    val sb: mutable.StringBuilder = new mutable.StringBuilder()
     sb.appendLine(s"${cmd.trigger}\t${cmd.description}")
     if (cmd.flags.nonEmpty) {
       sb.appendLine("Flags:")

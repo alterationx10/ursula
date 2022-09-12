@@ -28,7 +28,7 @@ Here is a general overview if of the pieces fit together.
 ### How it works: UrsulaApp
 
 You only need to make an object that extends the `UrsulaApp` trait, and provide
-a `Seq[Command[?]]`, which are your actions you wish to be available in your
+a `Seq[Command]`, which are your actions you wish to be available in your
 app. `UrsulaApp` extends `ZIOAppDefault`, and wires up everything needed for the
 `run` method automatically! It parses the arguments passed, and uses that to
 pull out the `Command` provided, and runs accordingly, passing on the arguments
@@ -40,7 +40,7 @@ means that even if you only have:
 
 ```scala
 object App extends UrsulaApp {
-    override val commands: Seq[Command[?]] = Seq.empty
+    override val commands: Seq[Command] = Seq.empty
 }
 ```
 
@@ -54,16 +54,19 @@ functionality you desire, and add them to the `commands: Seq`.
 
 ### Commands
 
-There is a `trait Command[A]` to extend, and the essence of this the
+There is a `trait Command` to extend, and the essence of this the
 implementation of
 
 ```scala
-def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, A]
+def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, ?]
 ```
 
 You consolidate all of your ZIO logic you want to run in this method that will
 pass in arguments that are `Chunk[String]` and returns a
-`ZIO[UrsulaServices, Throwable, A]`.
+`ZIO[UrsulaServices, Throwable, ?]`. Note that the return value is `?` - the 
+actual result is discarded to `.unit`, as `Commands` are meant to be a 
+one-off calls from the main entry point, and generally not composed with 
+other `Command`s.
 
 `UrsulaServices` are a collection of built in ZIO services that are available
 for you to use (or not at all, if you don't want to!). `UrsulaServices` are

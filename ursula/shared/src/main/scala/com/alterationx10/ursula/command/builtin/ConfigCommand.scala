@@ -76,7 +76,7 @@ case object ValueArg extends Argument[String] {
 
 }
 
-object ConfigCommand extends Command[Unit] {
+object ConfigCommand extends Command {
 
   override val description: String = "Interact with the CLI config file"
 

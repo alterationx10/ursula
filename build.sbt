@@ -40,9 +40,6 @@ ThisBuild / scalacOptions ++= {
 ThisBuild / semanticdbEnabled    := true
 ThisBuild / semanticdbVersion    := scalafixSemanticdb.revision
 
-ThisBuild / Test / envFileName := ".env.test"
-ThisBuild / Test / envVars     := (Test / envFromFile).value
-
 val zioVersion: String = "2.0.2"
 
 lazy val ursula = crossProject(JVMPlatform, NativePlatform)
@@ -50,7 +47,7 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform)
   .in(file("ursula"))
   .dependsOn(ursulaTest)
   .settings(
-    name := "ursula",
+    name           := "ursula",
     libraryDependencies ++= Seq(
       "dev.zio"     %%% "zio"     % zioVersion,
       "com.lihaoyi" %%% "utest"   % "0.8.1" % Test,
@@ -59,9 +56,6 @@ lazy val ursula = crossProject(JVMPlatform, NativePlatform)
     ),
     testFrameworks += new TestFramework("utest.runner.Framework"),
     publish / skip := false
-  )
-  .jvmSettings(
-    fork := true
   )
   .nativeSettings(
     libraryDependencies ++= Seq(
@@ -74,7 +68,7 @@ lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform)
   .crossType(CrossType.Pure)
   .in(file("ursula-test"))
   .settings(
-    name := "ursula-test",
+    name           := "ursula-test",
     libraryDependencies ++= Seq(
       "dev.zio"     %%% "zio"   % zioVersion,
       "com.lihaoyi" %%% "utest" % "0.8.1" % Test
@@ -91,3 +85,4 @@ lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform)
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")
 addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
+addCommandAlias("fix", "++2.13.8; ursulaJVM/scalafixAll RemoveUnused; ursulaTestJVM/scalafixAll RemoveUnused")
