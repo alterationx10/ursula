@@ -4,7 +4,7 @@ import com.alterationx10.ursula.extensions.UrsulaTestExtensions
 import utest.*
 import zio.*
 
-import java.io.{ByteArrayOutputStream, IOException, StringReader}
+import java.io.{ByteArrayOutputStream, StringReader}
 
 object TTYSpec extends TestSuite with UrsulaTestExtensions {
 
