@@ -50,7 +50,7 @@ object FlagSpec extends TestSuite with UrsulaTestExtensions {
   val argsNoFlag: Chunk[String]   = "-l this -l that".chunked
 
   implicit val rt: Runtime.Scoped[Config] =
-    ConfigLive.live.testRuntime
+    ConfigLive.temp.testRuntime
   override def tests: Tests               = Tests {
     test("parseFirstArgZIO") {
       test("cli") {

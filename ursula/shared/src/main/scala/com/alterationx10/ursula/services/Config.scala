@@ -1,8 +1,8 @@
 package com.alterationx10.ursula.services
 
-import os.Path
-import zio.*
+import os.{Path, Source}
 import upickle.default.*
+import zio.*
 
 trait Config {
   def get(key: String): Task[Option[String]]
@@ -92,5 +92,16 @@ object ConfigLive {
           writeConfig(dir, file, cfg)
         }
     }
+
+  def temp: ZLayer[Any, Nothing, Config] = {
+
+    val tmpDir: Path =
+      os.temp.dir(prefix = "ursula-config-temp")
+
+    val tempFile: Path =
+      os.temp(contents = Source.WritableSource("{}"), dir = tmpDir)
+
+    Scope.default >>> live(tmpDir.toString, tempFile.last)
+  }.orDie
 
 }

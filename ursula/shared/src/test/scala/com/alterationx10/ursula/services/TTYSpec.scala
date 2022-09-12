@@ -9,7 +9,7 @@ import java.io.{ByteArrayOutputStream, IOException, StringReader}
 object TTYSpec extends TestSuite with UrsulaTestExtensions {
 
   implicit val rt: Runtime.Scoped[Config] =
-    ConfigLive.live.testRuntime
+    ConfigLive.temp.testRuntime
 
   override def tests: Tests = Tests {
     test("readLine") {

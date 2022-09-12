@@ -76,7 +76,7 @@ object CommandSpec extends TestSuite with UrsulaTestExtensions {
   val help: Chunk[String]        = "-a -b -d -f -h".chunked
 
   implicit val rt: Runtime.Scoped[Config] =
-    ConfigLive.live.testRuntime
+    ConfigLive.temp.testRuntime
 
   override def tests: Tests = Tests {
 

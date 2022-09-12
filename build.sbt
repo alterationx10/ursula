@@ -30,15 +30,18 @@ ThisBuild / scalacOptions ++= {
       Seq(
         "-deprecation",
         "-Xfatal-warnings",
-//        "-Wunused:imports",
+        "-Wunused:imports",
         "-Wvalue-discard",
         "-Xsource:3"
       )
   })
 }
 
-ThisBuild / Test / envFileName   := ".env.test"
-ThisBuild / Test / envVars       := (Test / envFromFile).value
+ThisBuild / semanticdbEnabled    := true
+ThisBuild / semanticdbVersion    := scalafixSemanticdb.revision
+
+ThisBuild / Test / envFileName := ".env.test"
+ThisBuild / Test / envVars     := (Test / envFromFile).value
 
 val zioVersion: String = "2.0.2"
 

@@ -24,7 +24,7 @@ object FlagsSpec extends TestSuite with UrsulaTestExtensions {
   ).map(toChunk)
 
   implicit val rt: Runtime.Scoped[Config] =
-    ConfigLive.live.testRuntime
+    ConfigLive.temp.testRuntime
 
   override def tests: Tests = Tests {
     test("name") {
