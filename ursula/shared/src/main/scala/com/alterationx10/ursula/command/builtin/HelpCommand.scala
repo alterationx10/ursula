@@ -6,7 +6,6 @@ import com.alterationx10.ursula.command.Command
 import com.alterationx10.ursula.services.TTY
 import zio.*
 
-import java.io.IOException
 
 case class HelpCommand(commands: Seq[Command], isDefault: Boolean)
     extends Command {
