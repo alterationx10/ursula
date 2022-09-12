@@ -80,7 +80,7 @@ object ConfigSpec extends TestSuite with UrsulaTestExtensions {
       _rt.shutdown0()
 
       val setData = os.read(tempWithData)
-      assert(setData == "{}")
+      assert(setData == "{\n  \n}")
 
     }
   }
