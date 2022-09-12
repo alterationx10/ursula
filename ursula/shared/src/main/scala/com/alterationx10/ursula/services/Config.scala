@@ -74,7 +74,7 @@ object ConfigLive {
     val configPath     = dirToPath(dir)
     val configFilePath = configPath / file
     for {
-      cfg   <- config.configMap.get.map(d => writeJs(d).toString())
+      cfg   <- config.configMap.get.map(d => writeJs(d).render(2))
       dirty <- config.dirty.get
       _     <- ZIO.attempt(os.write.over(configFilePath, cfg)).when(dirty)
     } yield ()
