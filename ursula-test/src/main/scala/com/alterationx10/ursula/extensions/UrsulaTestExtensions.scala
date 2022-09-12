@@ -14,6 +14,16 @@ trait UrsulaTestExtensions {
 
   }
 
+  implicit class ZLayerTestScopedExtension[E, A](layer: ZLayer[Scope, E, A]) {
+
+    def testRuntime: Runtime.Scoped[A] = {
+      Unsafe.unsafe { implicit unsafe =>
+        Runtime.unsafe.fromLayer(Scope.default >>> layer)
+      }
+    }
+
+  }
+
   implicit class ZIOTestExtension[R, E, A](zio: ZIO[R, E, A]) {
     def testValue(implicit runtime: Runtime[R]): A = {
       Unsafe.unsafe { implicit unsafe =>

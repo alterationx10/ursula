@@ -93,7 +93,7 @@ object ConfigLive {
         }
     }
 
-  def temp: ZLayer[Any, Nothing, Config] = {
+  def temp: ZLayer[Scope, Throwable, Config] = {
 
     val tmpDir: Path =
       os.temp.dir(prefix = "ursula-config-temp")
@@ -101,7 +101,7 @@ object ConfigLive {
     val tempFile: Path =
       os.temp(contents = Source.WritableSource("{}"), dir = tmpDir)
 
-    Scope.default >>> live(tmpDir.toString, tempFile.last)
-  }.orDie
+    live(tmpDir.toString, tempFile.last)
+  }
 
 }
