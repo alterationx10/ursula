@@ -1,4 +1,4 @@
-name: Run tests on PR
+name: JVM Tests
 on:
   pull_request:
     types: [ opened, reopened, synchronize ]
@@ -17,4 +17,4 @@ jobs:
           java-version: '17'
           cache: 'sbt'
       - name: Test
-        run: sbt +test
+        run: sbt +ursulaNative/test
