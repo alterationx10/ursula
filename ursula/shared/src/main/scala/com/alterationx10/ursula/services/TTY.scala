@@ -1,14 +1,18 @@
 package com.alterationx10.ursula.services
 
 import zio.*
+import zio.Console.ConsoleLive
+import zio.internal.Platform
 
 import java.io.IOException
 
 object TTY {
 
+  def getPlatformConsole: Console =
+    if (Platform.isNative) TTYLive else ConsoleLive
+
   object TTYLive extends Console {
 
-    println()
     override def print(
         line: => Any
     )(implicit trace: Trace): IO[IOException, Unit] = ZIO

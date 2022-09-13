@@ -1,6 +1,7 @@
 package com.alterationx10.ursula.extensions
 
 import zio.*
+import zio.Console.ConsoleLive
 
 trait UrsulaTestExtensions {
 
@@ -25,17 +26,23 @@ trait UrsulaTestExtensions {
   }
 
   implicit class ZIOTestExtension[R, E, A](zio: ZIO[R, E, A]) {
-    def testValue(implicit runtime: Runtime[R]): A = {
+    def testValue(implicit
+        runtime: Runtime[R],
+        console: Console = ConsoleLive
+    ): A = {
       Unsafe.unsafe { implicit unsafe =>
         runtime.unsafe
           .run(
-            zio
+            ZIO.withConsole(console)(zio)
           )
           .getOrThrowFiberFailure()
       }
     }
 
-    def runTestEither(implicit runtime: Runtime[R]): Either[E, A] = {
+    def runTestEither(implicit
+        runtime: Runtime[R],
+        console: Console = ConsoleLive
+    ): Either[E, A] = {
       Unsafe.unsafe { implicit unsafe =>
         runtime.unsafe
           .run(

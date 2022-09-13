@@ -85,4 +85,7 @@ lazy val ursulaTest = crossProject(JVMPlatform, NativePlatform)
 
 addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")
 addCommandAlias("fmtCheck", "all scalafmtSbtCheck scalafmtCheckAll")
-addCommandAlias("fix", "++2.13.8; ursulaJVM/scalafixAll RemoveUnused; ursulaTestJVM/scalafixAll RemoveUnused")
+addCommandAlias(
+  "fix",
+  "++2.13.8; ursulaJVM/scalafixAll RemoveUnused; ursulaTestJVM/scalafixAll RemoveUnused"
+)
