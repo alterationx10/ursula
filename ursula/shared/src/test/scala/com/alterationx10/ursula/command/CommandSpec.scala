@@ -8,7 +8,7 @@ import com.alterationx10.ursula.errors.MissingFlagsException
 import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
 import com.alterationx10.ursula.extensions.*
-import com.alterationx10.ursula.services.{Config, ConfigLive}
+import com.alterationx10.ursula.services.{Config, ConfigLive, TTY}
 import utest.*
 
 // A <-> B Conflict
@@ -78,7 +78,8 @@ object CommandSpec extends TestSuite with UrsulaTestExtensions {
   implicit val rt: Runtime.Scoped[Config] =
     ConfigLive.temp.testRuntime
 
-  override def tests: Tests = Tests {
+  implicit val cnsl: Console = TTY.getPlatformConsole
+  override def tests: Tests  = Tests {
 
     test("should succeed when flags are given correctly") {
       TestCommand.processedAction(goodCommand).testValue

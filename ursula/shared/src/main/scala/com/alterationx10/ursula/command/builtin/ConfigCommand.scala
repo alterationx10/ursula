@@ -5,7 +5,7 @@ import com.alterationx10.ursula.args.Argument
 import com.alterationx10.ursula.args.Flag
 import zio.*
 import com.alterationx10.ursula.args.BooleanFlag
-import com.alterationx10.ursula.services.{Config, TTY}
+import com.alterationx10.ursula.services.Config
 
 case object SetFlag extends BooleanFlag {
 
@@ -89,8 +89,8 @@ object ConfigCommand extends Command {
     _     <- Config
                .get(_args.head)
                .flatMap {
-                 case Some(v) => TTY.printLine(v)
-                 case None    => TTY.printLine(s"${_args.head} not set!")
+                 case Some(v) => Console.printLine(v)
+                 case None    => Console.printLine(s"${_args.head} not set!")
                }
                .when(GetFlag.isPresent(args))
     _     <- Config

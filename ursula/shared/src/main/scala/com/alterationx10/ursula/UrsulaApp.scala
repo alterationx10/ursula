@@ -2,9 +2,8 @@ package com.alterationx10.ursula
 
 import com.alterationx10.ursula.command.Command
 import com.alterationx10.ursula.command.builtin.HelpCommand
-
 import zio.*
-import com.alterationx10.ursula.services.{Config, ConfigLive}
+import com.alterationx10.ursula.services.{Config, ConfigLive, TTY}
 import com.alterationx10.ursula.command.builtin.ConfigCommand
 
 trait UrsulaApp extends ZIOAppDefault {
@@ -102,8 +101,10 @@ trait UrsulaApp extends ZIOAppDefault {
   /** The entry point to the CLI, pre-wired
     */
   override final def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
-    program.provideSome[ZIOAppArgs & Scope](
-      commandLayer ++ ConfigLive.live(configDirectory, configFile)
-    )
+    ZIO
+      .withConsole(TTY.getPlatformConsole)(program)
+      .provideSome[ZIOAppArgs & Scope](
+        commandLayer ++ ConfigLive.live(configDirectory, configFile)
+      )
 
 }
