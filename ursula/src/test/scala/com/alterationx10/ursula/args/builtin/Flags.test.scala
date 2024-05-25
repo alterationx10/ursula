@@ -3,7 +3,7 @@ package com.alterationx10.ursula.args.builtin
 import com.alterationx10.ursula.extensions.UrsulaTestExtensions
 import com.alterationx10.ursula.services.{Config, ConfigLive}
 import utest.*
-import zio.*
+import zio.{Config => ZConfig, *}
 
 object FlagsSpec extends TestSuite with UrsulaTestExtensions {
 

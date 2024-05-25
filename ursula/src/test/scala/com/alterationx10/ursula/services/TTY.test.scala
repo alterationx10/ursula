@@ -2,7 +2,7 @@ package com.alterationx10.ursula.services
 
 import com.alterationx10.ursula.extensions.UrsulaTestExtensions
 import utest.*
-import zio.*
+import zio.{Runtime, Scope, ZLayer, ZIO}
 
 import java.io.{ByteArrayOutputStream, StringReader}
 
