@@ -3,5 +3,6 @@ target/
 .bsp/
 .metals/
 metals.sbt
-
+.scala-build
 .idea/
+.vscode/
