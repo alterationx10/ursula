@@ -8,7 +8,7 @@ import com.alterationx10.ursula.errors.MissingFlagsException
 import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
 import com.alterationx10.ursula.extensions.*
-import com.alterationx10.ursula.services.{Config, ConfigLive, TTY}
+import com.alterationx10.ursula.services.{Config, ConfigLive}
 import zio.test.*
 
 // A <-> B Conflict
@@ -74,8 +74,6 @@ object CommandSpec extends ZIOSpecDefault {
   val unknownArg: Chunk[String]  = "-f".chunked
   val conflicting: Chunk[String] = "-a -b -d".chunked
   val help: Chunk[String]        = "-a -b -d -f -h".chunked
-
-  implicit val cnsl: Console = TTY.getPlatformConsole
 
   override def spec: Spec[TestEnvironment & Scope, Any] =
     suite("CommandSpec")(
