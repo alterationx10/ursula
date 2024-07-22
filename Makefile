@@ -1,6 +1,6 @@
 .PHONY: test publish-local bundle-local publish-central reset
 test:
-	export `cat .env | xargs` && scala-cli test .
+	export `cat .env | xargs` && scala-cli --power test .
 publish-local:
 	scala-cli --power publish local .
 bundle-local:
