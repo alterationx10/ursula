@@ -12,7 +12,7 @@ env:
 
 jobs:
   publish:
-    name: Release toolkit and publish
+    name: Release to Central
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,3 +38,4 @@ jobs:
         env:
           PGP_KEY_ID: ${{ steps.import_gpg.outputs.fingerprint }}
           URSULA_VERSION: ${{ github.ref_name }}
+          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
