@@ -8,7 +8,7 @@ import com.alterationx10.ursula.errors.MissingFlagsException
 import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
 import com.alterationx10.ursula.extensions.*
-import com.alterationx10.ursula.services.{Config, ConfigLive}
+import com.alterationx10.ursula.services.{CliConfig, CliConfigLive}
 import zio.test.*
 
 // A <-> B Conflict
@@ -111,6 +111,6 @@ object CommandSpec extends ZIOSpecDefault {
           NonStrictTestCommand.processedAction(conflicting) *>
           NonStrictTestCommand.processedAction(missingFlag).as(assertCompletes)
       }
-    ).provide(ConfigLive.temp, Scope.default)
+    ).provide(CliConfigLive.temp, Scope.default)
 
 }

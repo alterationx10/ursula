@@ -3,7 +3,7 @@ package com.alterationx10.ursula
 import com.alterationx10.ursula.command.Command
 import com.alterationx10.ursula.command.builtin.HelpCommand
 import zio.*
-import com.alterationx10.ursula.services.{Config, ConfigLive}
+import com.alterationx10.ursula.services.{CliConfig, CliConfigLive}
 import com.alterationx10.ursula.command.builtin.ConfigCommand
 
 trait UrsulaApp extends ZIOAppDefault {
@@ -41,7 +41,7 @@ trait UrsulaApp extends ZIOAppDefault {
   private val commandMap: RIO[CommandList, Map[String, Command]] =
     for {
       map <- ZIO.serviceWith[CommandList](_.groupBy(_.trigger))
-      _   <- ZIO.foreach(map.filter(_._2.size > 1).toList) { kv =>
+      _   <- ZIO.foreachDiscard(map.filter(_._2.size > 1).toList) { kv =>
                ZIO.logWarning(s"""
                 Multiple commands injected with the same trigger - using first found:
                   ${kv._1} =>
@@ -73,7 +73,7 @@ trait UrsulaApp extends ZIOAppDefault {
     * Commands based on the arguments passed in
     */
   private final val program: ZIO[
-    CommandList & Config & ZIOAppArgs,
+    CommandList & CliConfig & ZIOAppArgs,
     Throwable,
     ExitCode
   ] =
@@ -103,7 +103,7 @@ trait UrsulaApp extends ZIOAppDefault {
   override final def run: ZIO[ZIOAppArgs & Scope, Any, Any] =
     program
       .provideSome[ZIOAppArgs & Scope](
-        commandLayer ++ ConfigLive.live(configDirectory, configFile)
+        commandLayer ++ CliConfigLive.live(configDirectory, configFile)
       )
 
 }

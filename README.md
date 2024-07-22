@@ -1,25 +1,17 @@
 # Ursula
 
-A slim framework to make CLI apps in ZIO, primarily targeting Scala Native.
+A slim framework to make Scala CLI apps in ZIO.
 
 ## Project Status
 
 This project is still in (very) early development, but feel free to give it a
-try - I'd love to hear any feedback you have. To add resolvers for the published
-jars, check the [Using in your project](#using-in-your-project) section.
-
-I'm currently publishing `0.0.0-a# ` builds, any they might (i.e. most likely
-will) break a bit on updates, but using the current latest will give you a feel
-for how it's used, and where the project is moving towards.
+try - I'd love to hear any feedback you have. I had been publishing early artifacts to CloudSmith,
+but I'll be updating to Maven Central soon.
 
 ## Cross Compatibility
 
-I've started using `sbt-crossproject` to build both JVM and Native (0.4.x) 
-versions of the library. Going forward, I'm attempting to drive development 
-around "Native first" in terms of design choices.
-
-This project is written in Scala 3, but without too many fancy new features. I
-am trying to support cross-compile and publish for Scala 2.13 as well.
+This project was steering towards a focus on Scala Native, however I think I painted myself into a corner with that.
+Now, this project is going to focus on just the JVM, and Scala 3. It's also going to be very scala-cli focused.
 
 ## Anatomy of the Framework
 
@@ -40,7 +32,7 @@ means that even if you only have:
 
 ```scala
 object App extends UrsulaApp {
-    override val commands: Seq[Command] = Seq.empty
+  override val commands: Seq[Command] = Seq.empty
 }
 ```
 
@@ -63,9 +55,9 @@ def action(args: Chunk[String]): ZIO[UrsulaServices, Throwable, ?]
 
 You consolidate all of your ZIO logic you want to run in this method that will
 pass in arguments that are `Chunk[String]` and returns a
-`ZIO[UrsulaServices, Throwable, ?]`. Note that the return value is `?` - the 
-actual result is discarded to `.unit`, as `Commands` are meant to be a 
-one-off calls from the main entry point, and generally not composed with 
+`ZIO[UrsulaServices, Throwable, ?]`. Note that the return value is `?` - the
+actual result is discarded to `.unit`, as `Commands` are meant to be a
+one-off calls from the main entry point, and generally not composed with
 other `Command`s.
 
 `UrsulaServices` are a collection of built in ZIO services that are available
@@ -79,9 +71,9 @@ There are a few other items to implement, such as
 
 ```scala
   val trigger: String
-  val description: String
-  val usage: String
-  val examples: Seq[String]
+val description: String
+val usage: String
+val examples: Seq[String]
 ```
 
 `trigger` is the String that should be used at the start of your CLI arguments
@@ -93,7 +85,7 @@ Two other important things to declare are
 
 ```scala
   val flags: Seq[Flag[?]]
-  val arguments: Seq[Argument[?]]
+val arguments: Seq[Argument[?]]
 ```
 
 [Flags](#flags) and [Arguments](#arguments) are discussed below, but know that
@@ -140,7 +132,7 @@ can encode the parsing logic.
 `UrsulaServices` is the sum of all services that are automatically provided in
 the `R` channel of your commands `action` zio. See below for more info on each.
 
-#### Config
+#### CliConfig
 
 This service allows you to get/set/delete keys from the apps config file. Behind
 the scenes, the `UrsulaApp` will automatically read the config file at start,
@@ -148,53 +140,9 @@ and load it into an in memory `Map`. This `Map` is what backs this service, and
 if the state becomes dirty (i.e. a `set` or `delete` is used), then after your
 `Command` logic has run, it will persist the `Map` back to disk.
 
-#### TTY
-
-`zio.Console` does a lot `.attemptBlockingIO`, which can make Scala Native 
-unhappy, so `TTY` is simple implementation of the `zio.Console` trait, 
-largely just using `scala.Console.println`, etc...
-
 ## Using in your project
 
-[![Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith&style=flat-square)](https://cloudsmith.com)
-
-Latest version:
-
-[![Latest version of 'ursula_3' @ Cloudsmith](https://api-prd.cloudsmith.io/v1/badges/version/alterationx10/ursula/maven/ursula_3/latest/a=noarch;xg=com.alterationx10/?render=true&show_latest=true)](https://cloudsmith.io/~alterationx10/repos/ursula/packages/detail/maven/ursula_3/latest/a=noarch;xg=com.alterationx10/)
-
-Note: If the badge doesn't show above, you can check the
-[cloudsmith page](https://cloudsmith.io/~alterationx10/repos/ursula/packages/)
-directly.
-
-### sbt
-
-If you're using [sbt](https://www.scala-sbt.org/), add this resolver to your
-build.sbt file:
-
-```scala
-ThisBuild / resolvers += "alterationx10-ursula" at "https://dl.cloudsmith.io/public/alterationx10/ursula/maven/"
-```
-
-and add this dependency to your project:
-
-```scala
-libraryDependencies += "com.alterationx10" %% "ursula" % "LATEST_VERSION"
-```
-
-### 🤘 scala-cli
-
-If you're using [scala-cli](https://scala-cli.virtuslab.org/), you rock!
-
-```scala
-//> using repository "https://dl.cloudsmith.io/public/alterationx10/ursula/maven/"
-//> using lib "com.alterationx10::ursula:LATEST_VERSION"
-```
-
-and when you're ready to share, you can use _something like_
-
-```shell
-scala-cli package . -o app --assembly
-```
+As mentioned above, I'll be moving artifacts to maven central soon, so check back for soon artifacts/versions.
 
 ## Other Projects
 

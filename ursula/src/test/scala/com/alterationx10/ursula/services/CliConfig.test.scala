@@ -1,12 +1,11 @@
 package com.alterationx10.ursula.services
 
-import com.alterationx10.ursula.extensions.UrsulaTestExtensions
 import os.{Path, Source}
 import upickle.default.*
 import zio.{Runtime, Scope, ZIO, ZLayer}
 import zio.test.*
 
-object ConfigSpec extends ZIOSpecDefault {
+object CliConfigSpec extends ZIOSpecDefault {
 
   override def spec: Spec[TestEnvironment & Scope, Any] =
     suite("ConfigSpec")(
@@ -15,9 +14,9 @@ object ConfigSpec extends ZIOSpecDefault {
         os.remove(tempNoExist)
         for {
           e <- ZIO
-                 .serviceWithZIO[Config](_.get(""))
+                 .serviceWithZIO[CliConfig](_.get(""))
                  .provide(
-                   ConfigLive
+                   CliConfigLive
                      .live(tempNoExist.toIO.getParent(), tempNoExist.last),
                    Scope.default
                  )
@@ -34,16 +33,16 @@ object ConfigSpec extends ZIOSpecDefault {
         for {
           _this <-
             ZIO
-              .serviceWithZIO[Config](_.get("this"))
+              .serviceWithZIO[CliConfig](_.get("this"))
               .provide(
-                ConfigLive
+                CliConfigLive
                   .live(tempWithData.toIO.getParent(), tempWithData.last),
                 Scope.default
               )
           abc   <- ZIO
-                     .serviceWithZIO[Config](_.get("abc"))
+                     .serviceWithZIO[CliConfig](_.get("abc"))
                      .provide(
-                       ConfigLive
+                       CliConfigLive
                          .live(tempWithData.toIO.getParent(), tempWithData.last),
                        Scope.default
                      )
@@ -57,9 +56,9 @@ object ConfigSpec extends ZIOSpecDefault {
 
         for {
           e <- ZIO
-                 .serviceWithZIO[Config](_.get("this"))
+                 .serviceWithZIO[CliConfig](_.get("this"))
                  .provide(
-                   ConfigLive
+                   CliConfigLive
                      .live(emptyData.toIO.getParent(), emptyData.last),
                    Scope.default
                  )
@@ -73,9 +72,9 @@ object ConfigSpec extends ZIOSpecDefault {
 
         for {
           _       <- ZIO
-                       .serviceWithZIO[Config](_.set("xyz", "omg"))
+                       .serviceWithZIO[CliConfig](_.set("xyz", "omg"))
                        .provide(
-                         ConfigLive
+                         CliConfigLive
                            .live(emptyData.toIO.getParent(), emptyData.last),
                          Scope.default
                        )
@@ -93,9 +92,9 @@ object ConfigSpec extends ZIOSpecDefault {
 
         for {
           _ <- ZIO
-                 .serviceWithZIO[Config](_.delete("this"))
+                 .serviceWithZIO[CliConfig](_.delete("this"))
                  .provide(
-                   ConfigLive
+                   CliConfigLive
                      .live(tempWithData.toIO.getParent(), tempWithData.last),
                    Scope.default
                  )

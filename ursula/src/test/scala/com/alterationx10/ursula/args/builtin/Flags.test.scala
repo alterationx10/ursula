@@ -1,7 +1,6 @@
 package com.alterationx10.ursula.args.builtin
 
-import com.alterationx10.ursula.extensions.UrsulaTestExtensions
-import com.alterationx10.ursula.services.{Config, ConfigLive}
+import com.alterationx10.ursula.services.{CliConfig, CliConfigLive}
 import zio.{Config => ZConfig, *}
 import zio.test.*
 

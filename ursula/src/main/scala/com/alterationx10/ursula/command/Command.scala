@@ -7,12 +7,12 @@ import com.alterationx10.ursula.doc.*
 
 import scala.annotation.tailrec
 import zio.*
-import com.alterationx10.ursula.services.Config
+import com.alterationx10.ursula.services.CliConfig
 
 trait Command {
 
   // This type is re-declared to save an import
-  type UrsulaServices = Config
+  type UrsulaServices = CliConfig
 
   /** A brief description of what this command does.
     */

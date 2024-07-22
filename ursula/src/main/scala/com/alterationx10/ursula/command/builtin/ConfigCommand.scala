@@ -5,7 +5,7 @@ import com.alterationx10.ursula.args.Argument
 import com.alterationx10.ursula.args.Flag
 import zio.*
 import com.alterationx10.ursula.args.BooleanFlag
-import com.alterationx10.ursula.services.Config
+import com.alterationx10.ursula.services.CliConfig
 
 case object SetFlag extends BooleanFlag {
 
@@ -86,18 +86,18 @@ object ConfigCommand extends Command {
       args: Chunk[String]
   ): ZIO[UrsulaServices, Throwable, Unit] = for {
     _args <- ZIO.attempt(stripFlags(args))
-    _     <- Config
+    _     <- CliConfig
                .get(_args.head)
                .flatMap {
                  case Some(v) => Console.printLine(v)
                  case None    => Console.printLine(s"${_args.head} not set!")
                }
                .when(GetFlag.isPresent(args))
-    _     <- Config
+    _     <- CliConfig
                .set(_args.head, _args.last)
                .when(SetFlag.isPresent(args))
     _     <-
-      Config.delete(_args.head).when(DeleteFlag.isPresent(args))
+      CliConfig.delete(_args.head).when(DeleteFlag.isPresent(args))
   } yield ()
 
   override val examples: Seq[String] = Seq(

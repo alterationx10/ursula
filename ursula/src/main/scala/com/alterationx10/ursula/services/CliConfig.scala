@@ -4,27 +4,27 @@ import os.{Path, Source}
 import upickle.default.*
 import zio.*
 
-trait Config {
+trait CliConfig {
   def get(key: String): Task[Option[String]]
   def set(key: String, value: String): Task[Unit]
   def delete(key: String): Task[Unit]
 }
 
-object Config {
-  def get(key: String): ZIO[Config, Throwable, Option[String]] =
-    ZIO.serviceWithZIO[Config](_.get(key))
+object CliConfig {
+  def get(key: String): ZIO[CliConfig, Throwable, Option[String]] =
+    ZIO.serviceWithZIO[CliConfig](_.get(key))
 
-  def set(key: String, value: String): ZIO[Config, Throwable, Unit] =
-    ZIO.serviceWithZIO[Config](_.set(key, value))
+  def set(key: String, value: String): ZIO[CliConfig, Throwable, Unit] =
+    ZIO.serviceWithZIO[CliConfig](_.set(key, value))
 
-  def delete(key: String): ZIO[Config, Throwable, Unit] =
-    ZIO.serviceWithZIO[Config](_.delete(key))
+  def delete(key: String): ZIO[CliConfig, Throwable, Unit] =
+    ZIO.serviceWithZIO[CliConfig](_.delete(key))
 }
 
-case class ConfigLive(
+case class CliConfigLive(
     configMap: Ref[Map[String, String]],
     dirty: Ref[Boolean]
-) extends Config {
+) extends CliConfig {
 
   def delete(key: String): Task[Unit] =
     for {
@@ -43,7 +43,7 @@ case class ConfigLive(
 
 }
 
-object ConfigLive {
+object CliConfigLive {
 
   private def dirToPath(dir: String) =
     dir.split("/").filterNot(_.isEmpty).foldLeft(os.root)(_ / _)
@@ -69,7 +69,7 @@ object ConfigLive {
   private def writeConfig(
       dir: String,
       file: String,
-      config: ConfigLive
+      config: CliConfigLive
   ): ZIO[Scope, Nothing, Unit] = {
     val configPath     = dirToPath(dir)
     val configFilePath = configPath / file
@@ -80,20 +80,20 @@ object ConfigLive {
     } yield ()
   }.orDie
 
-  def live(dir: String, file: String): ZLayer[Scope, Throwable, Config] =
+  def live(dir: String, file: String): ZLayer[Scope, Throwable, CliConfig] =
     ZLayer {
       (for {
         cfg    <-
           readConfig(dir, file)
         mapRef <- Ref.make(cfg)
         dRef   <- Ref.make(false)
-      } yield ConfigLive(mapRef, dRef))
+      } yield CliConfigLive(mapRef, dRef))
         .withFinalizer { cfg =>
           writeConfig(dir, file, cfg)
         }
     }
 
-  def temp: ZLayer[Scope, Throwable, Config] = {
+  def temp: ZLayer[Scope, Throwable, CliConfig] = {
 
     val tmpDir: Path =
       os.temp.dir(prefix = "ursula-config-temp")
