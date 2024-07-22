@@ -1,0 +1,40 @@
+name: Publish
+
+on:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+
+env:
+  CENTRAL_TOKEN: ${{ secrets.CENTRAL_USERNAME }}
+  GPG_PRIVATE_KEY: ${{ secrets.PGP_SECRET }}
+  PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+
+jobs:
+  publish:
+    name: Release toolkit and publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache
+        uses: coursier/cache-action@v6.3
+      - name: Setup Scala CLI
+        uses: VirtusLab/scala-cli-setup@main
+
+      - name: Import GPG key
+        id: import_gpg
+        run: |
+          echo "${{ secrets.PGP_SECRET }}" | base64 --decode > private.key
+          gpg --import --batch --yes --pinentry-mode loopback --passphrase "${{ secrets.PGP_PASSPHRASE }}" private.key
+          echo "fingerprint=$(gpg --list-secret-keys --with-colons | grep -m 1 fpr | awk -F: '/^fpr:/ { print $10 }')" >> "$GITHUB_OUTPUT"
+          rm private.key
+
+      - name: Publish
+        run: |
+          sudo apt-get install rename
+          make -s publish-central
+        continue-on-error: false
+        env:
+          PGP_KEY_ID: ${{ steps.import_gpg.outputs.fingerprint }}
+          URSULA_VERSION: ${{ github.ref_name }}
