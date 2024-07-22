@@ -2,10 +2,10 @@ package com.alterationx10.ursula.args
 
 import com.alterationx10.ursula.extensions.*
 import com.alterationx10.ursula.services.{Config, ConfigLive}
-import utest.*
 import zio.*
+import zio.test.*
 
-object FlagSpec extends TestSuite with UrsulaTestExtensions {
+object FlagSpec extends ZIOSpecDefault {
 
   // NOTE: This relies on teh contents .env.test to be loaded
   trait TestFlag extends StringFlag {
@@ -49,78 +49,80 @@ object FlagSpec extends TestSuite with UrsulaTestExtensions {
   val argsWithFlag: Chunk[String] = "-l this -l that -t xyz".chunked
   val argsNoFlag: Chunk[String]   = "-l this -l that".chunked
 
-  implicit val rt: Runtime.Scoped[Config] =
-    ConfigLive.temp.testRuntime
-  override def tests: Tests               = Tests {
-    test("parseFirstArgZIO") {
-      test("cli") {
-        val a = TestFlag.parseFirstArgZIO(argsWithFlag).testValue
-        val b = TestFlagEnv.parseFirstArgZIO(argsWithFlag).testValue
-        val c = TestFlagEnv2.parseFirstArgZIO(argsWithFlag).testValue
-        val d = TestFlagDef.parseFirstArgZIO(argsWithFlag).testValue
-        val e = TestFlagEnvDef.parseFirstArgZIO(argsWithFlag).testValue
-        val f = TestFlagEnvDef2.parseFirstArgZIO(argsWithFlag).testValue
-        assert(
-          a.contains("xyz"),
-          b == a,
-          c == a,
-          d == a,
-          e == a,
-          f == a
-        )
-      }
-      test("default") {
-        val a = TestFlag.parseFirstArgZIO(argsNoFlag).testValue
-        val b = TestFlagEnv.parseFirstArgZIO(argsNoFlag).testValue
-        val c = TestFlagEnv2.parseFirstArgZIO(argsNoFlag).testValue
-        val d = TestFlagDef.parseFirstArgZIO(argsNoFlag).testValue
-        val e = TestFlagEnvDef.parseFirstArgZIO(argsNoFlag).testValue
-        val f = TestFlagEnvDef2.parseFirstArgZIO(argsNoFlag).testValue
-        assert(
-          a.isEmpty,
-          b.contains("abc"),
-          c.isEmpty,
-          d.contains("123"),
-          e.contains("abc"),
-          f.contains("123")
-        )
-      }
-    }
-
-    test("parseArgsZIO") {
-      test("cli") {
-        val a = TestFlag.parseArgsZIO(argsWithFlag).testValue
-        val b = TestFlagEnv.parseArgsZIO(argsWithFlag).testValue
-        val c = TestFlagEnv2.parseArgsZIO(argsWithFlag).testValue
-        val d = TestFlagDef.parseArgsZIO(argsWithFlag).testValue
-        val e = TestFlagEnvDef.parseArgsZIO(argsWithFlag).testValue
-        val f = TestFlagEnvDef2.parseArgsZIO(argsWithFlag).testValue
-        assert(
-          a.contains("xyz"),
-          b == a,
-          c == a,
-          d == a,
-          e == a,
-          f == a
-        )
-      }
-      test("default") {
-        val a = TestFlag.parseArgsZIO(argsNoFlag).testValue
-        val b = TestFlagEnv.parseArgsZIO(argsNoFlag).testValue
-        val c = TestFlagEnv2.parseArgsZIO(argsNoFlag).testValue
-        val d = TestFlagDef.parseArgsZIO(argsNoFlag).testValue
-        val e = TestFlagEnvDef.parseArgsZIO(argsNoFlag).testValue
-        val f = TestFlagEnvDef2.parseArgsZIO(argsNoFlag).testValue
-        assert(
-          a.isEmpty,
-          b.contains("abc"),
-          c.isEmpty,
-          d.contains("123"),
-          e.contains("abc"),
-          f.contains("123")
-        )
-      }
-    }
-  }
+  override def spec: Spec[TestEnvironment & Scope, Any] =
+    suite("FlagSpec")(
+      suite("parseFirstArgZIO")(
+        test("cli") {
+          for {
+            a <- TestFlag.parseFirstArgZIO(argsWithFlag)
+            b <- TestFlagEnv.parseFirstArgZIO(argsWithFlag)
+            c <- TestFlagEnv2.parseFirstArgZIO(argsWithFlag)
+            d <- TestFlagDef.parseFirstArgZIO(argsWithFlag)
+            e <- TestFlagEnvDef.parseFirstArgZIO(argsWithFlag)
+            f <- TestFlagEnvDef2.parseFirstArgZIO(argsWithFlag)
+          } yield assertTrue(
+            a.contains("xyz"),
+            b == a,
+            c == a,
+            d == a,
+            e == a,
+            f == a
+          )
+        },
+        test("default") {
+          for {
+            a <- TestFlag.parseFirstArgZIO(argsNoFlag)
+            b <- TestFlagEnv.parseFirstArgZIO(argsNoFlag)
+            c <- TestFlagEnv2.parseFirstArgZIO(argsNoFlag)
+            d <- TestFlagDef.parseFirstArgZIO(argsNoFlag)
+            e <- TestFlagEnvDef.parseFirstArgZIO(argsNoFlag)
+            f <- TestFlagEnvDef2.parseFirstArgZIO(argsNoFlag)
+          } yield assertTrue(
+            a.isEmpty,
+            b.contains("abc"),
+            c.isEmpty,
+            d.contains("123"),
+            e.contains("abc"),
+            f.contains("123")
+          )
+        }
+      ),
+      suite("parseArgsZIO")(
+        test("cli") {
+          for {
+            a <- TestFlag.parseArgsZIO(argsWithFlag)
+            b <- TestFlagEnv.parseArgsZIO(argsWithFlag)
+            c <- TestFlagEnv2.parseArgsZIO(argsWithFlag)
+            d <- TestFlagDef.parseArgsZIO(argsWithFlag)
+            e <- TestFlagEnvDef.parseArgsZIO(argsWithFlag)
+            f <- TestFlagEnvDef2.parseArgsZIO(argsWithFlag)
+          } yield assertTrue(
+            a.contains("xyz"),
+            b == a,
+            c == a,
+            d == a,
+            e == a,
+            f == a
+          )
+        },
+        test("default") {
+          for {
+            a <- TestFlag.parseArgsZIO(argsNoFlag)
+            b <- TestFlagEnv.parseArgsZIO(argsNoFlag)
+            c <- TestFlagEnv2.parseArgsZIO(argsNoFlag)
+            d <- TestFlagDef.parseArgsZIO(argsNoFlag)
+            e <- TestFlagEnvDef.parseArgsZIO(argsNoFlag)
+            f <- TestFlagEnvDef2.parseArgsZIO(argsNoFlag)
+          } yield assertTrue(
+            a.isEmpty,
+            b.contains("abc"),
+            c.isEmpty,
+            d.contains("123"),
+            e.contains("abc"),
+            f.contains("123")
+          )
+        }
+      )
+    )
 
 }

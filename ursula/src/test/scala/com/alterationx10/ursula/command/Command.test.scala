@@ -1,6 +1,6 @@
 package com.alterationx10.ursula.command
 
-import zio.*
+import zio.{Config => ZConfig, *}
 import com.alterationx10.ursula.args.Flag
 import com.alterationx10.ursula.args.BooleanFlag
 import com.alterationx10.ursula.args.StringFlag
@@ -9,13 +9,13 @@ import com.alterationx10.ursula.errors.ConflictingFlagsException
 import com.alterationx10.ursula.errors.UnrecognizedFlagException
 import com.alterationx10.ursula.extensions.*
 import com.alterationx10.ursula.services.{Config, ConfigLive, TTY}
-import utest.*
+import zio.test.*
 
 // A <-> B Conflict
 // C requires an argument
 // D is a required flag
 
-object CommandSpec extends TestSuite with UrsulaTestExtensions {
+object CommandSpec extends ZIOSpecDefault {
 
   case object AFlag extends BooleanFlag {
     override val description: String = "A flag"
@@ -75,57 +75,44 @@ object CommandSpec extends TestSuite with UrsulaTestExtensions {
   val conflicting: Chunk[String] = "-a -b -d".chunked
   val help: Chunk[String]        = "-a -b -d -f -h".chunked
 
-  implicit val rt: Runtime.Scoped[Config] =
-    ConfigLive.temp.testRuntime
-
   implicit val cnsl: Console = TTY.getPlatformConsole
-  override def tests: Tests  = Tests {
 
-    test("should succeed when flags are given correctly") {
-      TestCommand.processedAction(goodCommand).testValue
-    }
-
-    test("should succeed when help flag is given") {
-      TestCommand.processedAction(help).testValue
-    }
-
-    test("should fail when missing a required flag") {
-      assert(
-        TestCommand
-          .processedAction(missingFlag)
-          .flip
-          .testValue == MissingFlagsException
-      )
-    }
-
-    test("should fail when missing an expected arg for a flag") {
-
-      assert(
-        TestCommand
-          .processedAction(unknownArg)
-          .flip
-          .testValue == UnrecognizedFlagException
-      )
-
-    }
-
-    test("should fail when given conflicting flags") {
-      assert(
-        TestCommand
-          .processedAction(conflicting)
-          .flip
-          .testValue == ConflictingFlagsException
-      )
-    }
-
-    test(
-      "should not fail on unknown/conflicting/missing flags if non-strict"
-    ) {
-      NonStrictTestCommand.processedAction(unknownArg).testValue
-      NonStrictTestCommand.processedAction(conflicting).testValue
-      NonStrictTestCommand.processedAction(missingFlag).testValue
-    }
-
-  }
+  override def spec: Spec[TestEnvironment & Scope, Any] =
+    suite("CommandSpec")(
+      test("should succeed when flags are given correctly") {
+        TestCommand.processedAction(goodCommand).as(assertCompletes)
+      },
+      test("should succeed when help flag is given") {
+        TestCommand.processedAction(help).as(assertCompletes)
+      },
+      test("should fail when missing a required flag") {
+        for {
+          error <- TestCommand.processedAction(missingFlag).flip
+        } yield assertTrue(
+          error == MissingFlagsException
+        )
+      },
+      test("should fail when given an unknown flag") {
+        for {
+          error <- TestCommand.processedAction(unknownArg).flip
+        } yield assertTrue(
+          error == UnrecognizedFlagException
+        )
+      },
+      test("should fail when given conflicting flags") {
+        for {
+          error <- TestCommand.processedAction(conflicting).flip
+        } yield assertTrue(
+          error == ConflictingFlagsException
+        )
+      },
+      test(
+        "should not fail on unknown/conflicting/missing flags if non-strict"
+      ) {
+        NonStrictTestCommand.processedAction(unknownArg) *>
+          NonStrictTestCommand.processedAction(conflicting) *>
+          NonStrictTestCommand.processedAction(missingFlag).as(assertCompletes)
+      }
+    ).provide(ConfigLive.temp, Scope.default)
 
 }

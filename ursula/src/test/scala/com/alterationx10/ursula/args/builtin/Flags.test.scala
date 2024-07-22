@@ -2,10 +2,10 @@ package com.alterationx10.ursula.args.builtin
 
 import com.alterationx10.ursula.extensions.UrsulaTestExtensions
 import com.alterationx10.ursula.services.{Config, ConfigLive}
-import utest.*
 import zio.{Config => ZConfig, *}
+import zio.test.*
 
-object FlagsSpec extends TestSuite with UrsulaTestExtensions {
+object FlagsSpec extends ZIOSpecDefault {
 
   def toChunk(str: String): Chunk[String] =
     Chunk.fromArray(str.split(" "))
@@ -23,34 +23,32 @@ object FlagsSpec extends TestSuite with UrsulaTestExtensions {
     "arg1 arg2"
   ).map(toChunk)
 
-  implicit val rt: Runtime.Scoped[Config] =
-    ConfigLive.temp.testRuntime
-
-  override def tests: Tests = Tests {
-    test("name") {
-      assert(HelpFlag.name == "help")
-    }
-    test("shortKey") {
-      assert(HelpFlag.shortKey == "h")
-    }
-    test("isBoolean") {
-      assert(!HelpFlag.expectsArgument)
-    }
-    test("no conflicts") {
-      assert(HelpFlag.exclusive.isEmpty)
-    }
-    test("do dependencies") {
-      assert(HelpFlag.dependsOn.isEmpty)
-    }
-    test("is present") {
-      val result: ZIO[Any, Throwable, Boolean] = for {
-        p <- ZIO.foreach(presentArgs)(HelpFlag.isPresentZIO)
-        m <- ZIO.foreach(missingArgs)(HelpFlag.isPresentZIO)
-      } yield p.forall(_ == true) &&
-        m.forall(_ == false)
-
-      assert(result.expect(_ == true))
-    }
-  }
+  override def spec: Spec[TestEnvironment & Scope, Any] =
+    suite("FlagsSpec")(
+      test("name") {
+        assertTrue(HelpFlag.name == "help")
+      },
+      test("shortKey") {
+        assertTrue(HelpFlag.shortKey == "h")
+      },
+      test("isBoolean") {
+        assertTrue(!HelpFlag.expectsArgument)
+      },
+      test("no conflicts") {
+        assertTrue(HelpFlag.exclusive.isEmpty)
+      },
+      test("do dependencies") {
+        assertTrue(HelpFlag.dependsOn.isEmpty)
+      },
+      test("is present") {
+        for {
+          p <- ZIO.foreach(presentArgs)(HelpFlag.isPresentZIO)
+          m <- ZIO.foreach(missingArgs)(HelpFlag.isPresentZIO)
+        } yield assertTrue(
+          p.forall(_ == true),
+          m.forall(_ == false)
+        )
+      }
+    )
 
 }

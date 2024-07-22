@@ -1,11 +1,14 @@
 package com.alterationx10.ursula.args
 
-import utest.{test, Tests, TestSuite}
+import zio.*
+import zio.test.*
 
-object ArgumentSpec extends TestSuite {
-  override def tests: Tests = Tests {
-    test("TODO") {
-      "Needs to be implemented"
-    }
-  }
+object ArgumentSpec extends ZIOSpecDefault {
+
+  override def spec: Spec[TestEnvironment & Scope, Any] =
+    suite("ArgumentSpec")(
+      test("TODO") {
+        assertTrue(true)
+      }
+    )
 }

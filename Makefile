@@ -1,6 +1,5 @@
+.PHONY: test
 test:
-	env $(cat .env | xargs) >/dev/null && scala-cli test .
-test-native:
-	env $(cat .env | xargs) >/dev/null && scala-cli test . --native
+	export $(cat .env | xargs) >/dev/null && scala-cli test .
 reset:
 	rm -rf .bsp .metals .scala-build .vscode
