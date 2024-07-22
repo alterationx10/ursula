@@ -6,8 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
-  CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+  CENTRAL_TOKEN: ${{ secrets.CENTRAL_USERNAME }}
   GPG_PRIVATE_KEY: ${{ secrets.PGP_SECRET }}
   PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
 
@@ -30,9 +29,6 @@ jobs:
           gpg --import --batch --yes --pinentry-mode loopback --passphrase "${{ secrets.PGP_PASSPHRASE }}" private.key
           echo "fingerprint=$(gpg --list-secret-keys --with-colons | grep -m 1 fpr | awk -F: '/^fpr:/ { print $10 }')" >> "$GITHUB_OUTPUT"
           rm private.key
-        env:
-          gpg_private_key: ${{ secrets.PGP_SECRET }}
-          passphrase: ${{ secrets.PGP_PASSPHRASE }}
 
       - name: Publish
         run: |
@@ -41,5 +37,4 @@ jobs:
         continue-on-error: false
         env:
           PGP_KEY_ID: ${{ steps.import_gpg.outputs.fingerprint }}
-          TOOLKIT_VERSION: ${{ github.ref_name }}
-          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
+          URSULA_VERSION: ${{ github.ref_name }}

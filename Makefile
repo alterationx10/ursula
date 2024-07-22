@@ -9,10 +9,8 @@ bundle-local:
 	for DIR in srcs docs poms jars; do \
 		cp  ~/.ivy2/local/dev.alteration.x10/ursula_3/${URSULA_VERSION}/$$DIR/* ursula-bundle/dev/alteration/x10/ursula_3/${URSULA_VERSION}; \
 	done
-	cd ursula-bundle/dev/alteration/x10/toolkit_3/${URSULA_VERSION} && \
-		rename 's/toolkit_3/toolkit_3-${URSULA_VERSION}/' *
-	cd ursula-bundle/dev/alteration/x10/toolkit-test_3/${URSULA_VERSION} && \
-		rename 's/toolkit-test_3/toolkit-test_3-${URSULA_VERSION}/' *
+	cd ursula-bundle/dev/alteration/x10/ursula_3/${URSULA_VERSION} && \
+		rename 's/ursula_3/ursula_3-${URSULA_VERSION}/' *
 	cd ursula-bundle && \
 		zip -r ursula-${URSULA_VERSION}.zip .
 publish-central: bundle-local
