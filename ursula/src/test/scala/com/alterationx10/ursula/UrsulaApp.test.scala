@@ -10,6 +10,7 @@ import zio.test.*
 object UrsulaAppSpec extends ZIOSpecDefault {
 
   object TestProgram extends UrsulaApp {
+    override val appIdentifier: String        = "ursula-test"
     lazy val tmpDir: Path                     = os.temp.dir(prefix = "ursula-test-UrsulaAppSpec")
     lazy val tmpConfig: Path                  =
       os.temp(contents = Source.WritableSource("{}"), dir = tmpDir)
