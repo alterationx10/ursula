@@ -2,6 +2,7 @@ package com.alterationx10.ursula.args
 
 import com.alterationx10.ursula.extensions.*
 import com.alterationx10.ursula.doc.*
+import com.alterationx10.ursula.errors.*
 import scala.annotation.tailrec
 import zio.*
 
@@ -48,7 +49,7 @@ trait Flag[R] {
     * example, if you wanted to restrict an --env [arg] flag to only "dev", or
     * "test", supply them here.
     */
-  val options: Option[Set[String]] = Option.empty
+  val options: Option[Set[R]] = Option.empty
 
   /** A partial function that will take the String value of the passed argument,
     * and convert it to type R.
@@ -139,15 +140,19 @@ trait Flag[R] {
     * Most useful when this Flag is expected once (i.e. [[multiple]] == false)
     * @param args
     *   The arguments passed to the command
+    * @throws InvalidOptionFlagException
+    *   if the flag is present but the value is not in the options (if options
+    *   is defined and non-empty)
     * @return
     * @see
     *   [[multiple]]
     */
-  final def parseFirstArg(args: Chunk[String]): Option[R] =
+  final def parseFirstArg(args: Chunk[String]): Option[R] = {
     args
       .dropUntil(a => a == _sk || a == _lk)
       .headOption
       .map(parse) :~ envArg :~ default
+  }.oneOfOrThrow(options.getOrElse(Set.empty), InvalidOptionFlagException)
 
   /** Wraps [[parseFirstArg]] in ZIO.attempt
     * @see
@@ -160,17 +165,18 @@ trait Flag[R] {
     * through [[parse]]
     * @param args
     *   The arguments passed to the command
+    * @throws InvalidOptionFlagException
+    *   if the flag is present but the value is not in the options (if options
+    *   is defined and non-empty)
     */
-  def parseArgs(args: Chunk[String]): Chunk[R] =
+  def parseArgs(args: Chunk[String]): Chunk[R] = {
     recursiveParse(parse)(args) :~ envArg :~ default
+  }.oneOfOrThrow(options.getOrElse(Set.empty), InvalidOptionFlagException)
 
   /** Wraps [[parseArgs]] in ZIO.attempt
     */
-  def parseArgsZIO(args: Chunk[String]): Task[Chunk[R]] = ZIO.foreach {
-    recursiveParse(parseZIO)(args) :~
-      envArg.map(e => ZIO.succeed(e)) :~
-      default.map(d => ZIO.succeed(d))
-  } { identity }
+  def parseArgsZIO(args: Chunk[String]): Task[Chunk[R]] =
+    ZIO.attempt(parseArgs(args))
 
   lazy val documentation: Documentation = FlagDoc(this)
 
