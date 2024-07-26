@@ -2,12 +2,13 @@ package com.alterationx10.ursula.args
 
 import com.alterationx10.ursula.extensions.*
 import com.alterationx10.ursula.services.{CliConfig, CliConfigLive}
+import com.alterationx10.ursula.errors.*
 import zio.*
 import zio.test.*
 
 object FlagSpec extends ZIOSpecDefault {
 
-  // NOTE: This relies on teh contents .env.test to be loaded
+  // NOTE: This relies on the contents .env to be loaded
   trait TestFlag extends StringFlag {
     override val description: String = "A flag for testing"
     override val name: String        = "override"
@@ -44,6 +45,20 @@ object FlagSpec extends ZIOSpecDefault {
     override val default: Option[String] = Option("123")
     override val env: Option[String]     = Option("NOT_PRESENT")
 
+  }
+
+  case object TestFlagOptions extends TestFlag {
+    override val options: Option[Set[String]] = Option(Set("abc", "123"))
+  }
+
+  case object TestFlagOptionsEnv extends TestFlag {
+    override val options: Option[Set[String]] = Option(Set("abc", "123"))
+    override val env: Option[String]          = Option("BAD_OPTION_TEST_FLAG")
+  }
+
+  case object TestFlagOptionsDef extends TestFlag {
+    override val options: Option[Set[String]] = Option(Set("abc", "123"))
+    override val default: Option[String]      = Some("xyz")
   }
 
   val argsWithFlag: Chunk[String] = "-l this -l that -t xyz".chunked
@@ -120,6 +135,38 @@ object FlagSpec extends ZIOSpecDefault {
             d.contains("123"),
             e.contains("abc"),
             f.contains("123")
+          )
+        }
+      ),
+      suite("only accepts valid options")(
+        test("cli") {
+          for {
+            _     <- TestFlagOptions.parseArgsZIO("-t 123 -t abc".chunked)
+            empty <- TestFlagOptions.parseArgsZIO(Chunk.empty)
+            err   <- TestFlagOptions.parseArgsZIO("-t xyz".chunked).flip
+          } yield assertTrue(
+            empty.isEmpty,
+            err == InvalidOptionFlagException
+          )
+        },
+        test("env") {
+          for {
+            a <- TestFlagOptionsEnv.parseArgsZIO("-t 123 -t abc".chunked)
+            e <- TestFlagOptionsEnv.parseArgsZIO(Chunk.empty).flip
+          } yield assertTrue(
+            a.contains("123"),
+            a.contains("abc"),
+            e == InvalidOptionFlagException
+          )
+        },
+        test("default") {
+          for {
+            a <-
+              TestFlagOptionsDef.parseArgsZIO("-l this -l that -t 123".chunked)
+            e <- TestFlagOptionsDef.parseArgsZIO(Chunk.empty).flip
+          } yield assertTrue(
+            a.contains("123"),
+            e == InvalidOptionFlagException
           )
         }
       )

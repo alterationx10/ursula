@@ -8,13 +8,21 @@ import com.alterationx10.ursula.command.builtin.ConfigCommand
 
 trait UrsulaApp extends ZIOAppDefault {
 
-  lazy val configDirectory: String =
-    s"${java.lang.System.getProperty("user.home")}/.ursula"
-  lazy val configFile: String      = "config.json"
-
-  /** A convenience alias for private methods
+  /** A unique identifier, primarily used for the configuration directory. It
+    * should be unique per app; CLI apps with the same appIdentifier will end up
+    * sharing the same configuration.
     */
-  type CommandList = Seq[Command]
+  val appIdentifier: String
+
+  /** The directory where the configuration file will be stored. Defaults to
+    * "~/.appIdentifier"
+    */
+  lazy val configDirectory: String =
+    s"${java.lang.System.getProperty("user.home")}/.$appIdentifier"
+
+  /** The name of the configuration file to be used. Defaults to "config.json"
+    */
+  lazy val configFile: String = "config.json"
 
   /** This setting determines whether the built in HelpCommand is the default
     * command. Defaults true, override to false if you want to use a different
@@ -38,9 +46,9 @@ trait UrsulaApp extends ZIOAppDefault {
   /** Given the injected Seq[Command], parse out a Map keyed by the Command
     * trigger. Warns if multiple commands use the same trigger.
     */
-  private val commandMap: RIO[CommandList, Map[String, Command]] =
+  private val commandMap: RIO[Seq[Command], Map[String, Command]] =
     for {
-      map <- ZIO.serviceWith[CommandList](_.groupBy(_.trigger))
+      map <- ZIO.serviceWith[Seq[Command]](_.groupBy(_.trigger))
       _   <- ZIO.foreachDiscard(map.filter(_._2.size > 1).toList) { kv =>
                ZIO.logWarning(s"""
                 Multiple commands injected with the same trigger - using first found:
@@ -52,15 +60,15 @@ trait UrsulaApp extends ZIOAppDefault {
 
   /** Given the injected Seq[Command], parse out the trigger key-words
     */
-  private val triggerList: RIO[CommandList, Seq[String]] =
-    ZIO.serviceWith[CommandList](_.map(_.trigger))
+  private val triggerList: RIO[Seq[Command], Seq[String]] =
+    ZIO.serviceWith[Seq[Command]](_.map(_.trigger))
 
   /** Given the injected Seq[Command], find the one flagged as default (if
     * present). Warns if multiple Commands have been set as default.
     */
-  private val findDefaultCommand: RIO[CommandList, Option[Command]] =
+  private val findDefaultCommand: RIO[Seq[Command], Option[Command]] =
     for {
-      default <- ZIO.serviceWith[CommandList](_.filter(_.isDefaultCommand))
+      default <- ZIO.serviceWith[Seq[Command]](_.filter(_.isDefaultCommand))
       _       <- ZIO.when(default.size > 1) {
                    ZIO.logWarning(s"""
           Multiple commands injected with isDefaultCommand=true - using the first:
@@ -73,7 +81,7 @@ trait UrsulaApp extends ZIOAppDefault {
     * Commands based on the arguments passed in
     */
   private final val program: ZIO[
-    CommandList & CliConfig & ZIOAppArgs,
+    Seq[Command] & CliConfig & ZIOAppArgs,
     Throwable,
     ExitCode
   ] =
