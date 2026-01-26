@@ -1,0 +1,94 @@
+{
+  "millBuildRootModuleResult": {
+    "codeSignatures": {},
+    "compile": {
+      "compileClasspath": {
+        "resolvedMvnDeps": {}
+      },
+      "allSourceFiles": {
+        "allSources": {
+          "sources": {
+            "sources.super.javalib.JavaModule": {}
+          },
+          "generatedSources": {}
+        }
+      },
+      "zincAuxiliaryClassFileExtensions": {
+        "zincAuxiliaryClassFileExtensions.super.javalib.JavaModule": {}
+      },
+      "scalaVersion": {},
+      "generatedScriptSources": {},
+      "zincReportCachedProblems": {},
+      "javacOptions": {},
+      "javaHome": {
+        "jvmIndexVersion": {},
+        "jvmVersion": {
+          "jvmId": {}
+        }
+      },
+      "scalaCompilerBridge": {},
+      "zincIncrementalCompilation": {},
+      "upstreamCompileOutput": {},
+      "millVersion": {},
+      "scalaOrganization": {},
+      "allScalacOptions": {
+        "mandatoryScalacOptions": {},
+        "scalacOptions": {
+          "scalacOptions.super.scalalib.ScalaModule": {}
+        },
+        "enablePluginScalacOptions": {}
+      },
+      "mill.javalib.JvmWorkerModule/internalWorker": {
+        "mill.javalib.JvmWorkerModule/internalWorkerClassLoader": {},
+        "mill.javalib.JvmWorkerModule/checkGradleModules": {},
+        "mill.javalib.JvmWorkerModule/classpath": {},
+        "mill.javalib.JvmWorkerModule/zincLogDebug": {},
+        "mill.javalib.JvmWorkerModule/repositories": {},
+        "mill.javalib.JvmWorkerModule/useFileLocks": {}
+      },
+      "mandatoryJavacOptions": {},
+      "scalacPluginClasspath": {
+        "scalacPluginMvnDeps": {}
+      },
+      "scalaCompilerClasspath": {
+        "scalaLibraryMvnDeps": {}
+      }
+    },
+    "parseBuildFiles": {
+      "scriptSources": {}
+    },
+    "runClasspath": {
+      "localClasspath": {
+        "localCompileClasspath": {
+          "compileResources": {},
+          "unmanagedClasspath": {}
+        },
+        "localRunClasspath": {
+          "resources": {
+            "resources.super.javalib.JavaModule": {}
+          },
+          "localRunClasspath.super.RunModule": {}
+        }
+      },
+      "transitiveLocalClasspath": {},
+      "resolvedRunMvnDeps": {
+        "mandatoryMvnDeps": {},
+        "depManagement": {},
+        "artifactTypes": {},
+        "resolvedDepsWarnNonPlatform": {},
+        "checkGradleModules": {},
+        "compileMvnDeps": {},
+        "repositories": {},
+        "mill.javalib.CoursierConfigModule/coursierEnv": {},
+        "transitiveCoursierProjects": {},
+        "runMvnDeps": {
+          "cliImports": {}
+        },
+        "mvnDeps": {},
+        "bomMvnDeps": {},
+        "platformSuffix": {}
+      },
+      "runClasspath.super.RunModule": {}
+    }
+  }
+}

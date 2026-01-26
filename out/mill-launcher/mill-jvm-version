@@ -1,0 +1,1 @@
+"extends: ScalaModule\nscalaVersion: 3.8.0\nscalacOptions: [\n  -no-indent,\n  -rewrite,\n  -source:3.4-migration,\n  -Wunused:all,\n  -deprecation,\n  -feature,\n  -Xmax-inlines,\n  64\n]\n\n"

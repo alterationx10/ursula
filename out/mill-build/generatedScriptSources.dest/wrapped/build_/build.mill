@@ -1,0 +1,21 @@
+package build_
+import mill.*, scalalib.*, javalib.*, kotlinlib.*
+import build_.{package_ => build}
+import build.*
+import MillMiscInfo.*
+import _root_.mill.util.TokenReaders.given
+import _root_.mill.runner.autooverride.AutoOverride
+
+//SOURCECODE_ORIGINAL_FILE_PATH=/Users/alt/Projects/alterationx10/ursula/build.mill.yaml
+object package_ extends _root_.mill.util.MainRootModule, package_ {
+  override lazy val millDiscover: _root_.mill.api.Discover = _root_.mill.api.Discover[this.type]
+  final lazy val test: _root_.build_.test.package_.type = _root_.build_.test.package_ // subfolder module reference
+}
+trait package_ extends ScalaModule, AutoOverride[_root_.mill.T[?]] {
+  def moduleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "", "moduleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("moduleDeps"))
+  def compileModuleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "", "compileModuleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("compileModuleDeps"))
+  def runModuleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "", "runModuleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("runModuleDeps"))
+  def bomModuleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "", "bomModuleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("bomModuleDeps"))
+  inline def autoOverrideImpl[T](): T = ${ mill.api.Task.notImplementedImpl[T] }
+}
+

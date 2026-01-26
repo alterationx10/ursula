@@ -1,0 +1,22 @@
+{
+    "value": [
+        "ref:v0:df85c7e5:/Users/alt/Projects/alterationx10/ursula/src/ursula/UrsulaApp.scala",
+        "ref:v0:9b2aa884:/Users/alt/Projects/alterationx10/ursula/src/ursula/extensions/Extensions.scala",
+        "ref:v0:dee55484:/Users/alt/Projects/alterationx10/ursula/src/ursula/doc/Documentation.scala",
+        "ref:v0:3d311115:/Users/alt/Projects/alterationx10/ursula/src/ursula/doc/CommandDoc.scala",
+        "ref:v0:2e54cc1a:/Users/alt/Projects/alterationx10/ursula/src/ursula/doc/FlagDoc.scala",
+        "ref:v0:a72fb0aa:/Users/alt/Projects/alterationx10/ursula/src/ursula/doc/ArgumentDoc.scala",
+        "ref:v0:9c55821f:/Users/alt/Projects/alterationx10/ursula/src/ursula/command/CommandContext.scala",
+        "ref:v0:dee4db5e:/Users/alt/Projects/alterationx10/ursula/src/ursula/command/Commands.scala",
+        "ref:v0:592af441:/Users/alt/Projects/alterationx10/ursula/src/ursula/command/Command.scala",
+        "ref:v0:6caafa9c:/Users/alt/Projects/alterationx10/ursula/src/ursula/command/builtin/HelpCommand.scala",
+        "ref:v0:6b465da2:/Users/alt/Projects/alterationx10/ursula/src/ursula/command/CommandBuilder.scala",
+        "ref:v0:fe17b283:/Users/alt/Projects/alterationx10/ursula/src/ursula/args/Argument.scala",
+        "ref:v0:6ac19ea4:/Users/alt/Projects/alterationx10/ursula/src/ursula/args/Flags.scala",
+        "ref:v0:04b32a00:/Users/alt/Projects/alterationx10/ursula/src/ursula/args/Arguments.scala",
+        "ref:v0:9d025b0d:/Users/alt/Projects/alterationx10/ursula/src/ursula/args/builtin/HelpFlag.scala",
+        "ref:v0:99a72f50:/Users/alt/Projects/alterationx10/ursula/src/ursula/args/Flag.scala"
+    ],
+    "valueHash": -1432055102,
+    "inputsHash": -1189659142
+}

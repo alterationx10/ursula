@@ -1,0 +1,471 @@
+{
+    "value": {
+        "msg": "      ",
+        "results": [
+            {
+                "fullyQualifiedName": "ursula.args.FlagSpec.Flag.parseFirstArg - args with flag",
+                "selector": "ursula.args.FlagSpec.Flag.parseFirstArg - args with flag",
+                "duration": 13,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagSpec.Flag.parseFirstArg - args without flag",
+                "selector": "ursula.args.FlagSpec.Flag.parseFirstArg - args without flag",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagSpec.Flag.parseArgs - args with flag",
+                "selector": "ursula.args.FlagSpec.Flag.parseArgs - args with flag",
+                "duration": 2,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagSpec.Flag.parseArgs - args without flag",
+                "selector": "ursula.args.FlagSpec.Flag.parseArgs - args without flag",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagSpec.Flag.parseArgs - only accepts valid options",
+                "selector": "ursula.args.FlagSpec.Flag.parseArgs - only accepts valid options",
+                "duration": 3,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.builtin.HelpFlagSpec.HelpFlag.name",
+                "selector": "ursula.args.builtin.HelpFlagSpec.HelpFlag.name",
+                "duration": 7,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.builtin.HelpFlagSpec.HelpFlag.shortKey",
+                "selector": "ursula.args.builtin.HelpFlagSpec.HelpFlag.shortKey",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.builtin.HelpFlagSpec.HelpFlag.isBoolean",
+                "selector": "ursula.args.builtin.HelpFlagSpec.HelpFlag.isBoolean",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.builtin.HelpFlagSpec.HelpFlag is not exclusive",
+                "selector": "ursula.args.builtin.HelpFlagSpec.HelpFlag is not exclusive",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.builtin.HelpFlagSpec.HelpFlag has no dependencies",
+                "selector": "ursula.args.builtin.HelpFlagSpec.HelpFlag has no dependencies",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.builtin.HelpFlagSpec.HelpFlag is present",
+                "selector": "ursula.args.builtin.HelpFlagSpec.HelpFlag is present",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.ArgumentSpec.Argument options",
+                "selector": "ursula.args.ArgumentSpec.Argument options",
+                "duration": 14,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.ArgumentSpec.Argument default",
+                "selector": "ursula.args.ArgumentSpec.Argument default",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.string creates a StringFlag with correct properties",
+                "selector": "ursula.args.FlagsSpec.Flags.string creates a StringFlag with correct properties",
+                "duration": 9,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.string parses arguments correctly",
+                "selector": "ursula.args.FlagsSpec.Flags.string parses arguments correctly",
+                "duration": 3,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.string respects options when provided",
+                "selector": "ursula.args.FlagsSpec.Flags.string respects options when provided",
+                "duration": 3,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.int creates an IntFlag with correct properties",
+                "selector": "ursula.args.FlagsSpec.Flags.int creates an IntFlag with correct properties",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.int parses integer arguments",
+                "selector": "ursula.args.FlagsSpec.Flags.int parses integer arguments",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.int uses default when not provided",
+                "selector": "ursula.args.FlagsSpec.Flags.int uses default when not provided",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.boolean creates a BooleanFlag",
+                "selector": "ursula.args.FlagsSpec.Flags.boolean creates a BooleanFlag",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.boolean detects presence correctly",
+                "selector": "ursula.args.FlagsSpec.Flags.boolean detects presence correctly",
+                "duration": 2,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.path creates a Path flag with correct properties",
+                "selector": "ursula.args.FlagsSpec.Flags.path creates a Path flag with correct properties",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.path parses paths correctly",
+                "selector": "ursula.args.FlagsSpec.Flags.path parses paths correctly",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.path supports custom parsers",
+                "selector": "ursula.args.FlagsSpec.Flags.path supports custom parsers",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.custom creates a custom typed flag",
+                "selector": "ursula.args.FlagsSpec.Flags.custom creates a custom typed flag",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.args.FlagsSpec.Flags.custom supports all flag properties",
+                "selector": "ursula.args.FlagsSpec.Flags.custom supports all flag properties",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.provide typed access to flags",
+                "selector": "ursula.command.CommandContextSpec.provide typed access to flags",
+                "duration": 10,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.return None for absent flags",
+                "selector": "ursula.command.CommandContextSpec.return None for absent flags",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.return default values when flag not provided",
+                "selector": "ursula.command.CommandContextSpec.return default values when flag not provided",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.check boolean flags correctly",
+                "selector": "ursula.command.CommandContextSpec.check boolean flags correctly",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.throw when requiredFlag is not present",
+                "selector": "ursula.command.CommandContextSpec.throw when requiredFlag is not present",
+                "duration": 3,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.return value for requiredFlag when present",
+                "selector": "ursula.command.CommandContextSpec.return value for requiredFlag when present",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.strip flags from args",
+                "selector": "ursula.command.CommandContextSpec.strip flags from args",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.provide rawArgs unchanged",
+                "selector": "ursula.command.CommandContextSpec.provide rawArgs unchanged",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.be used by Command.lazyAction",
+                "selector": "ursula.command.CommandContextSpec.be used by Command.lazyAction",
+                "duration": 4,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.parse argument with automatic index lookup",
+                "selector": "ursula.command.CommandContextSpec.parse argument with automatic index lookup",
+                "duration": 2,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.parse argument with explicit index",
+                "selector": "ursula.command.CommandContextSpec.parse argument with explicit index",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.use default value when argument not provided",
+                "selector": "ursula.command.CommandContextSpec.use default value when argument not provided",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.parse optional argument that is present",
+                "selector": "ursula.command.CommandContextSpec.parse optional argument that is present",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.return None for optional argument not provided",
+                "selector": "ursula.command.CommandContextSpec.return None for optional argument not provided",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.return Some with default for optional argument with default",
+                "selector": "ursula.command.CommandContextSpec.return Some with default for optional argument with default",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.throw when required argument is missing",
+                "selector": "ursula.command.CommandContextSpec.throw when required argument is missing",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.validate argument options",
+                "selector": "ursula.command.CommandContextSpec.validate argument options",
+                "duration": 3,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.parse valid argument option",
+                "selector": "ursula.command.CommandContextSpec.parse valid argument option",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.throw when argument not in command's arguments sequence",
+                "selector": "ursula.command.CommandContextSpec.throw when argument not in command's arguments sequence",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.strip flags before parsing arguments",
+                "selector": "ursula.command.CommandContextSpec.strip flags before parsing arguments",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandContextSpec.parse arguments with mixed flags and args",
+                "selector": "ursula.command.CommandContextSpec.parse arguments with mixed flags and args",
+                "duration": 2,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandSpec.should succeed when flags are given correctly",
+                "selector": "ursula.command.CommandSpec.should succeed when flags are given correctly",
+                "duration": 12,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandSpec.should succeed when help flag is given",
+                "selector": "ursula.command.CommandSpec.should succeed when help flag is given",
+                "duration": 8,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandSpec.should fail when missing a required flag",
+                "selector": "ursula.command.CommandSpec.should fail when missing a required flag",
+                "duration": 2,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandSpec.should fail when given an unknown flag",
+                "selector": "ursula.command.CommandSpec.should fail when given an unknown flag",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandSpec.should fail when given conflicting flags",
+                "selector": "ursula.command.CommandSpec.should fail when given conflicting flags",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandSpec.should not fail on unknown/conflicting/missing flags if non-strict",
+                "selector": "ursula.command.CommandSpec.should not fail on unknown/conflicting/missing flags if non-strict",
+                "duration": 2,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.create creates command with all properties",
+                "selector": "ursula.command.CommandsSpec.Commands.create creates command with all properties",
+                "duration": 10,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.create uses trigger as default usage",
+                "selector": "ursula.command.CommandsSpec.Commands.create uses trigger as default usage",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.create defaults to empty collections",
+                "selector": "ursula.command.CommandsSpec.Commands.create defaults to empty collections",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.create defaults to strict mode",
+                "selector": "ursula.command.CommandsSpec.Commands.create defaults to strict mode",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.create action is executed",
+                "selector": "ursula.command.CommandsSpec.Commands.create action is executed",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.simple creates command with minimal config",
+                "selector": "ursula.command.CommandsSpec.Commands.simple creates command with minimal config",
+                "duration": 2,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.simple with no flags or arguments",
+                "selector": "ursula.command.CommandsSpec.Commands.simple with no flags or arguments",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.Commands.builder creates builder instance",
+                "selector": "ursula.command.CommandsSpec.Commands.builder creates builder instance",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder builds command with all properties",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder builds command with all properties",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder.example adds examples incrementally",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder.example adds examples incrementally",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder.examples sets all examples at once",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder.examples sets all examples at once",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder.withFlags adds flags incrementally",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder.withFlags adds flags incrementally",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder.flags replaces flags",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder.flags replaces flags",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder.withArguments adds arguments incrementally",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder.withArguments adds arguments incrementally",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder.arguments replaces arguments",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder.arguments replaces arguments",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder.visible sets hidden to false",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder.visible sets hidden to false",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder throws if description not set",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder throws if description not set",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder throws if action not set",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder throws if action not set",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder defaults to trigger as usage",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder defaults to trigger as usage",
+                "duration": 1,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.CommandBuilder defaults to strict mode",
+                "selector": "ursula.command.CommandsSpec.CommandBuilder defaults to strict mode",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.factory-created command can be executed via tryAction",
+                "selector": "ursula.command.CommandsSpec.factory-created command can be executed via tryAction",
+                "duration": 3,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.builder-created command can be executed via tryAction",
+                "selector": "ursula.command.CommandsSpec.builder-created command can be executed via tryAction",
+                "duration": 0,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.factory-created command handles flags correctly",
+                "selector": "ursula.command.CommandsSpec.factory-created command handles flags correctly",
+                "duration": 4,
+                "status": "Success"
+            },
+            {
+                "fullyQualifiedName": "ursula.command.CommandsSpec.builder-created command handles arguments correctly",
+                "selector": "ursula.command.CommandsSpec.builder-created command handles arguments correctly",
+                "duration": 1,
+                "status": "Success"
+            }
+        ]
+    },
+    "valueHash": -1337229971,
+    "inputsHash": 536006665
+}

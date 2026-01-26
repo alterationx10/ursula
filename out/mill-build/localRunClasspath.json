@@ -1,0 +1,9 @@
+{
+    "value": [
+        "ref:v0:c984eca8:/Users/alt/Projects/alterationx10/ursula/mill-build/resources",
+        "ref:v0:ff322491:/Users/alt/Projects/alterationx10/ursula/out/mill-build/generatedScriptSources.dest/resources",
+        "ref:v0:6c013b51:/Users/alt/Projects/alterationx10/ursula/out/mill-build/compile.dest/transformed-classes"
+    ],
+    "valueHash": 1477404472,
+    "inputsHash": -1377139332
+}

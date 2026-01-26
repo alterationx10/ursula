@@ -1,0 +1,21 @@
+package build_.test
+import mill.*, scalalib.*, javalib.*, kotlinlib.*
+import build_.{package_ => build}
+import build.*
+import MillMiscInfo.*
+import _root_.mill.util.TokenReaders.given
+import _root_.mill.runner.autooverride.AutoOverride
+
+//SOURCECODE_ORIGINAL_FILE_PATH=/Users/alt/Projects/alterationx10/ursula/test/package.mill.yaml
+object package_ extends _root_.mill.api.internal.SubfolderModule(build.millDiscover), package_ {
+  
+  
+}
+trait package_ extends build.ScalaTests, TestModule.Munit, AutoOverride[_root_.mill.T[?]] {
+  def moduleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "test", "moduleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("moduleDeps"))
+  def compileModuleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "test", "compileModuleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("compileModuleDeps"))
+  def runModuleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "test", "runModuleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("runModuleDeps"))
+  def bomModuleDeps = _root_.mill.api.internal.ModuleDepsResolver.resolveModuleDeps(build, "test", "bomModuleDeps", _root_.mill.api.internal.ModuleDepsResolver.superMethod("bomModuleDeps"))
+  inline def autoOverrideImpl[T](): T = ${ mill.api.Task.notImplementedImpl[T] }
+}
+

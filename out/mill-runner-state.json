@@ -1,0 +1,24 @@
+{
+    "workerCache": {
+        "mill.javalib.JvmWorkerModule/internalWorkerClassLoader": {
+            "identityHashCode": 2111983516,
+            "inputHash": -484003188
+        },
+        "mill.javalib.JvmWorkerModule/internalWorker": {
+            "identityHashCode": 740596932,
+            "inputHash": -412905366
+        }
+    },
+    "evalWatched": [
+        "/Users/alt/Projects/alterationx10/ursula/test/compile-resources",
+        "/Users/alt/Projects/alterationx10/ursula/test/resources",
+        "/Users/alt/Projects/alterationx10/ursula/src",
+        "/Users/alt/Projects/alterationx10/ursula/compile-resources",
+        "/Users/alt/Projects/alterationx10/ursula/resources",
+        "/Users/alt/Projects/alterationx10/ursula/test/src"
+    ],
+    "moduleWatched": [],
+    "classLoaderIdentity": null,
+    "runClasspath": [],
+    "runClasspathHash": 473519988
+}

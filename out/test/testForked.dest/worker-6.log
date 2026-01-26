@@ -1,0 +1,44 @@
+ursula.command.CommandsSpec
+Running Test Class ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+ursula.command.CommandsSpec
+[32mursula.command.CommandsSpec:[0m
+[32m  + [0m[32mCommands.create creates command with all properties[0m [90m0.01s[0m
+[32m  + [0m[32mCommands.create uses trigger as default usage[0m [90m0.001s[0m
+[32m  + [0m[32mCommands.create defaults to empty collections[0m [90m0.0s[0m
+[32m  + [0m[32mCommands.create defaults to strict mode[0m [90m0.001s[0m
+[32m  + [0m[32mCommands.create action is executed[0m [90m0.001s[0m
+[32m  + [0m[32mCommands.simple creates command with minimal config[0m [90m0.002s[0m
+[32m  + [0m[32mCommands.simple with no flags or arguments[0m [90m0.001s[0m
+[32m  + [0m[32mCommands.builder creates builder instance[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder builds command with all properties[0m [90m0.0s[0m
+[32m  + [0m[32mCommandBuilder.example adds examples incrementally[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder.examples sets all examples at once[0m [90m0.0s[0m
+[32m  + [0m[32mCommandBuilder.withFlags adds flags incrementallyursula.command.CommandsSpec
+ursula.command.CommandsSpec
+[0m [90m0.0s[0m
+[32m  + [0m[32mCommandBuilder.flags replaces flags[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder.withArguments adds arguments incrementally[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder.arguments replaces arguments[0m [90m0.0s[0m
+[32m  + [0m[32mCommandBuilder.visible sets hidden to false[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder throws if description not set[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder throws if action not set[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder defaults to trigger as usage[0m [90m0.001s[0m
+[32m  + [0m[32mCommandBuilder defaults to strict mode[0m [90m0.0s[0m
+[32m  + [0m[32mfactory-created command can be executed via tryAction[0m [90m0.003s[0m
+[32m  + [0m[32mbuilder-created command can be executed via tryAction[0m [90m0.0s[0m
+[32m  + [0m[32mfactory-created command handles flags correctly[0m [90m0.004s[0m
+[32m  + [0m[32mbuilder-created command handles arguments correctly[0m [90m0.001s[0ursula.command.CommandsSpec
+m
+ursula.command.CommandsSpec

@@ -1,0 +1,543 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites tests="77" failures="0" errors="0" skipped="0" time="0.156">
+        <testsuite name="ursula.args.builtin.HelpFlagSpec.HelpFlag has no dependencies" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.builtin.HelpFlagSpec.HelpFlag has no dependencies" name="ursula.args.builtin.HelpFlagSpec.HelpFlag has no dependencies" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.create uses trigger as default usage" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.create uses trigger as default usage" name="ursula.command.CommandsSpec.Commands.create uses trigger as default usage" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.string parses arguments correctly" tests="1" failures="0" errors="0" skipped="0" time="0.003" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.string parses arguments correctly" name="ursula.args.FlagsSpec.Flags.string parses arguments correctly" time="0.003">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.parse argument with explicit index" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.parse argument with explicit index" name="ursula.command.CommandContextSpec.parse argument with explicit index" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagSpec.Flag.parseFirstArg - args with flag" tests="1" failures="0" errors="0" skipped="0" time="0.013" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagSpec.Flag.parseFirstArg - args with flag" name="ursula.args.FlagSpec.Flag.parseFirstArg - args with flag" time="0.013">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.strip flags from args" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.strip flags from args" name="ursula.command.CommandContextSpec.strip flags from args" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.custom supports all flag properties" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.custom supports all flag properties" name="ursula.args.FlagsSpec.Flags.custom supports all flag properties" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.parse argument with automatic index lookup" tests="1" failures="0" errors="0" skipped="0" time="0.002" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.parse argument with automatic index lookup" name="ursula.command.CommandContextSpec.parse argument with automatic index lookup" time="0.002">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.create defaults to strict mode" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.create defaults to strict mode" name="ursula.command.CommandsSpec.Commands.create defaults to strict mode" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.use default value when argument not provided" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.use default value when argument not provided" name="ursula.command.CommandContextSpec.use default value when argument not provided" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.parse optional argument that is present" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.parse optional argument that is present" name="ursula.command.CommandContextSpec.parse optional argument that is present" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandSpec.should fail when missing a required flag" tests="1" failures="0" errors="0" skipped="0" time="0.002" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandSpec.should fail when missing a required flag" name="ursula.command.CommandSpec.should fail when missing a required flag" time="0.002">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.return value for requiredFlag when present" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.return value for requiredFlag when present" name="ursula.command.CommandContextSpec.return value for requiredFlag when present" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.custom creates a custom typed flag" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.custom creates a custom typed flag" name="ursula.args.FlagsSpec.Flags.custom creates a custom typed flag" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.check boolean flags correctly" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.check boolean flags correctly" name="ursula.command.CommandContextSpec.check boolean flags correctly" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.parse valid argument option" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.parse valid argument option" name="ursula.command.CommandContextSpec.parse valid argument option" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.create creates command with all properties" tests="1" failures="0" errors="0" skipped="0" time="0.01" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.create creates command with all properties" name="ursula.command.CommandsSpec.Commands.create creates command with all properties" time="0.01">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.simple creates command with minimal config" tests="1" failures="0" errors="0" skipped="0" time="0.002" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.simple creates command with minimal config" name="ursula.command.CommandsSpec.Commands.simple creates command with minimal config" time="0.002">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.ArgumentSpec.Argument options" tests="1" failures="0" errors="0" skipped="0" time="0.014" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.ArgumentSpec.Argument options" name="ursula.args.ArgumentSpec.Argument options" time="0.014">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.path creates a Path flag with correct properties" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.path creates a Path flag with correct properties" name="ursula.args.FlagsSpec.Flags.path creates a Path flag with correct properties" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandSpec.should not fail on unknown/conflicting/missing flags if non-strict" tests="1" failures="0" errors="0" skipped="0" time="0.002" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandSpec.should not fail on unknown/conflicting/missing flags if non-strict" name="ursula.command.CommandSpec.should not fail on unknown/conflicting/missing flags if non-strict" time="0.002">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder.example adds examples incrementally" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder.example adds examples incrementally" name="ursula.command.CommandsSpec.CommandBuilder.example adds examples incrementally" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandSpec.should succeed when help flag is given" tests="1" failures="0" errors="0" skipped="0" time="0.008" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandSpec.should succeed when help flag is given" name="ursula.command.CommandSpec.should succeed when help flag is given" time="0.008">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.return default values when flag not provided" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.return default values when flag not provided" name="ursula.command.CommandContextSpec.return default values when flag not provided" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.throw when argument not in command's arguments sequence" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.throw when argument not in command's arguments sequence" name="ursula.command.CommandContextSpec.throw when argument not in command's arguments sequence" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.factory-created command handles flags correctly" tests="1" failures="0" errors="0" skipped="0" time="0.004" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.factory-created command handles flags correctly" name="ursula.command.CommandsSpec.factory-created command handles flags correctly" time="0.004">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.simple with no flags or arguments" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.simple with no flags or arguments" name="ursula.command.CommandsSpec.Commands.simple with no flags or arguments" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagSpec.Flag.parseFirstArg - args without flag" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagSpec.Flag.parseFirstArg - args without flag" name="ursula.args.FlagSpec.Flag.parseFirstArg - args without flag" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.boolean creates a BooleanFlag" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.boolean creates a BooleanFlag" name="ursula.args.FlagsSpec.Flags.boolean creates a BooleanFlag" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder.examples sets all examples at once" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder.examples sets all examples at once" name="ursula.command.CommandsSpec.CommandBuilder.examples sets all examples at once" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.string respects options when provided" tests="1" failures="0" errors="0" skipped="0" time="0.003" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.string respects options when provided" name="ursula.args.FlagsSpec.Flags.string respects options when provided" time="0.003">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.int creates an IntFlag with correct properties" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.int creates an IntFlag with correct properties" name="ursula.args.FlagsSpec.Flags.int creates an IntFlag with correct properties" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.boolean detects presence correctly" tests="1" failures="0" errors="0" skipped="0" time="0.002" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.boolean detects presence correctly" name="ursula.args.FlagsSpec.Flags.boolean detects presence correctly" time="0.002">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagSpec.Flag.parseArgs - args without flag" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagSpec.Flag.parseArgs - args without flag" name="ursula.args.FlagSpec.Flag.parseArgs - args without flag" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.be used by Command.lazyAction" tests="1" failures="0" errors="0" skipped="0" time="0.004" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.be used by Command.lazyAction" name="ursula.command.CommandContextSpec.be used by Command.lazyAction" time="0.004">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder.visible sets hidden to false" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder.visible sets hidden to false" name="ursula.command.CommandsSpec.CommandBuilder.visible sets hidden to false" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder defaults to trigger as usage" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder defaults to trigger as usage" name="ursula.command.CommandsSpec.CommandBuilder defaults to trigger as usage" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.string creates a StringFlag with correct properties" tests="1" failures="0" errors="0" skipped="0" time="0.009" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.string creates a StringFlag with correct properties" name="ursula.args.FlagsSpec.Flags.string creates a StringFlag with correct properties" time="0.009">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagSpec.Flag.parseArgs - args with flag" tests="1" failures="0" errors="0" skipped="0" time="0.002" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagSpec.Flag.parseArgs - args with flag" name="ursula.args.FlagSpec.Flag.parseArgs - args with flag" time="0.002">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder builds command with all properties" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder builds command with all properties" name="ursula.command.CommandsSpec.CommandBuilder builds command with all properties" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder.flags replaces flags" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder.flags replaces flags" name="ursula.command.CommandsSpec.CommandBuilder.flags replaces flags" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder.withFlags adds flags incrementally" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder.withFlags adds flags incrementally" name="ursula.command.CommandsSpec.CommandBuilder.withFlags adds flags incrementally" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.strip flags before parsing arguments" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.strip flags before parsing arguments" name="ursula.command.CommandContextSpec.strip flags before parsing arguments" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.factory-created command can be executed via tryAction" tests="1" failures="0" errors="0" skipped="0" time="0.003" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.factory-created command can be executed via tryAction" name="ursula.command.CommandsSpec.factory-created command can be executed via tryAction" time="0.003">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder throws if description not set" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder throws if description not set" name="ursula.command.CommandsSpec.CommandBuilder throws if description not set" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.validate argument options" tests="1" failures="0" errors="0" skipped="0" time="0.003" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.validate argument options" name="ursula.command.CommandContextSpec.validate argument options" time="0.003">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.int parses integer arguments" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.int parses integer arguments" name="ursula.args.FlagsSpec.Flags.int parses integer arguments" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.builtin.HelpFlagSpec.HelpFlag.isBoolean" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.builtin.HelpFlagSpec.HelpFlag.isBoolean" name="ursula.args.builtin.HelpFlagSpec.HelpFlag.isBoolean" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.provide typed access to flags" tests="1" failures="0" errors="0" skipped="0" time="0.01" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.provide typed access to flags" name="ursula.command.CommandContextSpec.provide typed access to flags" time="0.01">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.create defaults to empty collections" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.create defaults to empty collections" name="ursula.command.CommandsSpec.Commands.create defaults to empty collections" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.builtin.HelpFlagSpec.HelpFlag is not exclusive" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.builtin.HelpFlagSpec.HelpFlag is not exclusive" name="ursula.args.builtin.HelpFlagSpec.HelpFlag is not exclusive" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.path parses paths correctly" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.path parses paths correctly" name="ursula.args.FlagsSpec.Flags.path parses paths correctly" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.int uses default when not provided" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.int uses default when not provided" name="ursula.args.FlagsSpec.Flags.int uses default when not provided" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.provide rawArgs unchanged" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.provide rawArgs unchanged" name="ursula.command.CommandContextSpec.provide rawArgs unchanged" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder defaults to strict mode" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder defaults to strict mode" name="ursula.command.CommandsSpec.CommandBuilder defaults to strict mode" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.ArgumentSpec.Argument default" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.ArgumentSpec.Argument default" name="ursula.args.ArgumentSpec.Argument default" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.builtin.HelpFlagSpec.HelpFlag.shortKey" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.builtin.HelpFlagSpec.HelpFlag.shortKey" name="ursula.args.builtin.HelpFlagSpec.HelpFlag.shortKey" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandSpec.should fail when given an unknown flag" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandSpec.should fail when given an unknown flag" name="ursula.command.CommandSpec.should fail when given an unknown flag" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagSpec.Flag.parseArgs - only accepts valid options" tests="1" failures="0" errors="0" skipped="0" time="0.003" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagSpec.Flag.parseArgs - only accepts valid options" name="ursula.args.FlagSpec.Flag.parseArgs - only accepts valid options" time="0.003">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.builder-created command can be executed via tryAction" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.builder-created command can be executed via tryAction" name="ursula.command.CommandsSpec.builder-created command can be executed via tryAction" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.builtin.HelpFlagSpec.HelpFlag.name" tests="1" failures="0" errors="0" skipped="0" time="0.007" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.builtin.HelpFlagSpec.HelpFlag.name" name="ursula.args.builtin.HelpFlagSpec.HelpFlag.name" time="0.007">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.return None for optional argument not provided" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.return None for optional argument not provided" name="ursula.command.CommandContextSpec.return None for optional argument not provided" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.return None for absent flags" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.return None for absent flags" name="ursula.command.CommandContextSpec.return None for absent flags" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.builder-created command handles arguments correctly" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.builder-created command handles arguments correctly" name="ursula.command.CommandsSpec.builder-created command handles arguments correctly" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.FlagsSpec.Flags.path supports custom parsers" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.FlagsSpec.Flags.path supports custom parsers" name="ursula.args.FlagsSpec.Flags.path supports custom parsers" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder throws if action not set" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder throws if action not set" name="ursula.command.CommandsSpec.CommandBuilder throws if action not set" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.args.builtin.HelpFlagSpec.HelpFlag is present" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.args.builtin.HelpFlagSpec.HelpFlag is present" name="ursula.args.builtin.HelpFlagSpec.HelpFlag is present" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder.withArguments adds arguments incrementally" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder.withArguments adds arguments incrementally" name="ursula.command.CommandsSpec.CommandBuilder.withArguments adds arguments incrementally" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandSpec.should succeed when flags are given correctly" tests="1" failures="0" errors="0" skipped="0" time="0.012" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandSpec.should succeed when flags are given correctly" name="ursula.command.CommandSpec.should succeed when flags are given correctly" time="0.012">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.throw when required argument is missing" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.throw when required argument is missing" name="ursula.command.CommandContextSpec.throw when required argument is missing" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandSpec.should fail when given conflicting flags" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandSpec.should fail when given conflicting flags" name="ursula.command.CommandSpec.should fail when given conflicting flags" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.throw when requiredFlag is not present" tests="1" failures="0" errors="0" skipped="0" time="0.003" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.throw when requiredFlag is not present" name="ursula.command.CommandContextSpec.throw when requiredFlag is not present" time="0.003">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.builder creates builder instance" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.builder creates builder instance" name="ursula.command.CommandsSpec.Commands.builder creates builder instance" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.Commands.create action is executed" tests="1" failures="0" errors="0" skipped="0" time="0.001" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.Commands.create action is executed" name="ursula.command.CommandsSpec.Commands.create action is executed" time="0.001">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandsSpec.CommandBuilder.arguments replaces arguments" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandsSpec.CommandBuilder.arguments replaces arguments" name="ursula.command.CommandsSpec.CommandBuilder.arguments replaces arguments" time="0.0">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.parse arguments with mixed flags and args" tests="1" failures="0" errors="0" skipped="0" time="0.002" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.parse arguments with mixed flags and args" name="ursula.command.CommandContextSpec.parse arguments with mixed flags and args" time="0.002">
+          
+        </testcase>
+      </testsuite><testsuite name="ursula.command.CommandContextSpec.return Some with default for optional argument with default" tests="1" failures="0" errors="0" skipped="0" time="0.0" timestamp="2026-01-26T23:09:12">
+        <properties>
+        
+      </properties>
+        <testcase classname="ursula.command.CommandContextSpec.return Some with default for optional argument with default" name="ursula.command.CommandContextSpec.return Some with default for optional argument with default" time="0.0">
+          
+        </testcase>
+      </testsuite>
+      </testsuites>

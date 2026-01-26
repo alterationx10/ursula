@@ -1,0 +1,14 @@
+{
+    "value": [
+        "-no-indent",
+        "-rewrite",
+        "-source:3.4-migration",
+        "-Wunused:all",
+        "-deprecation",
+        "-feature",
+        "-Xmax-inlines",
+        "64"
+    ],
+    "valueHash": 915817511,
+    "inputsHash": 467980450
+}

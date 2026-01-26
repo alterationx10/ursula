@@ -1,0 +1,10 @@
+{
+    "value": [
+        "ref:v0:8e5b558e:/Users/alt/Projects/alterationx10/ursula/build.mill.yaml",
+        "ref:v0:33b78599:/Users/alt/Projects/alterationx10/ursula/test/package.mill.yaml",
+        "ref:v0:33b78599:/Users/alt/Projects/alterationx10/ursula/test/package.mill.yaml",
+        "ref:v0:c984eca8:/Users/alt/Projects/alterationx10/ursula/mill-build/src"
+    ],
+    "valueHash": 2115389128,
+    "inputsHash": -1685873362
+}

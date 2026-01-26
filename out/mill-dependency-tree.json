@@ -1,0 +1,181 @@
+{
+  "test.testForked": {
+    "test.testClasspath": {
+      "test.localRunClasspath": {
+        "test.compile": {
+          "test.zincAuxiliaryClassFileExtensions": {
+            "test.zincAuxiliaryClassFileExtensions.super.javalib.JavaModule": {}
+          },
+          "test.allSourceFiles": {
+            "test.allSources": {
+              "test.sources": {},
+              "test.generatedSources": {}
+            }
+          },
+          "test.zincReportCachedProblems": {},
+          "test.scalaCompilerBridge": {
+            "scalaCompilerBridge": {}
+          },
+          "test.javacOptions": {
+            "javacOptions": {}
+          },
+          "test.allScalacOptions": {
+            "test.mandatoryScalacOptions": {
+              "test.mandatoryScalacOptions.super.ScalaModule": {}
+            },
+            "test.scalacOptions": {
+              "scalacOptions": {}
+            },
+            "test.enablePluginScalacOptions": {
+              "test.scalacPluginMvnDeps": {}
+            }
+          },
+          "test.mandatoryJavacOptions": {},
+          "test.upstreamCompileOutput": {},
+          "test.zincIncrementalCompilation": {},
+          "test.compileClasspath": {
+            "compile": {
+              "compileClasspath": {
+                "resolvedMvnDeps": {
+                  "resolvedDepsWarnNonPlatform": {},
+                  "artifactTypes": {}
+                }
+              },
+              "allSourceFiles": {
+                "allSources": {
+                  "sources": {},
+                  "generatedSources": {}
+                }
+              },
+              "zincAuxiliaryClassFileExtensions": {
+                "zincAuxiliaryClassFileExtensions.super.javalib.JavaModule": {}
+              },
+              "zincIncrementalCompilation": {},
+              "upstreamCompileOutput": {},
+              "allScalacOptions": {
+                "mandatoryScalacOptions": {},
+                "enablePluginScalacOptions": {}
+              },
+              "mandatoryJavacOptions": {},
+              "zincReportCachedProblems": {},
+              "scalaCompilerClasspath": {}
+            },
+            "test.resolvedMvnDeps": {}
+          },
+          "test.scalaCompilerClasspath": {
+            "test.scalaLibraryMvnDeps": {}
+          },
+          "test.scalacPluginClasspath": {
+            "scalacPluginClasspath": {
+              "checkGradleModules": {},
+              "scalacPluginMvnDeps": {}
+            }
+          }
+        },
+        "test.localRunClasspath.super.RunModule": {}
+      }
+    },
+    "test.forkArgs": {},
+    "test.allForkEnv": {
+      "test.allForkEnv.super.RunModule": {
+        "test.forkEnv": {},
+        "test.javaHomePathForkEnv": {}
+      }
+    },
+    "test.testForkGrouping": {
+      "test.discoveredTestClasses": {}
+    },
+    "test.resources.super.JavaModule": {},
+    "test.propagateEnv": {},
+    "test.testLogLevel": {},
+    "mill.javalib.JvmWorkerModule/scalalibClasspath": {},
+    "test.testSandboxWorkingDir": {},
+    "javaHome": {
+      "jvmIndexVersion": {},
+      "jvmVersion": {
+        "jvmId": {}
+      }
+    },
+    "test.testReportXml": {},
+    "test.testFramework": {},
+    "test.runClasspath": {
+      "test.resolvedRunMvnDeps": {
+        "scalaVersion": {},
+        "test.mandatoryMvnDeps": {
+          "test.munitVersion": {},
+          "test.mandatoryMvnDeps.super.scalalib.ScalaModule": {
+            "test.mandatoryMvnDeps.super.javalib.JavaModule": {}
+          }
+        },
+        "test.scalaOrganization": {
+          "scalaOrganization": {}
+        },
+        "test.mvnDeps": {},
+        "test.compileMvnDeps": {},
+        "test.depManagement": {
+          "test.depManagement.super.JavaModule": {},
+          "depManagement": {}
+        },
+        "test.resolvedDepsWarnNonPlatform": {},
+        "test.platformSuffix": {},
+        "repositories": {},
+        "test.bomMvnDeps": {
+          "bomMvnDeps": {},
+          "test.bomMvnDeps.super.JavaModule": {}
+        },
+        "mvnDeps": {},
+        "test.checkGradleModules": {},
+        "platformSuffix": {},
+        "test.artifactTypes": {},
+        "test.runMvnDeps": {},
+        "test.transitiveCoursierProjects": {
+          "compileMvnDeps": {},
+          "mandatoryMvnDeps": {
+            "mandatoryMvnDeps.super.javalib.JavaModule": {},
+            "scalaLibraryMvnDeps": {}
+          },
+          "transitiveCoursierProjects": {},
+          "runMvnDeps": {}
+        },
+        "test.scalaVersion": {}
+      },
+      "test.localClasspath": {
+        "test.localCompileClasspath": {
+          "test.unmanagedClasspath": {},
+          "test.compileResources": {}
+        }
+      },
+      "test.runClasspath.super.RunModule": {},
+      "test.transitiveLocalClasspath": {
+        "localClasspath": {
+          "localCompileClasspath": {
+            "compileResources": {},
+            "unmanagedClasspath": {}
+          },
+          "localRunClasspath": {
+            "resources": {},
+            "localRunClasspath.super.RunModule": {}
+          }
+        }
+      }
+    },
+    "test.testUseArgsFile": {
+      "test.runUseArgsFile": {
+        "runUseArgsFile": {}
+      }
+    },
+    "test.testArgsDefault": {},
+    "mill.javalib.JvmWorkerModule/testrunnerEntrypointClasspath": {},
+    "mill.javalib.JvmWorkerModule/internalWorker": {
+      "mill.javalib.JvmWorkerModule/internalWorkerClassLoader": {},
+      "mill.javalib.CoursierConfigModule/coursierEnv": {},
+      "mill.javalib.JvmWorkerModule/checkGradleModules": {},
+      "mill.javalib.JvmWorkerModule/classpath": {},
+      "mill.javalib.JvmWorkerModule/zincLogDebug": {},
+      "mill.javalib.JvmWorkerModule/repositories": {},
+      "mill.javalib.JvmWorkerModule/useFileLocks": {}
+    },
+    "test.forkWorkingDir": {},
+    "test.testParallelism": {}
+  }
+}

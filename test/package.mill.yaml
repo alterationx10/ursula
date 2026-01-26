@@ -1,0 +1,6 @@
+extends: [ build.ScalaTests, TestModule.Munit ]
+mvnDeps:
+  - org.scalameta::munit:1.2.1
+forkEnv:
+  TEST_FLAG: abc
+  BAD_OPTION_TEST_FLAG: qrs

@@ -1,0 +1,17 @@
+{
+    "value": [
+        "qref:v1:3b9c6ae0:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.8.0/scala3-library_3-3.8.0.jar",
+        "qref:v1:961f6163:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalameta/munit_3/1.2.1/munit_3-1.2.1.jar",
+        "qref:v1:e95f49e0:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/3.8.0/scala-library-3.8.0.jar",
+        "qref:v1:0b00093a:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalameta/junit-interface/1.2.1/junit-interface-1.2.1.jar",
+        "qref:v1:04fc75e8:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scalameta/munit-diff_3/1.2.1/munit-diff_3-1.2.1.jar",
+        "qref:v1:b0cfb609:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/junit/junit/4.13.2/junit-4.13.2.jar",
+        "qref:v1:9ca2e086:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/test-interface/1.0/test-interface-1.0.jar",
+        "qref:v1:43ad0d11:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar",
+        "ref:v0:c984eca8:/Users/alt/Projects/alterationx10/ursula/compile-resources",
+        "ref:v0:3cfaca8f:/Users/alt/Projects/alterationx10/ursula/out/compile.dest/classes",
+        "ref:v0:c984eca8:/Users/alt/Projects/alterationx10/ursula/test/compile-resources"
+    ],
+    "valueHash": -1114724896,
+    "inputsHash": 1877280728
+}
