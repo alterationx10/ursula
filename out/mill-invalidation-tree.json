@@ -1,7 +1,0 @@
-{
-  "test.allForkEnv.super.RunModule": {
-    "test.allForkEnv": {
-      "test.testForked": {}
-    }
-  }
-}

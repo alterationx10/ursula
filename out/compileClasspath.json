@@ -1,9 +1,0 @@
-{
-    "value": [
-        "qref:v1:3b9c6ae0:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.8.0/scala3-library_3-3.8.0.jar",
-        "qref:v1:e95f49e0:/Users/alt/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-lang/scala-library/3.8.0/scala-library-3.8.0.jar",
-        "ref:v0:c984eca8:/Users/alt/Projects/alterationx10/ursula/compile-resources"
-    ],
-    "valueHash": 1490106773,
-    "inputsHash": 630966306
-}

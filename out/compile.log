@@ -1,8 +1,0 @@
-compiling 16 Scala sources to out/compile.dest/classes ...
-[[33mwarn[39m] [33msrc/ursula/args/Flag.scala[0m:[33m8[0m:[33m25[0m
-[0m[33mimport[0m scala.collection.[33mJavaConverters[0m.mapAsScalaMapConverter
-                        [33m^^^^^^^^^^^^^^[0m
-[33mobject[0m [35mJavaConverters[0m in [33mpackage[0m [35mscala.collection[0m is deprecated since 2.13.0: Use `scala.jdk.CollectionConverters` instead
-
-[[33mwarn[39m] one warning found
-done compiling

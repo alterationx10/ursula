@@ -1,8 +1,0 @@
-{
-    "value": [
-        "com.lihaoyi:::scalac-mill-moduledefs-plugin:0.13.0;exclude=com.lihaoyi:sourcecode_3",
-        "com.lihaoyi:::mill-runner-autooverride-plugin:1.1.0-RC4;exclude=com.lihaoyi:sourcecode_3"
-    ],
-    "valueHash": 1428523132,
-    "inputsHash": -181088820
-}

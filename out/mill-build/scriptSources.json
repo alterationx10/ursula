@@ -1,9 +1,0 @@
-{
-    "value": [
-        "ref:v0:8e5b558e:/Users/alt/Projects/alterationx10/ursula/build.mill.yaml",
-        "ref:v0:33b78599:/Users/alt/Projects/alterationx10/ursula/test/package.mill.yaml",
-        "ref:v0:33b78599:/Users/alt/Projects/alterationx10/ursula/test/package.mill.yaml"
-    ],
-    "valueHash": -187632783,
-    "inputsHash": 2068678974
-}
