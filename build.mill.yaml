@@ -1,0 +1,28 @@
+extends: [ ScalaModule, SonatypeCentralPublishModule ]
+scalaVersion: 3.8.0
+jvmVersion: temurin:25
+publishVersion: 0.0.15
+artifactName: ursula
+pomSettings:
+  description: A slim framework to make Scala CLI apps
+  organization: dev.alteration
+  url: https://github.com/alterationx10/ursula
+  licenses: [ Apache 2 ]
+  versionControl: https://github.com/alterationx10/ursula
+  developers:
+    - id: alterationx10
+      name: Mark Rudolph
+      email: mark@alteration.dev
+      url: https://github.com/alterationx10
+
+scalacOptions: [
+  -no-indent,
+  -rewrite,
+  -source:3.4-migration,
+  -Wunused:all,
+  -deprecation,
+  -feature,
+  -Xmax-inlines,
+  64
+]
+
